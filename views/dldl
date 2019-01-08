@@ -1,0 +1,24 @@
+<% chats.forEach(function(chat){	%>
+							<% if (chat.sender == user.username){  %>
+								<div class="outgoing_msg">
+									<div class="sent_msg">
+										<p><%= chat.message %></p>
+										<span class="time_date"><%= chat.sender %>| <%= chat.date %></span>
+									</div>
+								</div>
+
+							<%	}   %>
+							<%	  if (chat.sender != user.username){ %>
+								<div class="incoming_msg">
+										<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+										<div class="received_msg">
+											<div class="received_withd_msg">
+												<p><%= chat.message %></p>
+												<span class="time_date"> <%=	chat.sender	%> | <%=	chat.date	%></span>
+											</div>
+										</div>
+									</div>
+							<%	}   %>
+
+							<%	})   %>
+							

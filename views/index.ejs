@@ -1,0 +1,175 @@
+<html>
+
+<head>
+	<style>
+	</style>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<title>Stackqora.com</title>
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<!-- Font Awesome CSS-->
+	<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+	<!-- Custom icon font-->
+	<link rel="stylesheet" href="css/fontastic.css">
+	<!-- Google fonts - Open Sans-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+	<!-- Fancybox-->
+	<link rel="stylesheet" href="vendor/@fancyapps/fancybox/jquery.fancybox.min.css">
+	<!-- theme stylesheet-->
+	<link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+	<!-- Custom stylesheet - for your changes-->
+	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" href="css/chat.css">
+	<!-- Bootstrap core CSS -->
+	<link href="md/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="md/css/mdb.min.css" rel="stylesheet">
+	<!-- Favicon-->
+
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900"
+	 rel="stylesheet">
+</head>
+<style>
+	#messages ul.error {
+          list-style: none;
+          color: #a94442;
+          background-color:#f2dede;
+          border-color:#ebccd1;
+          padding: 15px;
+          margin-bottom:20px;
+          border: 1px solid transparent;
+          border-radius: 4px;
+        }
+        #messages ul.success {
+          list-style: none;
+          color: #a94442;
+          background-color:#f2dede;
+          border-color:#ebccd1;
+          padding: 15px;
+          margin-bottom:20px;
+          border: 1px solid transparent;
+          border-radius: 4px;
+        }
+
+        
+        </style>
+
+<body>
+	<header class="header">
+		<nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
+			<div class="container">
+				<a class="navbar-brand waves-effect" href="index.html">
+					<strong>Stackqora</strong>
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<!--<span class="navbar-toggler-icon"></span>-->
+					<i class="fa fa-navicon fa-lg"></i>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav mr-auto">
+					
+					</ul>
+					<ul class="navbar-nav nav-flex-icons">
+						<li class="nav-item">
+							<a href="https://github.com/JosephTesla" class="nav-link waves-effect">
+								<i class="fa fa-github"></i>follow
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="users/" class="nav-link border border-light rounded waves-effect">
+								<i class="fa fa-user"></i>
+								<span id="userone"><%- user.username %></span>
+							</a>
+						</li>
+						<li></li>
+						<li id="usertwo" class="nav-item">
+							<a href="users/logout" class="nav-link border border-light rounded waves-effect">
+								<i class="fa fa-key"></i> Logout
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div class="container">
+
+		<div class="content-app">
+			<h3>loggedin:
+				<%= user.username %>
+			</h3>
+			<div class="row" id="messageArea">
+				<div class="col-md-4" id="online">
+					<div class="well">
+						<h3>Online Users</h3>
+						<ul class="list-group" id="users">
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="mesgs">
+						<div class="msg_history">
+								<div class="incoming_msg">
+									<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+									<div class="received_msg">
+										<div class="received_withd_msg">
+											<p>Welcome to stackqora chat</p>
+											<span class="time_date"> 11:01 AM | June 9</span>
+										</div>
+									</div>
+								</div>
+								<% chats.forEach(function(chat){	%>
+									<% if (chat.sender === user.username){  %>
+										<div class="outgoing_msg">
+											<div class="sent_msg">
+												<p><%= chat.message %></p>
+												<span class="time_date">from <%= chat.sender %>	| <%= chat.date %></span>
+											</div>
+										</div>
+		
+									<%	}   %>
+									<%	  if (chat.sender !== user.username){ %>
+										<div class="incoming_msg">
+												<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+												<div class="received_msg">
+													<div class="received_withd_msg">
+														<p><%= chat.message %></p>
+														<span class="time_date">from  <%=	chat.sender	%> | <%=	chat.date	%></span>
+													</div>
+												</div>
+											</div>
+									<%	}   %>
+		
+									<%	})   %>3
+								
+							</div>
+							<div class="type_msg">
+								<div class="input_msg_write">
+									<input id="message"	type="text" class="write_msg" placeholder="Type a message" />
+									<button	id="btn" class="msg_send_btn" type="button"><i class="fa fa-send" aria-hidden="true"></i></button>
+								</div>
+								<br><a href="" id="addlink">add link</a>
+								<div id="link-form">
+									<input id="linktext" placeholder="text to display" /><input id="link" placeholder="link" />
+									<input type="button" id="linkbtn" value="add link" />
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+		<div class="content-app">
+			<div class="row" id="messageArea">
+				<div class="col-md-4" id="online">
+
+				</div>
+				<div class="col-md-8">
+						
+				</div>
+			</div>
+		</div>
+		
+
+
+	<%- include('templates/footer'); %>

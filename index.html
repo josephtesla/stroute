@@ -1,0 +1,154 @@
+<html>
+
+<head>
+	<title>IO CHAT</title>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
+	<script src="bootstrap/js/bootstrap.js"></script>
+	<script src="bootstrap/js/jquery.min.js"></script>
+	<script src="socket.io.js"></script>
+	<style>
+
+		body{
+                margin-top: 40px;
+            }
+						#link-form{
+							display: none;
+						}
+            .well {
+                border-radius: 4px;
+                background-color:rgb(228, 225, 225);
+                padding:50px;
+            }
+            .msg{
+                border-radius: 4px;
+                background-color:rgb(228, 225, 225);
+                margin-top:10px;
+                height:40px;
+                padding-left:30px;
+                padding-top: 10px;
+            }
+            #messageArea {
+                display: none;
+            }
+						#message {
+							width:400px;
+							height: 100px;
+						}
+        
+        </style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row" id="userFormArea">
+			<div class="col-md-12">
+				<form id="userForm">
+					<div class="form-group">
+						<label>Enter Username</label>
+						<input id="username" class="form-control" />
+						<br>
+						<input type="submit" id="btn" value="Login" class="btn btn-primary" />
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="row" id="messageArea">
+			<div class="col-md-4" id="online">
+				<div class="well">
+					<h3>Online Users</h3>
+					<ul class="list-group" id="users">
+
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="chat" id="chat"></div>
+				<form id="messageForm">
+					<div class="form-group">
+						<label>Enter Message</label>
+						<div contenteditable="true" id="message" class="form-control">
+
+						</div>
+						<br><button id="addlink">add link</button>
+						<div id="link-form">
+							<input id="linktext" placeholder="text to display"/><input id="link" placeholder="link" />
+							<input type="button" id="linkbtn" value="add link"/>
+						</div>
+					</div>
+					<input type="submit" id="btn" value="Send message" class="btn btn-primary" />
+				</form>
+			</div>
+
+		</div>
+	</div>
+
+	<script>
+		$(function () {
+			var socket = io.connect();
+			var $messageForm = $('#messageForm');
+			var $message = document.querySelector('#message');
+			var $chat = $('#chat')
+			var $messageArea = $('#messageArea');
+			var $userForm = $('#userForm');
+			var $username = $('#username');
+			var $users = $('#users');
+			var $userFormArea = $('#userFormArea');
+			
+			$('#addlink').click(function(event){
+				event.preventDefault();
+				$('#link-form').toggle()
+			})
+			
+			$('#linkbtn').click(function(e){
+				e.preventDefault();
+				const $linktext = $('#linktext').val();
+				const $link = document.querySelector('#link');
+				console.log($link)
+				if ($link.value.includes('http')){
+					const html = `<a href='${link.value}'>${$linktext}</a>`;
+					$message.innerHTML += ' ' + html;
+				}
+				else{
+					const html = `<a href='http://${link.value}'>${$linktext}</a>`;
+					$message.innerHTML += ' ' + html;
+				}
+			})
+
+			$messageForm.submit(function (e) {
+				e.preventDefault();
+				console.log($message.innerHTML)
+				//Emit 'send message' event after sending a message
+				socket.emit('send message', $message.innerHTML);
+
+				//clear message area
+				$message.innerHTML = '';
+			})
+			socket.on('new message', function (data) {
+				$chat.append(`<div class="msg"><strong> ${data.user}   : </strong>${data.msg}</div>`);
+			})
+
+			$userForm.submit(function (e) {
+				e.preventDefault();
+				socket.emit('new user', $username.val(), function (data) {
+					if (data) {
+						$userFormArea.hide();
+						$messageArea.show();
+					}
+				})
+				$username.val('');
+			})
+
+			socket.on('get user', function (data) {
+				var html = '';
+				for (i = 0; i < data.length; i++) {
+					html += '<li class="list-group-item">' + data[i] + '</li>';
+				}
+				$users.html(html);
+			})
+
+		})
+	</script>
+</body>
+
+</html>
