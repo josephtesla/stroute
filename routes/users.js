@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router()
 const path = require('path')
-const mongojs = require('mongojs')
-const db = mongojs('passportapp', ['users']);
-
+const User = require('../Models/User')
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -61,7 +59,7 @@ router.post('/register', function (req, res) {
 			bcrypt.hash(newUser.password, salt, function (err, hash) {
 				newUser.password = hash;
 
-				db.users.insert(newUser, function (err, docs) {
+				User.create(newUser, function (err, docs) {
 					if (err) {
 						res.send(err);
 					}
@@ -94,14 +92,14 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (id, done) {
-	db.users.findOne({ _id: mongojs.ObjectId(id) }, function (err, user) {
+	User.findById(id, function (err, user) {
 		done(null, user);
 	})
 })
 
 passport.use(new LocalStrategy(
 	function (username, password, done) {
-		db.users.findOne({ username: username }, function (err, user) {
+		User.findOne({ username: username }, function (err, user) {
 			if (err) {
 				return done(err);
 			}
