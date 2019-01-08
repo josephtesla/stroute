@@ -10,6 +10,7 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
 const mongoose = require('mongoose');
+const	ejs = require('ejs')
 mongoose.connect('mongodb://josephtesla:tesla98@ds151614.mlab.com:51614/passportapp').then(() => {
 	console.log("connected");
 }).catch(err => {console.log(err.message)})
