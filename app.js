@@ -10,11 +10,13 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
 const mongoose = require('mongoose');
-const	ejs = require('ejs')
+const ejs = require('ejs')
+//mongodb://josephtesla:tesla98@ds151614.mlab.com:51614/passportapp
 mongoose.connect('mongodb://josephtesla:tesla98@ds151614.mlab.com:51614/passportapp').then(() => {
 	console.log("connected");
-}).catch(err => {console.log(err.message)})
+}).catch(err => { console.log(err.message) })
 const Message = require('./Models/Message');
+const User = require('./Models/User')
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -31,18 +33,18 @@ const users = require('./routes/users')
 //view engine
 app.set('view engine', 'ejs');
 //static folder
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 //bodyparser
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //express-session middleware
 app.use(session({
-    secret:'secret',
-    saveUninitialized:true,
-    resave:true
+	secret: 'secret',
+	saveUninitialized: true,
+	resave: true
 }))
 
 //passport middleware
@@ -51,33 +53,62 @@ app.use(passport.session());
 
 //express-validator middleware
 app.use(expressValidator({
-    errorFormatter: function(param, msg, value){
-        var namespace = param.split('.')
-        , root = namespace.shift()
-        ,  formParam = root;
+	errorFormatter: function (param, msg, value) {
+		var namespace = param.split('.')
+			, root = namespace.shift()
+			, formParam = root;
 
-        while(namespace.length){
-            formParam = '[' + namespace.shift() + ']';
-        }
-        return {
-            param: formParam,
-            msg: msg,
-            value: value
-        };
+		while (namespace.length) {
+			formParam = '[' + namespace.shift() + ']';
+		}
+		return {
+			param: formParam,
+			msg: msg,
+			value: value
+		};
 
-    }
+	}
 }));
+
+function ensureAuthenticated(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+	res.location('/users/login');
+	res.redirect('/users/login');
+}
 
 //connnect-flash
 app.use(flash());
-app.use(function(req, res,  next){
-    res.locals.messages = require('express-messages')(req, res);
-    next();
+app.use(function (req, res, next) {
+	res.locals.messages = require('express-messages')(req, res);
+	next();
 })
 
-app.get('*',(req, res,next) =>   {
-    res.locals.user = req.user || null;
-    next();
+app.get('*', (req, res, next) => {
+	res.locals.user = req.user || null;
+	next();
+})
+
+app.get('/chats', ensureAuthenticated, (req, res)	=>{
+	console.log(socketusers)
+	const loggedInUser = req.user;
+	const onlineFriends = [];
+	User.findById(loggedInUser._id)
+	.then(user => {
+		const friendNames = [];
+		user.friends.forEach(friend => {
+			friendNames.push(friend.username);
+		})
+		socketusers.forEach(onlineUser => {
+			if (friendNames.includes(onlineUser)){
+				onlineFriends.push(onlineUser);
+			}
+		})
+		res.render('index', {
+			onlineFriends:onlineFriends
+		})
+	})
 })
 
 app.use('/', routes);
@@ -98,22 +129,27 @@ io.sockets.on('connection', function (socket) {
 	socket.on('send message', function (data) {
 		//'emit new message event' to all sockets
 		io.sockets.emit('new message', {
-			msg: data,
-			user: socket.username
+			msg: data.msg,
+			user: socket.username,
+			receiver: data.receiver
 		});
 		console.log(socket.username)
 		const newMessage = {
-			message: data,
+			sillyId: `${socket.username} ${data.receiver}`,
+			message: {
+					msg: data.msg,
+					type:"text"
+				},
 			sender: socket.username,
-			receiver: "all",
-			date: new Date().toLocaleTimeString()
+			receiver: data.receiver,
+			date: new Date().toLocaleString()
 		}
 		Message.create(newMessage)
-		.then(result => {
-			console.log(result);
-		}).catch((err) => {
-			console.log(err.message)
-		})
+			.then(result => {
+				console.log(result);
+			}).catch((err) => {
+				console.log(err.message)
+			})
 	})
 
 
@@ -121,7 +157,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('new user', function (data, callback) {
 		callback(true)
 		socket.username = data;
-		if (!socketusers.includes(socket.username)){
+		if (!socketusers.includes(socket.username)) {
 			socketusers.push(socket.username);
 			updateUsernames();
 		}
@@ -131,4 +167,5 @@ io.sockets.on('connection', function (socket) {
 		io.sockets.emit('get user', socketusers)
 	}
 });
+
 

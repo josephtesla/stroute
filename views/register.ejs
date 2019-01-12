@@ -1,45 +1,53 @@
 <%- include('templates/header'); %>
 
 <div class="content-app">
-    <div class="userpart">
-        <% if (locals.errors) { %>
-            <div class="alert alert-danger">
-        <%  errors.forEach(function(error){ %>
-                <%= error.msg %><br>
-            <%  }) %>
-        </div>
-        <% }  %>
-        
-            <center>
-							<!-- Default form register -->
-<form action="/users/register" method="POST"	class="col-md-6 text-center border border-light p-5">
-	<%- messages();  %>
-		<div id="errorplace" class="alert alert-danger"></div>
-		<h6 class="h4 mb-4">Sign Up</h6>
-		<input type="text" required value="<%= (!!locals.name)?name:'' %>"	name="name" class="form-control mb-4" placeholder="Name">
-		<input type="text" required value="<%= (!!locals.username)?username:'' %>"	 name="username" class="form-control mb-4" placeholder="enter a username">
-		<input type="email" required value="<%= (!!locals.email)?email:'' %>" name="email" class="form-control mb-4" placeholder="Email address">
+	<div class="userpart">
+		<% if (locals.errors) { %>
+		<div class="alert alert-danger">
+			<%  errors.forEach(function(error){ %>
+			<%= error.msg %><br>
+			<%  }) %>
+		</div>
+		<% }  %>
 
-		<!-- Password -->
-		<input type="password" required value="<%= (!!locals.password)?password:'' %>"name="password" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
-		<small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
-		</small>
+		<center>
+			<!-- Default form register -->
+			<form action="/users/register" method="POST" class="col-md-6 text-center border border-light p-5">
+				<div id="errorplace" class="alert alert-danger"></div>
+				<h6 class="h4 mb-4">Sign Up</h6>
+				<input type="text" required value="<%= (!!locals.name)?name:'' %>" name="name" class="form-control mb-4"
+				 placeholder="Name">
+				<input type="text" required value="<%= (!!locals.username)?username:'' %>" name="username" class="form-control mb-4"
+				 placeholder="enter a username">
+				<input type="email" required value="<%= (!!locals.email)?email:'' %>" name="email" class="form-control mb-4"
+				 placeholder="Email address">
+				<!-- Password -->
+				<input type="password" required value="<%= (!!locals.password)?password:'' %>" name="password" class="form-control"
+				 placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+				<small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+				</small>
 
-		<input type="password" required value="<%= (!!locals.password2)?password2:'' %>" name="password2" class="form-control" placeholder="confirm password" aria-describedby="defaultRegisterFormPhoneHelpBlock">
-		<small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
-				confirm your password
-		</small>
-		<!-- Sign up button -->
-		<button id="signupBtn"  class="btn btn-info my-4 btn-block" type="submit">Sign in</button>
-		<p>Already a member?
+				<input type="password" required value="<%= (!!locals.password2)?password2:'' %>" name="password2" class="form-control"
+				 placeholder="confirm password" aria-describedby="defaultRegisterFormPhoneHelpBlock">
+				<small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
+					confirm your password
+				</small>
+				Gender:
+				<select	name="gender"	required value="<%= (!!locals.gender)?gender:'' %>"  class="form-control mb-4">
+					<option value="Male">Male</option>
+					<option value="Female">Female</option>
+				</select>
+				<!-- Sign up button -->
+				<button id="signupBtn" class="btn btn-info my-4 btn-block" type="submit">Sign in</button>
+				<p>Already a member?
 					<a href="./login">Login </a>
-			</p>
-		<hr>
-</form>
-<!-- Default form register -->
+				</p>
+				<hr>
+			</form>
+			<!-- Default form register -->
 
-        </center>
-    </div>
+		</center>
+	</div>
 </div>
 
 <%- include('templates/footer'); %>

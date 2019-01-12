@@ -1,3 +1,25 @@
+#messages ul.error {
+    list-style: none;
+    color: #a94442;
+    background-color:#f2dede;
+    border-color:#ebccd1;
+    padding: 15px;
+    margin-bottom:20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+  #messages ul.success {
+    list-style: none;
+    color: #54c922;
+    background-color:#dfeed9;
+    border-color:#d3e5d1;
+    padding: 15px;
+    margin-bottom:20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+
+
 .navbar {
     background-color: rgb(44, 42, 42) !important;
     color: white !important;
@@ -11,13 +33,64 @@
 .navbar-light .navbar-brand {
     color: white !important;
 }
+.msg_history{
+    background-image: url('/img/bg-1.jpg');
+}
+
+#index{
+    margin-top: 70px; 
+}
 
 #link-form{
     display: none;
 }
+#img-form{
+    display: none;
+}
+.hide{
+    display: none;
+}
+
+#nameform{
+    display: none;
+}
+#emailform{
+    display: none;
+}
+#genderform{
+    display: none;
+}
+#addressform{
+    display: none;
+}
+
+.viewprofile{
+    float: right;
+}
+
+#mp-form{
+    display: none;
+}
+
+.imgwhite{
+    padding: 5px;
+    float: right;
+}
+.bg-white{
+    background: white;
+}
+.userimg{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
 
 .fa-navicon {
     color: white !important;
+}
+
+#sidebar{
+    border-right: 1px solid grey;
 }
 
 main.posts-listing{

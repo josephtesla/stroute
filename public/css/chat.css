@@ -64,7 +64,19 @@ img{ max-width:100%;}
 .incoming_msg_img {
   display: inline-block;
   width: 6%;
+  
 }
+#imgavatar{
+  border-radius: 50%;
+
+}
+
+footer{
+  margin-top:20px;
+}
+
+
+
 .received_msg {
   display: inline-block;
   padding: 0 0 0 10px;
@@ -81,16 +93,17 @@ img{ max-width:100%;}
   width: 100%;
 }
 .time_date {
-  color: #747474;
+  color: #f1eeee;
   display: block;
   font-size: 12px;
   margin: 8px 0 0;
 }
-.received_withd_msg { width: 57%;}
+.received_withd_msg { width: 65%;}
 .mesgs {
   float: left;
   padding: 30px 15px 0 25px;
   width: 100%;
+  border: 1px solid grey;
 }
 
  .sent_msg p {
@@ -101,10 +114,18 @@ img{ max-width:100%;}
   padding: 5px 10px 5px 12px;
   width:100%;
 }
-.outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
+
+.sent_msg span {
+  border-radius: 3px;
+  margin: 0; color:#fff;
+}
+
+
+
+.outgoing_msg{ overflow:hidden; margin:26px 0 26px; padding-right: 0px;}
 .sent_msg {
   float: right;
-  width: 46%;
+  width: 70%;
 }
 .input_msg_write input {
   position: relative;
@@ -133,5 +154,10 @@ img{ max-width:100%;}
 .messaging { padding: 0 0 50px 0;}
 .msg_history {
   height: 516px;
+  overflow-y: scroll;
+}
+
+.friends {
+  height: 400px;
   overflow-y: scroll;
 }

@@ -4,7 +4,7 @@
 	<style>
 	</style>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<title>Stackqora.com</title>
+	<title>Twoexpress</title>
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<!-- Font Awesome CSS-->
 	<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
@@ -24,42 +24,16 @@
 	<!-- Material Design Bootstrap -->
 	<link href="md/css/mdb.min.css" rel="stylesheet">
 	<!-- Favicon-->
-
-
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900"
 	 rel="stylesheet">
+	<script src="js/index.js"></script>
 </head>
-<style>
-	#messages ul.error {
-          list-style: none;
-          color: #a94442;
-          background-color:#f2dede;
-          border-color:#ebccd1;
-          padding: 15px;
-          margin-bottom:20px;
-          border: 1px solid transparent;
-          border-radius: 4px;
-        }
-        #messages ul.success {
-          list-style: none;
-          color: #a94442;
-          background-color:#f2dede;
-          border-color:#ebccd1;
-          padding: 15px;
-          margin-bottom:20px;
-          border: 1px solid transparent;
-          border-radius: 4px;
-        }
-
-        
-        </style>
-
 <body>
 	<header class="header">
 		<nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
 			<div class="container">
 				<a class="navbar-brand waves-effect" href="index.html">
-					<strong>Stackqora</strong>
+					<strong>Twoexpress</strong>
 				</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 				 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,24 +42,26 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
-					
+
 					</ul>
 					<ul class="navbar-nav nav-flex-icons">
 						<li class="nav-item">
-							<a href="https://github.com/JosephTesla" class="nav-link waves-effect">
-								<i class="fa fa-github"></i>follow
+							<a href="https://github.com/JosephTesla" class="btn btn-outline-white waves-effect waves-light"">
+								<i class="
+							 fa fa-github"></i>follow
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="users/" class="nav-link border border-light rounded waves-effect">
-								<i class="fa fa-user"></i>
+							<a href="users/<%- user.username %>" class="btn btn-outline-white waves-effect waves-light"">
+								<i class=" fa fa-user"></i>
 								<span id="userone"><%- user.username %></span>
 							</a>
 						</li>
 						<li></li>
 						<li id="usertwo" class="nav-item">
-							<a href="users/logout" class="nav-link border border-light rounded waves-effect">
-								<i class="fa fa-key"></i> Logout
+							<a href="users/logout" class="btn btn-outline-white waves-effect waves-light"">
+								<i class=" fa fa-key"></i>
+								Logout
 							</a>
 						</li>
 					</ul>
@@ -95,81 +71,131 @@
 	</header>
 	<div class="container">
 
-		<div class="content-app">
-			<h3>loggedin:
-				<%= user.username %>
-			</h3>
+		<div class="content-app" id="index">
 			<div class="row" id="messageArea">
-				<div class="col-md-4" id="online">
-					<div class="well">
-						<h3>Online Users</h3>
-						<ul class="list-group" id="users">
-						</ul>
-					</div>
+				<div class="col-md-4" id="sidebar">
+					<ul style="list-style-type:square;">
+						<li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/chats" role="button">Chats <i class="fa fa-comment ml-2"></i></a></li>
+						<li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/friendlist" role="button">View
+								Friend List<i class="fa fa-th-list ml-2"></i></a></li>
+						<li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/addfriend" role="button">Add Friend<i
+								 class="fa fa-hacker-news ml-2"></i></a></li>
+						<li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="" role="button">Create New Group<i
+								 class="fa fa-group ml-2"></i></a></li>
+					</ul>
 				</div>
 				<div class="col-md-8">
-					<div class="mesgs">
-						<div class="msg_history">
-								<div class="incoming_msg">
-									<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-									<div class="received_msg">
-										<div class="received_withd_msg">
-											<p>Welcome to stackqora chat</p>
-											<span class="time_date"> 11:01 AM | June 9</span>
-										</div>
-									</div>
-								</div>
-								<% chats.forEach(function(chat){	%>
-									<% if (chat.sender === user.username){  %>
-										<div class="outgoing_msg">
-											<div class="sent_msg">
-												<p><%= chat.message %></p>
-												<span class="time_date">from <%= chat.sender %>	| <%= chat.date %></span>
-											</div>
-										</div>
-		
-									<%	}   %>
-									<%	  if (chat.sender !== user.username){ %>
-										<div class="incoming_msg">
-												<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-												<div class="received_msg">
-													<div class="received_withd_msg">
-														<p><%= chat.message %></p>
-														<span class="time_date">from  <%=	chat.sender	%> | <%=	chat.date	%></span>
-													</div>
-												</div>
-											</div>
-									<%	}   %>
-		
-									<%	})   %>3
-								
+					<div class="app-content">
+						<div id="welcomepage">
+							<h2>Chat With Friends, meet new people</h2><br>
+							<a class="btn btn-outline-primary waves-effect waves-light" href="/addfriend" role="button">Find friends<i class="fa fa-group ml-2"></i></a>
+						</div>
+						<div id="onlinechats">
+							<h3>Online Friends</h3>
+							<% if (!!locals.onlineFriends){ %>
+							<ul class="list-group">
+								<%	onlineFriends.forEach(function(friend){	%>
+								<l1 class="list-group-item"><a href="/<%= friend %>">@ <%= friend %></a>
+								</l1>
+								<% })	%>
+								<li></li>
+							</ul>
+
+							<%	}	%>
+						</div>
+						<div id="findpage">
+							<%- messages();  %>
+							<% if (!!locals.users){ %>
+							<h3>Find Friends</h3>
+							<form action="/addfriend/search" method="POST">
+								<input type="search" name="friendname" placeholder="search name" />
+								<input type="submit" value="check" class="btn btn-outline-primary btn-sm" />
+							</form>
+
+							<div class="friends">
+								<h3>Suggestions:</h3>
+								<ul class="list-group">
+									<%	users.forEach(function(user){	%>
+									<l1 class="list-group-item"><a href="/addfriend/<%= user.username %>">
+											<%= user.name %>(@
+											<%= user.username %>)</a>
+											<a class="viewprofile" href="/users/<%= user.username %>">view profile</a></l1>
+									<% })	%>
+									<li></li>
+								</ul>
 							</div>
-							<div class="type_msg">
-								<div class="input_msg_write">
-									<input id="message"	type="text" class="write_msg" placeholder="Type a message" />
-									<button	id="btn" class="msg_send_btn" type="button"><i class="fa fa-send" aria-hidden="true"></i></button>
-								</div>
-								<br><a href="" id="addlink">add link</a>
-								<div id="link-form">
-									<input id="linktext" placeholder="text to display" /><input id="link" placeholder="link" />
-									<input type="button" id="linkbtn" value="add link" />
-								</div>
+							<%	}	%>
+							<% if (!!locals.searchResults){ %>
+							<form action="/addfriend/search" method="POST">
+								<input type="search" name="friendname" placeholder="search name" />
+								<input type="submit" class="btn btn-outline-primary btn-sm" />
+							</form>
+							<div class="friends">
+								<ul class="list-group">
+									<%	searchResults.forEach(function(user){	%>
+									<l1 class="list-group-item"><a href="/addfriend/<%= user.username %>">
+											<%= user.name %>(@
+											<%= user.username %>)</a></l1>
+									<% })	%>
+									<li></li>
+								</ul>
+
+								<%	}	%>
+
+							</div>
+							<div id="friendlist">
+								<% if (!!locals.friendlist) { %>
+								<% if (friendlist.length){  %>
+								<h3>Your Friends: </h3>
+								<ul class="list-group">
+									<%	friendlist.forEach(function(friend){	%>
+									<l1 class="list-group-item"><a href="/<%= friend.username %>">
+											<%= friend.name %>(@
+											<%= friend.username %>)</a> 	
+											<a class="viewprofile" href="/users/<%= friend.username %>">view profile</a></l1>
+									<% })	%>
+									<li></li>
+								</ul>
+								<%  }  %>
+								<% if (!friendlist.length){  %>
+								<h3>You do not have any friends currently.</h3><br>
+								<a class="btn btn-outline-primary waves-effect waves-light" href="/addfriend" role="button">Find friends<i
+									 class="fa fa-group ml-2"></i></a>
+
+								<%  }  %>
+								<%  }  %>
 							</div>
 						</div>
+					</div>
 				</div>
 			</div>
+
+
+			<footer>
+				&copy Twoexpress
+			</footer>
 		</div>
-		<div class="content-app">
-			<div class="row" id="messageArea">
-				<div class="col-md-4" id="online">
-
-				</div>
-				<div class="col-md-8">
-						
-				</div>
-			</div>
-		</div>
-		
 
 
-	<%- include('templates/footer'); %>
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="js/socket.io.js"></script>
+		<script src="vendor/popper.js/umd/popper.min.js"> </script>
+		<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+		<script src="vendor/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
+		<script src="js/front.js"></script>
+		<script src="js/socket.js"></script>
+
+		<!-- MDB core JavaScript -->
+		<script type="text/javascript" src="md/js/mdb.min.js"></script>
+		<!-- Initializations -->
+		<script type="text/javascript">
+			// Animations initialization
+			new WOW().init();
+		</script>
+
+</body>
+
+
+
+</html>

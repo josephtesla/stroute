@@ -4,7 +4,7 @@
   <style>
   </style>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Stackqora.com </title>
+  <title>Twoxpress </title>
   <script src="vendor/jquery/jquery.min.js"></script>
   <!-- Font Awesome CSS-->
   <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
@@ -41,72 +41,59 @@
         }
         #messages ul.success {
           list-style: none;
-          color: #a94442;
-          background-color:#f2dede;
-          border-color:#ebccd1;
+          color: #54c922;
+          background-color:#dfeed9;
+          border-color:#d3e5d1;
           padding: 15px;
           margin-bottom:20px;
           border: 1px solid transparent;
           border-radius: 4px;
         }
 
+
         
         </style>
 
 <body>
-<header  class="header">
-  <nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
-    <div class="container">
-       <a class="navbar-brand waves-effect" href="index.html" >
-          <strong>Stackqora</strong>
-       </a>
-       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <!--<span class="navbar-toggler-icon"></span>-->
-          <i  class="fa fa-navicon fa-lg"></i>
-       </button>
-       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-             <li class="nav-item active">
-                <a class="nav-link waves-effect" href="index.html">Home
-                   
-                </a>
-             </li>
-             <li class="nav-item">
-                <a id="askbutton" class="nav-link waves-effect" href="" >Create group</a>
-             </li>
-             <li class="nav-item">
-                <a class="nav-link waves-effect" href="index.html">chats</a>
-             </li>
-             <li class="nav-item">
-                <a class="nav-link waves-effect" href="" >Users</a>
-             </li>
-          </ul>
-          <ul class="navbar-nav nav-flex-icons">
-                <% if (!user) { %>
-                  <li id="userone" class="nav-item">
-                      <a href="users/register" class="nav-link border border-light rounded waves-effect">
-                         <i class="fa fa-user"></i> Sign up
-                      </a>
-                   </li>
-                   <li></li>
-                   <li id="usertwo" class="nav-item">
-                      <a href="users/login" class="nav-link border border-light rounded waves-effect">
-                         <i class="fa fa-key"></i> Log in
-                      </a>
-                   </li>
-                <% } %>
-             <li class="nav-item">
-                <a href="https://github.com/JosephTesla" class="nav-link waves-effect" >
-                   <i class="fa fa-github"></i>follow
-                </a>
-             </li>
-             
-          </ul>
-       </div>
-    </div>
- </nav>
-</header>
+   <header class="header">
+		<nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
+			<div class="container">
+				<a class="navbar-brand waves-effect" href="index.html">
+					<strong>Twoxpress</strong>
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<!--<span class="navbar-toggler-icon"></span>-->
+					<i class="fa fa-navicon fa-lg"></i>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav mr-auto">
+
+					</ul>
+					<ul class="navbar-nav nav-flex-icons">
+						<li class="nav-item">
+							<a href="https://github.com/JosephTesla" class="btn btn-outline-white waves-effect waves-light"">
+								<i class="fa fa-github"></i>follow
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/users/register" class="btn btn-outline-white waves-effect waves-light"">
+								<i class="fa fa-user"></i>
+								<span id="userone">
+									Signup</span>
+							</a>
+						</li>
+						<li></li>
+						<li id="usertwo" class="nav-item">
+							<a href="/users/login" class="btn btn-outline-white waves-effect waves-light"">
+								<i class="fa fa-key"></i> Login
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
 
   
 
