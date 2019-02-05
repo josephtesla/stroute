@@ -1,102 +1,105 @@
 <html>
 
 <head>
-   <style>
-   </style>
-   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-   <title>Twoexpress</title>
-   <script src="vendor/jquery/jquery.min.js"></script>
-   <!-- Font Awesome CSS-->
-   <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
-   <!-- Custom icon font-->
-   <link rel="stylesheet" href="css/fontastic.css">
-   <!-- Google fonts - Open Sans-->
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
-   <!-- Fancybox-->
-   <link rel="stylesheet" href="vendor/@fancyapps/fancybox/jquery.fancybox.min.css">
-   <!-- theme stylesheet-->
-   <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
-   <!-- Custom stylesheet - for your changes-->
-   <link rel="stylesheet" href="css/custom.css">
-   <link rel="stylesheet" href="css/chat.css">
-   <!-- Bootstrap core CSS -->
-   <link href="md/css/bootstrap.min.css" rel="stylesheet">
-   <!-- Material Design Bootstrap -->
-   <link href="md/css/mdb.min.css" rel="stylesheet">
-   <!-- Favicon-->
-   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900"
-      rel="stylesheet">
-   <script src="js/index.js"></script>
+  <style>
+  </style>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Twoexpress</title>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <!-- Font Awesome CSS-->
+  <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+  <!-- Custom icon font-->
+  <link rel="stylesheet" href="css/fontastic.css">
+  <!-- Google fonts - Open Sans-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+  <!-- Fancybox-->
+  <link rel="stylesheet" href="vendor/@fancyapps/fancybox/jquery.fancybox.min.css">
+  <!-- theme stylesheet-->
+  <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+  <!-- Custom stylesheet - for your changes-->
+  <link rel="stylesheet" href="css/custom.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <!-- Bootstrap core CSS -->
+  <link href="md/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="md/css/mdb.min.css" rel="stylesheet">
+  <!-- Favicon-->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900"
+    rel="stylesheet">
+  <script src="js/index.js"></script>
 </head>
+
 <body>
-   <header class="header">
-      <nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
-         <div class="container">
-            <a class="navbar-brand waves-effect" href="index.html">
-               <strong>Twoexpress</strong>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-               aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-               <!--<span class="navbar-toggler-icon"></span>-->
-               <i class="fa fa-navicon fa-lg"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-               <ul class="navbar-nav mr-auto">
+  <header class="header">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
+      <div class="container">
+        <a class="navbar-brand waves-effect" href="/">
+          <strong>Twoexpress</strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <!--<span class="navbar-toggler-icon"></span>-->
+          <i class="fa fa-navicon fa-lg"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
 
-               </ul>
-               <ul class="navbar-nav nav-flex-icons">
-                  <li class="nav-item">
-                     <a href="https://github.com/JosephTesla" class="btn btn-outline-white waves-effect waves-light"">
+          </ul>
+          <ul class="navbar-nav nav-flex-icons">
+            <li class="nav-item">
+              <a href="https://github.com/JosephTesla" class="btn btn-outline-white waves-effect waves-light"">
 								<i class="
-                        fa fa-github"></i>follow
-                     </a>
-                  </li>
-                  <li class="nav-item">
-                     <a href="/users/<%- user.username %>" class="btn btn-outline-white waves-effect waves-light"">
+                fa fa-github"></i>follow
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/users/<%- user.username %>" class="btn btn-outline-white waves-effect waves-light"">
 								<i class="
-                        fa fa-user"></i>
-                        <span id="userone">
-                           <%- user.username %></span>
-                     </a>
-                  </li>
-                  <li></li>
-                  <li id="usertwo" class="nav-item">
-                     <a href="users/logout" class="btn btn-outline-white waves-effect waves-light"">
-								<i class="
-                        fa fa-key"></i>
-                        Logout
-                     </a>
-                  </li>
-               </ul>
-            </div>
-         </div>
-      </nav>
-   </header>
-   <div class="container">
+                fa fa-user"></i>
+                <span id="userone">
+                  <%- user.username %></span>
+              </a>
+            </li>
+            <li></li>
+            <li id="usertwo" class="nav-item">
+              <a href="/logout" class="btn btn-outline-white waves-effect waves-light"">
+								<i class=" fa fa-key"></i>
+                Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="container">
 
-      <div class="content-app" id="index">
-         <div class="row" id="messageArea">
-            <div class="col-md-4" id="sidebar">
-               <ul style="list-style-type:square;">
-                  <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/chats" role="button">Chats
-                        <i class="fa fa-comment ml-2"></i></a></li>
-                  <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/friendlist" role="button">View
-                        Friend List<i class="fa fa-th-list ml-2"></i></a></li>
-                  <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/addfriend" role="button">Add
-                        Friend<i class="fa fa-hacker-news ml-2"></i></a></li>
-                  <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="" role="button">Create
-                        New Group<i class="fa fa-group ml-2"></i></a></li>
-               </ul>
-            </div>
-            <div class="col-md-8">
-               <div class="app-content">
-                     <%- messages();  %>
-                  <%  if (username !== user.username){    %>
-                  <strong>
-                     <center>
-                     <h1>User Profile</h1>
-                  </strong>
-                  <img id="imgavatar"  style="border:1px solid grey" width="250px" height="250px" src="
+    <div class="content-app" id="index">
+      <div class="row" id="messageArea">
+        <div class="col-md-4" id="sidebar">
+          <ul style="list-style-type:square;">
+            <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/chats" role="button">Chats
+                <i class="fa fa-comment ml-2"></i></a></li>
+            <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/friendlist" role="button">View
+                Friend List<i class="fa fa-th-list ml-2"></i></a></li>
+            <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/addfriend" role="button">Add
+                Friend<i class="fa fa-hacker-news ml-2"></i></a></li>
+            <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/notifications" role="button">notifications
+              <span class="badge badge-primary badge-pill pull-right">2</span></a></li>
+          </ul>
+        </div>
+        <div class="col-md-8">
+          <div class="app-content">
+            <%- messages();  %>
+            <%  if (username !== user.username){    %>
+              <div class="card">
+                <div class="card-body">
+                  <h3>
+                    <%= name %> (@<%= username %>)</h3>
+                </div>
+              </div><br/>
+              <center> 
+            <img id="imgavatar" style="border:1px solid grey" width="250px" height="250px" src="
                   <% if (typeof image === 'undefined' || image == '')   {  %>
                      img/user.svg
                    <%   } %>
@@ -104,96 +107,121 @@
                      <%= image %>
                    <%   } %> 
                   
-                  " alt="<%= name %>">
-                  <br><br>
-                  </center>
-                  <ul class="list group">
-                     <li class="list-group-item">Name:
-                        <%= name %>
-                     </li>
-                     <li class="list-group-item">Username:
-                        <%= username %>
-                     </li>
-                     <li class="list-group-item">Email:
-                        <%= email %>
-                     </li>
-                     <li class="list-group-item">Gender:
-                        <%= gender %>
-                     </li>
-                     <li class="list-group-item">Address: <Address>
-                           <%= address %></Address></li>
-                  </ul>
-                  <%   } %>
-                  <%  if (username === user.username){    %>
-                  <form action="/users/<%= username %>/edit" method="POST" enctype="multipart/form-data">
-                     <strong>
-                        <center>
-                        <h1>User Profile</h1>
-                     </strong>
-                     <img id="imgavatar"  style="border:1px solid grey" width="250px" height="250px" src="
+                  "
+              alt="<%= name %>">
+            <br><br>
+            </center>
+            <b>Status:
+              <%= status %></b>
+            <div class="card">
+              <ul class="list group">
+
+                <li class="list-group-item">Name:
+                  <%= name %>
+                </li>
+                <li class="list-group-item">Username:
+                  <%= username %>
+                </li>
+                <li class="list-group-item">Email:
+                  <%= email %>
+                </li>
+                <li class="list-group-item">Gender:
+                  <%= gender %>
+                </li>
+                <li class="list-group-item">Address: <Address>
+                    <%= address %></Address></li>
+              </ul>
+            </div>
+            <%   } %>
+            <%  if (username === user.username){    %>
+            <form action="/users/<%= username %>/edit" method="POST" enctype="multipart/form-data">
+              <div class="card">
+                <div class="card-body">
+                  <h3>
+                    <%= name %> (@<%= username %>)</h3>
+                </div>
+              </div>
+              <br />
+              <center>
+
+                <img id="imgavatar" style="border:1px solid grey" width="250px" height="250px" src="
                         <% if (typeof image === 'undefined' || image == '')   {  %>
                            img/user.svg
                          <%   } %>
                          <% if (image.length)   {  %>
                            <%= image %>
                          <%   } %> 
-                     " alt="<%= name %>"><br>
-                     <a class="btn btn-outline-primary btn-sm" href="" id="picsbtn">Change profile pics</a>
-                     <a class="btn btn-outline-primary btn-sm" target="_blank"   href="/<%= image  %>">View full size</a>
-                     <input type="file" class="hide" id="profilepics" name="profilepics" />
-                     <br><br>
-                  </center>
-                     <ul class="list group">
-                        <li class="list-group-item">Name:
-                           <%= name %> <a href="" id="editname">edit</a>
-                           <input type="text" class="hide form-control" value="<%= name %>" placeholder="update name" name="editname" id="nameform" /></li>
-                        <li class="list-group-item">Username:
-                           <%= username %>
-                        </li>
-                        <li class="list-group-item">Email:
-                           <%= email %> <a href="" id="editemail">edit</a>
-                           <input type="text" class="form-control hide" value="<%= email %>" name="editemail" placeholder="update Email" id="emailform" /></li>
-                        <li class="list-group-item">Gender:
-                           <%= gender %> <a href="" id="editgender">edit</a>
-                           <select class="form-control  hide" id="genderform" name="editgender">
-                              <option  selected="selected" value="<%= gender %>"><%=  gender  %></option>
-                              <option value="Male">Male</option>
-                              <option value="Female">Female</option>
-                           </select></li>
-                        <li class="list-group-item">Address: <Address>
-                              <%= address %></Address> <a href="" id="editaddress">edit</a>
-                           <input type="text" class="form-control hide" value="<%= address %>" name="editaddress" id="addressform" placeholder="update address" /></li>
-                     </ul>
-                     <input type="submit" class="btn btn-outline-primary btn-sm" value="Save changes" />
-                  </form>
-                  <%   } %>
-               </div>
+                     "
+                  alt="<%= name %>"><br>
+                <a class="btn btn-outline-primary btn-sm" href="" id="picsbtn">Change profile pics</a>
+                <a class="btn btn-outline-primary btn-sm" target="_blank" href="/<%= image  %>">View full size</a>
+                <input type="file" class="hide" id="profilepics" name="profilepics" />
+                <br><br>
+              </center>
+              <b>Status:
+                <%= status %> <a href="" id="editstatus">edit</a>
+                <input type="text" class="hide form-control" value="<%= status %>" placeholder="update status" name="editstatus"
+                  id="statusform" />
+                <div class="card">
+              </b>
+              <ul class="list group">
 
-            </div>
-         </div>
+                <li class="list-group-item">Name:
+                  <%= name %> <a href="" id="editname">edit</a>
+                  <input type="text" class="hide form-control" value="<%= name %>" placeholder="update name" name="editname"
+                    id="nameform" /></li>
+                <li class="list-group-item">Username:
+                  <%= username %>
+                </li>
+                <li class="list-group-item">Email:
+                  <%= email %> <a href="" id="editemail">edit</a>
+                  <input type="text" class="form-control hide" value="<%= email %>" name="editemail" placeholder="update Email"
+                    id="emailform" /></li>
+                <li class="list-group-item">Gender:
+                  <%= gender %> <a href="" id="editgender">edit</a>
+                  <select class="form-control  hide" id="genderform" name="editgender">
+                    <option selected="selected" value="<%= gender %>">
+                      <%=  gender  %>
+                    </option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select></li>
+                <li class="list-group-item">Address: <Address>
+                    <%= address %></Address> <a href="" id="editaddress">edit</a>
+                  <input type="text" class="form-control hide" value="<%= address %>" name="editaddress" id="addressform"
+                    placeholder="update address" /></li>
+              </ul>
+          </div>
+          <input type="submit" class="btn btn-outline-primary btn-sm" value="Save changes" />
+          </form>
+          <%   } %>
+        </div>
 
-
-         <footer>
-            &copy Twoexpress
-         </footer>
       </div>
+    </div>
 
 
-      <script src="vendor/jquery/jquery.min.js"></script>
-      <script src="js/socket.io.js"></script>
-      <script src="vendor/popper.js/umd/popper.min.js"> </script>
-      <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-      <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
-      <script src="vendor/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
-      <script src="js/front.js"></script>
-      <script src="js/profile.js"></script>
-      <!-- MDB core JavaScript -->
-      <script type="text/javascript" src="md/js/mdb.min.js"></script>
-      <!-- Initializations -->
-      <script type="text/javascript">
-         // Animations initialization
-         new WOW().init();
-      </script>
+    <footer>
+      &copy Twoexpress
+    </footer>
+  </div>
+
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="js/socket.io.js"></script>
+  <script src="vendor/popper.js/umd/popper.min.js"> </script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+  <script src="vendor/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
+  <script src="js/front.js"></script>
+  <script src="js/profile.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="md/js/mdb.min.js"></script>
+  <!-- Initializations -->
+  <script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
+  </script>
 
 </body>
 

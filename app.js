@@ -9,23 +9,19 @@ const flash = require('connect-flash')
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
-const mongoose = require('mongoose');
 const ejs = require('ejs')
-//mongodb://josephtesla:tesla98@ds151614.mlab.com:51614/passportapp
-mongoose.connect('mongodb://josephtesla:tesla98@ds151614.mlab.com:51614/passportapp').then(() => {
-	console.log("connected");
-}).catch(err => { console.log(err.message) })
+require('dotenv').config();
+const connect = require('./config');
+
+connect(process.env.NODE_ENV)
+
 const Message = require('./Models/Message');
 const User = require('./Models/User')
-
+const Notification = require('./Models/Notification')
 app.use(express.static(path.join(__dirname, 'public')));
 
 const socketusers = [];
 const connections = [];
-
-server.listen(process.env.PORT || 5000, function () {
-	console.log('server started...')
-});
 
 const routes = require('./routes/index');
 const users = require('./routes/users')
@@ -91,7 +87,6 @@ app.get('*', (req, res, next) => {
 })
 
 app.get('/chats', ensureAuthenticated, (req, res)	=>{
-	console.log(socketusers)
 	const loggedInUser = req.user;
 	const onlineFriends = [];
 	User.findById(loggedInUser._id)
@@ -122,7 +117,6 @@ io.sockets.on('connection', function (socket) {
 		socketusers.splice(socketusers.indexOf(socket.username), 1);
 		updateUsernames();
 		connections.splice(connections.indexOf(socket), 1);
-		console.log("Disconnected: %s sockets connected", connections.length)
 	})
 
 	//event Listener for send message emitted from the client
@@ -133,7 +127,6 @@ io.sockets.on('connection', function (socket) {
 			user: socket.username,
 			receiver: data.receiver
 		});
-		console.log(socket.username)
 		const newMessage = {
 			sillyId: `${socket.username} ${data.receiver}`,
 			message: {
@@ -142,11 +135,13 @@ io.sockets.on('connection', function (socket) {
 				},
 			sender: socket.username,
 			receiver: data.receiver,
-			date: new Date().toLocaleString()
+      date: new Date().toLocaleString(),
+      datesecs: Date.now(),
+      homeimg:""
 		}
 		Message.create(newMessage)
 			.then(result => {
-				console.log(result);
+				console.log('sent');
 			}).catch((err) => {
 				console.log(err.message)
 			})
@@ -165,7 +160,23 @@ io.sockets.on('connection', function (socket) {
 
 	function updateUsernames() {
 		io.sockets.emit('get user', socketusers)
-	}
+  }
+});
+
+app.use((req, res, next) => {
+  const error = new Error('Not found');
+  error.status = 404;
+  next(error);
+});
+//renders 404 page
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.render('404');
 });
 
 
+server.listen(process.env.PORT || 5000,  () => {
+	console.log('server started...')
+});
+
+module.exports = app;

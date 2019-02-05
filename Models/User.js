@@ -8,7 +8,11 @@ const userSchema = new mongoose.Schema({
    gender: String,
    image:String,
    address: String,
-   friends: Array
+   friends: Array,
+   status: {
+     type:String,
+     default:""
+   }
 
 })
 

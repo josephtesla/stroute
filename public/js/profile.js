@@ -5,6 +5,11 @@ $('#editname').click(function(e){
    $('#nameform').toggle()
 })
 
+$('#editstatus').click(function(e){
+  e.preventDefault();
+  $('#statusform').toggle()
+})
+
 $('#editemail').click(function(e){
    e.preventDefault();
    $('#emailform').toggle()

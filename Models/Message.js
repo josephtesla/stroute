@@ -5,7 +5,9 @@ const messageSchema = new mongoose.Schema({
 	message: Object,
 	sender: String,
 	receiver: String,
-	date: String
+  date: String,
+  datesecs: Number,
+  homeimg: String,
 })
 
 

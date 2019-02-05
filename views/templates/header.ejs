@@ -1,65 +1,39 @@
 <html>
 
 <head>
-  <style>
-  </style>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Twoxpress </title>
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <!-- Font Awesome CSS-->
-  <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
-  <!-- Custom icon font-->
-  <link rel="stylesheet" href="css/fontastic.css">
-  <!-- Google fonts - Open Sans-->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
-  <!-- Fancybox-->
-  <link rel="stylesheet" href="vendor/@fancyapps/fancybox/jquery.fancybox.min.css">
-  <!-- theme stylesheet-->
-  <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
-  <!-- Custom stylesheet - for your changes-->
-  <link rel="stylesheet" href="css/custom.css">
- <!-- Bootstrap core CSS -->
- <link href="md/css/bootstrap.min.css" rel="stylesheet">
- <!-- Material Design Bootstrap -->
- <link href="md/css/mdb.min.css" rel="stylesheet">
-  <!-- Favicon-->
-
-
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900"
-    rel="stylesheet">
+	<style>
+	</style>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<title>Twoexpress</title>
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<!-- Font Awesome CSS-->
+	<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+	<!-- Custom icon font-->
+	<link rel="stylesheet" href="css/fontastic.css">
+	<!-- Google fonts - Open Sans-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+	<!-- Fancybox-->
+	<link rel="stylesheet" href="vendor/@fancyapps/fancybox/jquery.fancybox.min.css">
+	<!-- theme stylesheet-->
+	<link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+	<!-- Custom stylesheet - for your changes-->
+	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" href="css/chat.css">
+	<!-- Bootstrap core CSS -->
+	<link href="md/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="md/css/mdb.min.css" rel="stylesheet">
+	<!-- Favicon-->
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900"
+	 rel="stylesheet">
+	<script src="js/index.js"></script>
 </head>
-<style>
-        #messages ul.error {
-          list-style: none;
-          color: #a94442;
-          background-color:#f2dede;
-          border-color:#ebccd1;
-          padding: 15px;
-          margin-bottom:20px;
-          border: 1px solid transparent;
-          border-radius: 4px;
-        }
-        #messages ul.success {
-          list-style: none;
-          color: #54c922;
-          background-color:#dfeed9;
-          border-color:#d3e5d1;
-          padding: 15px;
-          margin-bottom:20px;
-          border: 1px solid transparent;
-          border-radius: 4px;
-        }
-
-
-        
-        </style>
-
 <body>
-   <header class="header">
+	<header class="header">
 		<nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
 			<div class="container">
-				<a class="navbar-brand waves-effect" href="index.html">
-					<strong>Twoxpress</strong>
+				<a class="navbar-brand waves-effect" href="/">
+					<strong>Twoexpress</strong>
 				</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 				 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,20 +47,21 @@
 					<ul class="navbar-nav nav-flex-icons">
 						<li class="nav-item">
 							<a href="https://github.com/JosephTesla" class="btn btn-outline-white waves-effect waves-light"">
-								<i class="fa fa-github"></i>follow
+								<i class="
+							 fa fa-github"></i>follow
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="/users/register" class="btn btn-outline-white waves-effect waves-light"">
-								<i class="fa fa-user"></i>
-								<span id="userone">
-									Signup</span>
+							<a href="users/<%- user.username %>" class="btn btn-outline-white waves-effect waves-light"">
+								<i class=" fa fa-user"></i>
+								<span id="userone"><%- user.username %></span>
 							</a>
 						</li>
 						<li></li>
 						<li id="usertwo" class="nav-item">
-							<a href="/users/login" class="btn btn-outline-white waves-effect waves-light"">
-								<i class="fa fa-key"></i> Login
+							<a href="/users/logout" class="btn btn-outline-white waves-effect waves-light"">
+								<i class=" fa fa-key"></i>
+								Logout
 							</a>
 						</li>
 					</ul>
@@ -94,7 +69,4 @@
 			</div>
 		</nav>
 	</header>
-
-  
-
-  <div class="container">
+	<div class="container">

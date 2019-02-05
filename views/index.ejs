@@ -1,76 +1,5 @@
-<html>
 
-<head>
-	<style>
-	</style>
-	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<title>Twoexpress</title>
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<!-- Font Awesome CSS-->
-	<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
-	<!-- Custom icon font-->
-	<link rel="stylesheet" href="css/fontastic.css">
-	<!-- Google fonts - Open Sans-->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
-	<!-- Fancybox-->
-	<link rel="stylesheet" href="vendor/@fancyapps/fancybox/jquery.fancybox.min.css">
-	<!-- theme stylesheet-->
-	<link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
-	<!-- Custom stylesheet - for your changes-->
-	<link rel="stylesheet" href="css/custom.css">
-	<link rel="stylesheet" href="css/chat.css">
-	<!-- Bootstrap core CSS -->
-	<link href="md/css/bootstrap.min.css" rel="stylesheet">
-	<!-- Material Design Bootstrap -->
-	<link href="md/css/mdb.min.css" rel="stylesheet">
-	<!-- Favicon-->
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900"
-	 rel="stylesheet">
-	<script src="js/index.js"></script>
-</head>
-<body>
-	<header class="header">
-		<nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
-			<div class="container">
-				<a class="navbar-brand waves-effect" href="index.html">
-					<strong>Twoexpress</strong>
-				</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-				 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<!--<span class="navbar-toggler-icon"></span>-->
-					<i class="fa fa-navicon fa-lg"></i>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav mr-auto">
-
-					</ul>
-					<ul class="navbar-nav nav-flex-icons">
-						<li class="nav-item">
-							<a href="https://github.com/JosephTesla" class="btn btn-outline-white waves-effect waves-light"">
-								<i class="
-							 fa fa-github"></i>follow
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="users/<%- user.username %>" class="btn btn-outline-white waves-effect waves-light"">
-								<i class=" fa fa-user"></i>
-								<span id="userone"><%- user.username %></span>
-							</a>
-						</li>
-						<li></li>
-						<li id="usertwo" class="nav-item">
-							<a href="users/logout" class="btn btn-outline-white waves-effect waves-light"">
-								<i class=" fa fa-key"></i>
-								Logout
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</header>
-	<div class="container">
-
+<%- include('templates/header') %>
 		<div class="content-app" id="index">
 			<div class="row" id="messageArea">
 				<div class="col-md-4" id="sidebar">
@@ -80,8 +9,8 @@
 								Friend List<i class="fa fa-th-list ml-2"></i></a></li>
 						<li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/addfriend" role="button">Add Friend<i
 								 class="fa fa-hacker-news ml-2"></i></a></li>
-						<li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="" role="button">Create New Group<i
-								 class="fa fa-group ml-2"></i></a></li>
+                 <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/notifications" role="button">Notifications 
+                  <span class="badge badge-primary badge-pill pull-right">2</span></a></li>
 					</ul>
 				</div>
 				<div class="col-md-8">
@@ -91,7 +20,8 @@
 							<a class="btn btn-outline-primary waves-effect waves-light" href="/addfriend" role="button">Find friends<i class="fa fa-group ml-2"></i></a>
 						</div>
 						<div id="onlinechats">
-							<h3>Online Friends</h3>
+              <div class="card"> 
+							<h3 class="card-title">Online Friends</h3>
 							<% if (!!locals.onlineFriends){ %>
 							<ul class="list-group">
 								<%	onlineFriends.forEach(function(friend){	%>
@@ -101,32 +31,35 @@
 								<li></li>
 							</ul>
 
-							<%	}	%>
+              <%	}	%>
+            </div>
 						</div>
 						<div id="findpage">
 							<%- messages();  %>
 							<% if (!!locals.users){ %>
 							<h3>Find Friends</h3>
-							<form action="/addfriend/search" method="POST">
+							<form action="/search" method="POST">
 								<input type="search" name="friendname" placeholder="search name" />
 								<input type="submit" value="check" class="btn btn-outline-primary btn-sm" />
 							</form>
 
 							<div class="friends">
-								<h3>Suggestions:</h3>
+                <div class="card">
+                <h3 class="card-title">Suggestions:</h3>
+                
 								<ul class="list-group">
 									<%	users.forEach(function(user){	%>
 									<l1 class="list-group-item"><a href="/addfriend/<%= user.username %>">
-											<%= user.name %>(@
-											<%= user.username %>)</a>
+											<%= user.name %> (@<%= user.username %>)</a>
 											<a class="viewprofile" href="/users/<%= user.username %>">view profile</a></l1>
 									<% })	%>
 									<li></li>
-								</ul>
+                </ul>
+              </div>
 							</div>
 							<%	}	%>
 							<% if (!!locals.searchResults){ %>
-							<form action="/addfriend/search" method="POST">
+							<form action="/search" method="POST">
 								<input type="search" name="friendname" placeholder="search name" />
 								<input type="submit" class="btn btn-outline-primary btn-sm" />
 							</form>
@@ -134,8 +67,7 @@
 								<ul class="list-group">
 									<%	searchResults.forEach(function(user){	%>
 									<l1 class="list-group-item"><a href="/addfriend/<%= user.username %>">
-											<%= user.name %>(@
-											<%= user.username %>)</a></l1>
+											<%= user.name %>  (@<%= user.username %>)</a></l1>
 									<% })	%>
 									<li></li>
 								</ul>
@@ -146,16 +78,17 @@
 							<div id="friendlist">
 								<% if (!!locals.friendlist) { %>
 								<% if (friendlist.length){  %>
-								<h3>Your Friends: </h3>
+                <h3>Your Friends: </h3>
+                <div  class="card">
 								<ul class="list-group">
 									<%	friendlist.forEach(function(friend){	%>
 									<l1 class="list-group-item"><a href="/<%= friend.username %>">
-											<%= friend.name %>(@
-											<%= friend.username %>)</a> 	
+											<%= friend.name %> (@<%= friend.username %>)</a> 	
 											<a class="viewprofile" href="/users/<%= friend.username %>">view profile</a></l1>
 									<% })	%>
 									<li></li>
-								</ul>
+                </ul>
+              </div>
 								<%  }  %>
 								<% if (!friendlist.length){  %>
 								<h3>You do not have any friends currently.</h3><br>
@@ -184,7 +117,8 @@
 		<script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
 		<script src="vendor/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
 		<script src="js/front.js"></script>
-		<script src="js/socket.js"></script>
+    <script src="js/socket.js"></script>
+    <script src="js/notify.js"></script>
 
 		<!-- MDB core JavaScript -->
 		<script type="text/javascript" src="md/js/mdb.min.js"></script>
@@ -195,7 +129,6 @@
 		</script>
 
 </body>
-
 
 
 </html>

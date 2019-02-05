@@ -1,0 +1,102 @@
+<%- include('templates/header') %>
+
+<div class="content-app" id="index">
+  <div class="row" id="messageArea">
+    <div class="col-md-4" id="sidebar">
+      <ul style="list-style-type:square;">
+        <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/chats" role="button">Chats
+            <i class="fa fa-comment ml-2"></i></a></li>
+        <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/friendlist" role="button">View
+            Friend List<i class="fa fa-th-list ml-2"></i></a></li>
+        <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/addfriend" role="button">Add
+            Friend<i class="fa fa-hacker-news ml-2"></i></a></li>
+        <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/notifications" role="button"> notifications
+          <span class="badge badge-primary badge-pill pull-right">2</span></a></li>
+      </ul>
+    </div>
+    <div class="col-md-8">
+      <div class="app-content">
+        <h2>Messages</h2>
+       <div class="card">
+        <ul class="list-group">
+          <%  if (messages.length) { %>
+          <% messages.forEach(function(message){   %>
+          <%  if (message.receiver !== user.username){  %>
+          
+          <a id="recentlink" href="<%= message.receiver %>">
+            <li class="list-group-item">
+              <img class="headimg" src="img/user.svg" alt="img">
+              <b><input type="hidden" class="textvalue" value="<%= message.message.msg  %>"/>
+                <%= message.receiver  %></b><br />
+              <span class="msgbody"><p class="text">
+                <%  if (message.message.type === 'text') { %>
+                <%= message.message.msg  %>
+                <% }  %>
+                </p>
+                <span class="noti-time">
+                  <%=  message.date  %></span></span>
+            </li>
+          </a>
+          <% }  %>
+          <%  if (message.receiver === user.username){  %>
+            
+          <a  id="recentlink" href="<%= message.sender %>">
+            <li class="list-group-item">
+              <img class="headimg" src="img/user.svg" alt="img">
+              <b><input type="hidden" class="textvalue" value="<%= message.message.msg  %>"/>
+                <%= message.sender  %></b><br />
+              <span class="msgbody"><p class="text">
+                <%  if (message.message.type === 'text') { %>
+                <%= message.message.msg  %>
+                <% }  %></p>
+                <span class="noti-time">
+                  <%=  message.date  %></span></span>
+            </li>
+          </a>
+          <% }  %>
+          <%  })  %>
+          <% }  %>
+          <%  if (!messages.length) { %>
+          <li class="list-group-item">No recent chats yet. <a href='/chats'>view online friends</a></li>
+          <% }  %>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <footer>
+    &copy Twoexpress
+  </footer>
+</div>
+
+
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="js/socket.io.js"></script>
+<script src="vendor/popper.js/umd/popper.min.js"> </script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+<script src="vendor/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
+<script src="js/front.js"></script>
+<script src="js/profile.js"></script>
+<script src="js/notify.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="md/js/mdb.min.js"></script>
+<!-- Initializations -->
+<script type="text/javascript">
+  // Animations initialization
+  new WOW().init();
+  const textValues = document.querySelectorAll('.textvalue');
+  const text = document.querySelectorAll('.text');
+  for (var i = 0; i < textValues.length; i++) {
+    if (textValues[i].value.length > 100){
+      text[i].innerHTML = `${textValues[i].value.substring(0, 100)}... more`
+    }
+  }
+</script>
+
+</body>
+
+
+
+</html>

@@ -68,7 +68,15 @@ img{ max-width:100%;}
 }
 #imgavatar{
   border-radius: 50%;
+}
+.headimg{
+  width: 50px;
+  height: 50px;
+}
 
+.msgbody{
+  width:80%;
+  margin-left: 10%;
 }
 
 footer{
@@ -98,10 +106,15 @@ footer{
   font-size: 12px;
   margin: 8px 0 0;
 }
+
+.noti-time{
+  float: right;
+}
+
 .received_withd_msg { width: 65%;}
 .mesgs {
   float: left;
-  padding: 30px 15px 0 25px;
+  
   width: 100%;
   border: 1px solid grey;
 }
@@ -136,6 +149,9 @@ footer{
   min-height: 48px;
   width: 100%;
 }
+#message{
+  width: 100%;
+}
 
 .type_msg {border-top: 1px solid #c4c4c4;position: relative;}
 .msg_send_btn {
@@ -157,7 +173,8 @@ footer{
   overflow-y: scroll;
 }
 
-.friends {
-  height: 400px;
+
+.list-group{
+  height: 480px;
   overflow-y: scroll;
 }

@@ -1,28 +1,31 @@
 {
-  "name": "stackora",
+  "name": "Twoexpress",
   "version": "1.0.0",
-  "description": "chat application",
+  "description": "Instant chat messenger build with JavaScript stack",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "author": "Joseph",
   "license": "ISC",
   "dependencies": {
-    "express":"4.16.4",
-    "express-validator": "5.3.1",
-    "express-session":"1.15.6",
-    "mongoose":"5.4.2",
+    "aws-sdk": "^2.395.0",
+    "bcryptjs": "2.4.3",
     "body-parser": "1.18.3",
-    "passport":"0.4.0",
-    "passport-strategy": "1.0.0",
-    "passport-local":"1.0.0",
-    "bcryptjs":"2.4.3",
     "connect-flash": "0.1.1",
-    "socket.io":"2.2.0",
+    "dotenv": "^6.2.0",
+    "ejs": "2.6.1",
+    "express": "4.16.4",
+    "express-messages": "1.0.1",
+    "express-session": "1.15.6",
+    "express-validator": "5.3.1",
     "mongojs": "2.6.0",
-    "express-messages":"1.0.1",
-    "ejs":"2.6.1",
-    "multer":"1.4.1"
+    "mongoose": "5.4.2",
+    "multer": "^1.4.1",
+    "nodemailer": "^5.1.1",
+    "passport": "0.4.0",
+    "passport-local": "1.0.0",
+    "passport-strategy": "1.0.0",
+    "socket.io": "2.2.0"
   }
 }

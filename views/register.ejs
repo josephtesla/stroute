@@ -1,53 +1,187 @@
-<%- include('templates/header'); %>
+<html>
 
-<div class="content-app">
-	<div class="userpart">
-		<% if (locals.errors) { %>
-		<div class="alert alert-danger">
-			<%  errors.forEach(function(error){ %>
-			<%= error.msg %><br>
-			<%  }) %>
-		</div>
-		<% }  %>
+<head>
+  <style>
+  </style>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Twoexpress </title>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <!-- Font Awesome CSS-->
+  <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+  <!-- Custom icon font-->
+  <link rel="stylesheet" href="css/fontastic.css">
+  <!-- Google fonts - Open Sans-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+  <!-- Fancybox-->
+  <link rel="stylesheet" href="vendor/@fancyapps/fancybox/jquery.fancybox.min.css">
+  <!-- theme stylesheet-->
+  <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+  <!-- Custom stylesheet - for your changes-->
+  <link rel="stylesheet" href="css/custom.css">
+  <!-- Bootstrap core CSS -->
+  <link href="md/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="md/css/mdb.min.css" rel="stylesheet">
+  <!-- Favicon-->
 
-		<center>
-			<!-- Default form register -->
-			<form action="/users/register" method="POST" class="col-md-6 text-center border border-light p-5">
-				<div id="errorplace" class="alert alert-danger"></div>
-				<h6 class="h4 mb-4">Sign Up</h6>
-				<input type="text" required value="<%= (!!locals.name)?name:'' %>" name="name" class="form-control mb-4"
-				 placeholder="Name">
-				<input type="text" required value="<%= (!!locals.username)?username:'' %>" name="username" class="form-control mb-4"
-				 placeholder="enter a username">
-				<input type="email" required value="<%= (!!locals.email)?email:'' %>" name="email" class="form-control mb-4"
-				 placeholder="Email address">
-				<!-- Password -->
-				<input type="password" required value="<%= (!!locals.password)?password:'' %>" name="password" class="form-control"
-				 placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
-				<small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
-				</small>
 
-				<input type="password" required value="<%= (!!locals.password2)?password2:'' %>" name="password2" class="form-control"
-				 placeholder="confirm password" aria-describedby="defaultRegisterFormPhoneHelpBlock">
-				<small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
-					confirm your password
-				</small>
-				Gender:
-				<select	name="gender"	required value="<%= (!!locals.gender)?gender:'' %>"  class="form-control mb-4">
-					<option value="Male">Male</option>
-					<option value="Female">Female</option>
-				</select>
-				<!-- Sign up button -->
-				<button id="signupBtn" class="btn btn-info my-4 btn-block" type="submit">Sign in</button>
-				<p>Already a member?
-					<a href="./login">Login </a>
-				</p>
-				<hr>
-			</form>
-			<!-- Default form register -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900"
+    rel="stylesheet">
+</head>
+<style>
+  #messages ul.error {
+          list-style: none;
+          color: #a94442;
+          background-color:#f2dede;
+          border-color:#ebccd1;
+          padding: 15px;
+          margin-bottom:20px;
+          border: 1px solid transparent;
+          border-radius: 4px;
+        }
+        #messages ul.success {
+          list-style: none;
+          color: #54c922;
+          background-color:#dfeed9;
+          border-color:#d3e5d1;
+          padding: 15px;
+          margin-bottom:20px;
+          border: 1px solid transparent;
+          border-radius: 4px;
+        }
 
-		</center>
-	</div>
-</div>
 
-<%- include('templates/footer'); %>
+        
+        </style>
+
+<body>
+  <header class="header">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
+      <div class="container">
+        <a class="navbar-brand waves-effect" href="index.html">
+          <strong>Twoxpress</strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <!--<span class="navbar-toggler-icon"></span>-->
+          <i class="fa fa-navicon fa-lg"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+
+          </ul>
+          <ul class="navbar-nav nav-flex-icons">
+            <li class="nav-item">
+              <a href="https://github.com/JosephTesla" class="btn btn-outline-white waves-effect waves-light"">
+								<i class="
+                fa fa-github"></i>follow
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/users/register" class="btn btn-outline-white waves-effect waves-light"">
+								<i class=" fa
+                fa-user"></i>
+                <span id="userone">
+                  Signup</span>
+              </a>
+            </li>
+            <li></li>
+            <li id="usertwo" class="nav-item">
+              <a href="/users/login" class="btn btn-outline-white waves-effect waves-light"">
+								<i class=" fa
+                fa-key"></i> Login
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+
+  <div class="container">
+
+    <div class="content-app">
+      <div class="userpart">
+
+
+        <center>
+          <!-- Default form register -->
+          <form action="/users/register" method="POST" class="col-md-6 text-center border border-light p-5">
+            <% if (locals.errors) { %>
+            <div class="alert alert-danger">
+              <%  errors.forEach(function(error){ %>
+              <%= error.msg %><br>
+              <%  }) %>
+            </div>
+            <% }  %>
+            <% if (locals.nameerror) { %>
+            <div class="alert alert-danger">
+              <%= nameerror %>
+            </div>
+            <% }  %>
+            <h6 class="h4 mb-4">Sign Up</h6>
+            <input type="text" required value="<%= (locals.name)?name:'' %>" name="name" class="form-control mb-4"
+              placeholder="Name">
+            <input type="text" required value="<%= (locals.username)?username:'' %>" name="username" class="form-control mb-4"
+              placeholder="enter a username">
+            <input type="email" required value="<%= (locals.email)?email:'' %>" name="email" class="form-control mb-4"
+              placeholder="Email address">
+            <!-- Password -->
+            <input type="password" required value="<%= (locals.password)?password:'' %>" name="password" class="form-control"
+              placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+            <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+            </small>
+
+            <input type="password" required value="<%= (locals.password2)?password2:'' %>" name="password2" class="form-control"
+              placeholder="confirm password" aria-describedby="defaultRegisterFormPhoneHelpBlock">
+            <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
+              confirm your password
+            </small>
+            Gender:
+            <select name="gender" required value="<%= (locals.gender)?gender:'' %>" class="form-control mb-4">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <!-- Sign up button -->
+            <button id="signupBtn" class="btn btn-info my-4 btn-block" type="submit">Sign in</button>
+            <p>Already a member?
+              <a href="./login">Login </a>
+            </p>
+            <hr>
+          </form>
+          <!-- Default form register -->
+
+        </center>
+      </div>
+    </div>
+
+    <footer>
+      &copy Twoxpress
+    </footer>
+    </div>
+    
+    
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/socket.io.js"></script>
+        <script src="vendor/popper.js/umd/popper.min.js"> </script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+        <script src="vendor/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
+        <script src="js/front.js"></script>
+    
+    
+       <!-- MDB core JavaScript -->
+       <script type="text/javascript" src="md/js/mdb.min.js"></script>
+       <!-- Initializations -->
+       <script type="text/javascript">
+          // Animations initialization
+          new WOW().init();
+       </script>
+    
+    </body>
+    
+    
+    
+    </html>

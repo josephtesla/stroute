@@ -39,10 +39,9 @@ $(function () {
 			const html = `<a href='http://${link.value}' target='_blank'>${$linktext}</a>`;
 			$message.innerHTML += ' ' + html;
 		}
-	})
-
+  })
+  
 	$('#btn').click(function () {
-		console.log($message.value)
 		//Emit 'send message' event after sending a message
 		const messageBody = {
 			receiver: sendTo,
@@ -72,8 +71,9 @@ $(function () {
             <div class="received_msg">
                <div class="received_withd_msg">
                   <p>${data.msg}</p>
-                  <span class="time_date"><a href="/users/${data.user}">${data.user.toUpperCase()}</a>  | 
-                  ${new Date().toLocaleString()} </span>
+                  <span class="time_date"><a style="color:#f2dede;"	href="/users/${data.user}">${data.user.toUpperCase()}</a> |
+                  ${new Date().toLocaleString()}</span>
+                
                </div>
             </div>
          </div>`
