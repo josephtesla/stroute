@@ -10,7 +10,7 @@ const connect = (nodeEnv) => {
     })
   }
   else if(nodeEnv === 'production'){
-    mongoose.connect(process.env.DATABASE_URI, {
+    mongoose.connect('mongodb://josephtesla:tesla98@ds151614.mlab.com:51614/passportapp', {
       useNewUrlParser: true
     })
     .then(resp => {
