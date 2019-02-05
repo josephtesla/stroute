@@ -1,5 +1,4 @@
 const nodemailer = require('nodemailer')
-const xoauth2 = require('xoauth2');
 
 const credentials = {
   user: 'godwinjoseph693@gmail.com',
