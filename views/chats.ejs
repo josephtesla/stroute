@@ -1,5 +1,4 @@
 <%- include('templates/header') %>
-	<div class="container">
 
 		<div class="content-app">
 			<div class="row" id="messageArea">
@@ -7,8 +6,8 @@
 					<div class="well">
            
             <div class="card">
-              <ul id="users">
-              </ul>
+              <div class="card-body"  id="users">
+              </div>
             </div>
 					</div>
 				</div>
@@ -16,7 +15,8 @@
 				
 				</div>
 			</div>
-		</div>
+    </div>
+    </div>
 		<div class="content-app">
 			<div class="row" id="messageArea">
 				<div class="col-md-12" id="online">
@@ -40,7 +40,7 @@
 								<div class="sent_msg">
 										<span class="imgwhite ">
 										<%  if (chat.message.type === "image") {	%>
-										<img class="bg-white" style="border:3px solid white"	src="http://localhost:5000/<%= chat.message.msg %>"	 width="100%"/>
+										<img class="bg-white" style="border:3px solid white"	src="<%= chat.message.msg %>"	 width="100%"/>
 										<%	}   %>
 
 										<%  if (chat.message.type === "audio") {	%>
@@ -88,7 +88,7 @@
 									<div class="received_withd_msg">
                     
 												<%  if (chat.message.type === "image") {	%>
-												<span class="imgwhite"><img style="border:3px solid white;"	src="http://localhost:5000/<%= chat.message.msg %>" /></span>
+												<span class="imgwhite"><img style="border:3px solid white;"	src="<%= chat.message.msg %>" /></span>
 												<%	}   %></span>
 
 												<%  if (chat.message.type === "audio") {	%>
@@ -164,10 +164,10 @@
 								<input type="button" id="linkbtn" value="add link" />
 							</div>
 							<a href="" class="btn btn-outline-primary btn-sm"	id="imgLink">send photo</a>
-							<form action="/image/<%= receiver  %>" enctype="multipart/form-data" method="POST" id="img-form">
-								<input type="file"	required name="image" placeholder="upload" />supports Jpg/png format
-								<input type="submit"  value="send" />
-							</form>
+							<div id="img-form">
+								<input type="file" id="image-upload" required name="image" placeholder="upload" />supports Jpg/png format
+								<button id="btnImageSend">send</button>
+              </div>
 							<a	class="btn btn-outline-primary btn-sm" href="" id="mpLink">send audio/video</a>
 							<form action="/mpsome/<%= receiver  %>" enctype="multipart/form-data" method="POST" id="mp-form">
 								<input type="file" name="mpsome"	required placeholder="upload only mp3/mp4/" />
@@ -187,14 +187,16 @@
 
 
 		<footer>
-			&copy	Twoxpress
+			&copy	expressGo
 		</footer>
 
-	</div>
+
 
 
 	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="js/socket.io.js"></script>
+  <script src="js/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+  <script src="js/upload.js"></script>
 	<script src="vendor/popper.js/umd/popper.min.js"> </script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="vendor/jquery.cookie/jquery.cookie.js"> </script>

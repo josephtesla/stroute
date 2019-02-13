@@ -15,9 +15,15 @@ const connect = require('./config');
 
 connect(process.env.NODE_ENV)
 
+app.post('/api/img', (req, res) => {
+  console.log(req.file)
+  console.log(req.body.image);
+})
+
 const Message = require('./Models/Message');
 const User = require('./Models/User')
 const Notification = require('./Models/Notification')
+const Group = require('./Models/Group')
 app.use(express.static(path.join(__dirname, 'public')));
 
 const socketusers = [];
@@ -137,15 +143,55 @@ io.sockets.on('connection', function (socket) {
 			receiver: data.receiver,
       date: new Date().toLocaleString(),
       datesecs: Date.now(),
-      homeimg:""
+      msgtype:"private"
 		}
 		Message.create(newMessage)
 			.then(result => {
-				console.log('sent');
+				console.log(result);
 			}).catch((err) => {
 				console.log(err.message)
 			})
-	})
+  })
+  
+  socket.on('group message', function(data){
+    const groupid = data.receiver;
+    Group.findById(groupid).populate('users')
+    .then(group => {
+      let groupusers = [];
+      group.users.forEach(user => {
+        groupusers.push(user.username);
+      });
+
+      io.sockets.emit('newgroup message', {
+        msg: data.msg,
+        user: socket.username,
+        receiver: data.receiver,
+        groupusers: groupusers
+      })
+    Message.create({
+      sillyId: `${socket.username} ${data.receiver}`,
+			message: {
+					msg: data.msg,
+					type:"text"
+				},
+			sender: socket.username,
+			receiver: data.receiver,
+      date: new Date().toLocaleString(),
+      datesecs: Date.now(),
+      msgtype:"group",
+      groupname: group.name,
+      groupid: group._id
+    }).then(message => {
+      Group.findById(groupid)
+      .then(group => {
+        group.messages.push(message)
+        group.save();
+      })
+    })
+
+    })
+
+  })
 
 
 	//new user

@@ -4,7 +4,7 @@
   <style>
   </style>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Twoexpress</title>
+  <title>expressGo</title>
   <script src="vendor/jquery/jquery.min.js"></script>
   <!-- Font Awesome CSS-->
   <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
@@ -34,7 +34,7 @@
     <nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
       <div class="container">
         <a class="navbar-brand waves-effect" href="/">
-          <strong>Twoexpress</strong>
+          <strong>expressGo</strong>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,12 +46,7 @@
 
           </ul>
           <ul class="navbar-nav nav-flex-icons">
-            <li class="nav-item">
-              <a href="https://github.com/JosephTesla" class="btn btn-outline-white waves-effect waves-light"">
-								<i class="
-                fa fa-github"></i>follow
-              </a>
-            </li>
+            
             <li class="nav-item">
               <a href="/users/<%- user.username %>" class="btn btn-outline-white waves-effect waves-light"">
 								<i class="
@@ -62,9 +57,15 @@
             </li>
             <li></li>
             <li id="usertwo" class="nav-item">
-              <a href="/logout" class="btn btn-outline-white waves-effect waves-light"">
+              <a href="/users/logout" class="btn btn-outline-white waves-effect waves-light"">
 								<i class=" fa fa-key"></i>
                 Logout
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="https://github.com/JosephTesla" class="btn btn-outline-white waves-effect waves-light"">
+								<i class="
+                fa fa-github"></i>follow
               </a>
             </li>
           </ul>
@@ -78,28 +79,30 @@
       <div class="row" id="messageArea">
         <div class="col-md-4" id="sidebar">
           <ul style="list-style-type:square;">
-            <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/chats" role="button">Chats
+            <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/chats" role="button">Chats
                 <i class="fa fa-comment ml-2"></i></a></li>
-            <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/friendlist" role="button">View
-                Friend List<i class="fa fa-th-list ml-2"></i></a></li>
-            <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/addfriend" role="button">Add
-                Friend<i class="fa fa-hacker-news ml-2"></i></a></li>
-            <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/notifications" role="button">notifications
-              <span class="badge badge-primary badge-pill pull-right">2</span></a></li>
+
+            <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/friendlist" role="button">friendlist
+              <span class="badge badge-primary badge-pill pull-right"><%- user.requests %></span></a></li>
+            <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/notifications" role="button">notifications
+                <span class="badge badge-primary badge-pill pull-right"><%- (user.notifications)?user.notifications: "" %></span></a></li>
+                <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/groups" role="button">Groups  
+                  <span class="badge badge-primary badge-pill pull-right">1</span></a></li>
           </ul>
         </div>
         <div class="col-md-8">
           <div class="app-content">
             <%- messages();  %>
             <%  if (username !== user.username){    %>
-              <div class="card">
-                <div class="card-body">
-                  <h3>
-                    <%= name %> (@<%= username %>)</h3>
-                </div>
-              </div><br/>
-              <center> 
-            <img id="imgavatar" style="border:1px solid grey" width="250px" height="250px" src="
+            <div class="card">
+              <div class="card-body">
+                <h3>
+                  <%= name %> (@
+                  <%= username %>)</h3>
+              </div>
+            </div><br />
+            <center>
+              <img id="imgavatarr" style="border:1px solid grey" width="250px" height="250px" src="
                   <% if (typeof image === 'undefined' || image == '')   {  %>
                      img/user.svg
                    <%   } %>
@@ -108,8 +111,12 @@
                    <%   } %> 
                   
                   "
-              alt="<%= name %>">
-            <br><br>
+                alt="<%= name %>"><br>
+              <a class="btn btn-outline-primary btn-sm" href="/chatphase?type=private&user=<%= username  %>">Open chats</a>
+              <input type="file" class="hide" id="profilepics" name="profilepics" />
+              <a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/friendlist?user=<%= username  %>" role="button">View
+                Friend List<i class="fa fa-th-list ml-2"></i></a>
+              <br><br>
             </center>
             <b>Status:
               <%= status %></b>
@@ -138,13 +145,14 @@
               <div class="card">
                 <div class="card-body">
                   <h3>
-                    <%= name %> (@<%= username %>)</h3>
+                    <%= name %> (@
+                    <%= username %>)</h3>
                 </div>
               </div>
               <br />
               <center>
 
-                <img id="imgavatar" style="border:1px solid grey" width="250px" height="250px" src="
+                <img id="imgavatarr" style="border:1px solid grey" width="250px" height="250px" src="
                         <% if (typeof image === 'undefined' || image == '')   {  %>
                            img/user.svg
                          <%   } %>
@@ -154,8 +162,9 @@
                      "
                   alt="<%= name %>"><br>
                 <a class="btn btn-outline-primary btn-sm" href="" id="picsbtn">Change profile pics</a>
-                <a class="btn btn-outline-primary btn-sm" target="_blank" href="/<%= image  %>">View full size</a>
                 <input type="file" class="hide" id="profilepics" name="profilepics" />
+                <a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/friendlist?user=<%= username %>" role="button">View
+                  Friend List<i class="fa fa-th-list ml-2"></i></a>
                 <br><br>
               </center>
               <b>Status:
@@ -202,7 +211,7 @@
 
 
     <footer>
-      &copy Twoexpress
+      &copy expressGo
     </footer>
   </div>
 

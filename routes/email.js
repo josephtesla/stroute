@@ -1,19 +1,20 @@
 const nodemailer = require('nodemailer')
 
 const credentials = {
-  user: 'godwinjoseph693@gmail.com',
-  pass: process.env.EMAIL_PASSWORD
+  user: 'twoexpress247@gmail.com',
+  pass: process.env.G_PASS
 }
 
 const sendEmailMessage = (to, subject, body) => {
+  console.log(credentials);
   const mailTransport = nodemailer.createTransport({
-    service:'gmail',
+    service:'Gmail',
     auth: {
       user: credentials.user,
       pass: credentials.pass
     }
   });
-  const from = `${credentials.user}`;
+  const from = credentials.user;
   mailTransport.sendMail({
     from: from,
     to: to,
@@ -27,5 +28,6 @@ const sendEmailMessage = (to, subject, body) => {
     }
   })
 }
+
 
 module.exports = sendEmailMessage;

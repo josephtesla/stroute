@@ -23,7 +23,6 @@ $(function () {
             html += `<li class="list-group-item"><a href="/${data[i]}"> ${data[i]} </a></li>`;
          }
       }
-      $users.html(html);
    })
 
 })

@@ -41,6 +41,10 @@
   margin-top: 70px; 
 }
 
+#addmember{
+  display: none;
+}
+
 #link-form{
   display: none;
 }

@@ -1,0 +1,184 @@
+<%- include('templates/header') %>
+
+<div class="content-app" id="index">
+  <div class="row" id="messageArea">
+    <div class="col-md-4" id="sidebar">
+      <ul style="list-style-type:square;">
+        <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/chats" role="button">Chats
+            <i class="fa fa-comment ml-2"></i></a></li>
+        <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/friendlist" role="button">Friends
+          <span class="badge badge-primary badge-pill pull-right"><%-(user.requests)?user.requests: "" %></span></a></li>
+        <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/notifications" role="button">notifications
+            <span class="badge badge-primary badge-pill pull-right"><%- (user.notifications)?user.notifications: "" %></span></a></li>
+        <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/groups" role="button">Groups
+            <span class="badge badge-primary badge-pill pull-right">1</span></a></li>
+      </ul>
+    </div>
+    <div class="col-md-8">
+      <div class="app-content">
+        <a class="btn btn-outline-primary waves-effect waves-light btn-sm" id="newg" role="button">New Group</a>
+        <%- messages(); %>
+        <div id='groupbody'>
+          <div class="membersarea">
+            <% if (locals.members) { %>
+            <h2>
+              <%= heading  %>
+            </h2>
+            <div class="card">
+              <ul class="list-group">
+                <% members.forEach(function(member){   %>
+                <a href="/users/<%= member.username  %>"><li class="list-group-item">
+                  <%= member.name  %> (@<%= member.username  %>)
+                  <% if (admin === member.username) { %>
+                    <a class="viewprofile">Admin</a>
+                    <% } %>  
+                </li></a>
+                  <% }) %>
+                </div>
+               <% } %>
+              </div>
+          <div class="settingsarea">
+            <% if (locals.adminsetting) { %>
+            <h2><%= heading  %></h2>
+            <a class="btn btn-outline-primary waves-effect waves-light btn-sm" id="admem" role="button">add member</a>
+            <a class="btn btn-outline-primary waves-effect waves-light btn-sm" id="vmem" role="button">view members</a>
+            <div class="card" id="groupmembers">
+              <h4>Group members</h4>
+              <ul class="list-group">
+                <% groupmembers.forEach(function(member){   %>
+                <li class="list-group-item">
+                  <a href="/users/<%= member.username  %>">
+                    <%= member.name  %> (@<%= member.username  %>)</a>
+                    <% if (admin !== member.username) { %>
+                      <a class="viewprofile" href="/deleteuser?groupid=<%= groupid %>&userid=<%= member._id %>">remove user</a></li>
+                      <% } %>
+                      <% if (admin === member.username) { %>
+                      <a class="viewprofile">Admin</a></li>
+                      <% } %>
+                        
+                <% }) %></ul>
+            </div>
+            <div class="card" id="addmember">
+              <h4>Add new member</h4>
+              <div class="card-body">
+                <form method="POST" action="/groups/addmember">
+                  <input type="hidden" name="groupid" value="<%= groupid %>"/>
+                  <input type="text" value="<%= (!!locals.uname)?uname:'' %>" name="uname" class="form-control mb-4"
+                    placeholder="Enter correct username" required>
+                  <button id="" class="btn btn-info my-4" type="submit">add member</button>
+                </form>
+              </div>
+            </div>
+            <% } %>
+          </div>
+          <% if (locals.groups) { %>
+          <h2>
+            <%= heading  %>
+          </h2>
+          <a href="/groups?admin=43h6w89eywut7wr7tw88w" id='admin'>view groups you created!</a>
+          <div class="card">
+            <ul class="list-group">
+              <%  if (groups.length) { %>
+              <% groups.forEach(function(group){   %>
+              <a id="recentlink" href="/chatphase?type=group&user=<%= group._id %>">
+                <li class="list-group-item">
+                  <b>
+                    <%= group.name  %></b><br />
+                  <span class="msgbody">
+                    <span class="noti-time">
+                      created:
+                      <%=  group.date  %> (
+                      <%= group.members %> members)</span>
+                  </span>
+                </li>
+              </a>
+              <%  })  %>
+              <% }  %>
+              <%  if (!groups.length) { %>
+              <div class="card">
+                <div class="card-body">
+                  <li class="list-group-item">No Group chats. <a id="newg2" href='/chats'>Create new</a></li>
+                </div>
+              </div>
+              <% }  %>
+            </ul>
+          </div>
+              <% } %>
+        </div>
+        <div class="newgroup">
+          <h1>New Group</h1>
+
+          <div class="card">
+            <div class="card-body">
+              <form method="POST" action="/groups/new">
+                <input type="text" value="<%= (!!locals.gname)?gname:'' %>" name="gname" class="form-control mb-4"
+                  placeholder="enter name of group" required>
+                <input type="text" value="<%= (!!locals.gdesc)?gdesc:'' %>" name="gdesc" class="form-control mb-4"
+                  placeholder="short description of group" required>
+                <button id="" class="btn btn-info btn-block my-4" type="submit">create</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  &copy expressGo
+</footer>
+</div>
+
+
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="js/socket.io.js"></script>
+<script src="vendor/popper.js/umd/popper.min.js"> </script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+<script src="vendor/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
+<script src="js/front.js"></script>
+<script src="js/edit.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="md/js/mdb.min.js"></script>
+<!-- Initializations -->
+<script type="text/javascript">
+  // Animations initialization
+  new WOW().init();
+  const textValues = document.querySelectorAll('.textvalue');
+  const text = document.querySelectorAll('.text');
+  for (var i = 0; i < textValues.length; i++) {
+    if (textValues[i].value.length > 100) {
+      text[i].innerHTML = `${textValues[i].value.substring(0, 100)}... more`
+    }
+  }
+  $('#admem').click(function (e) {
+    e.preventDefault()
+    $('#groupmembers').hide();
+    $('#addmember').fadeIn(100)
+  })
+  $('#vmem').click(function (e) {
+    e.preventDefault()
+    $('#addmember').hide();
+    $('#groupmembers').fadeIn(100)
+  })
+  $('#newg').click(function (e) {
+    e.preventDefault()
+    $('#groupbody').toggle();
+    $('.newgroup').fadeToggle(100)
+  })
+  $('#newg2').click(function (e) {
+    e.preventDefault()
+    $('#groupbody').toggle();
+    $('.newgroup').fadeToggle(100)
+  })
+  if (window.location.search) {
+    $('#admin').html('view groups you are in')
+    document.getElementById('admin').setAttribute('href', '/groups')
+  }
+</script>
+
+</body>
+
+
+
+</html>

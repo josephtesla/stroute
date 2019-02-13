@@ -12,6 +12,15 @@ const userSchema = new mongoose.Schema({
    status: {
      type:String,
      default:""
+   },
+   groups:Array,
+   notifications: {
+    type:Number,
+    default: 0
+   },
+   requests: {
+    type:Number,
+    default: 0
    }
 
 })

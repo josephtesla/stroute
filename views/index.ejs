@@ -1,132 +1,169 @@
-
 <%- include('templates/header') %>
-		<div class="content-app" id="index">
-			<div class="row" id="messageArea">
-				<div class="col-md-4" id="sidebar">
-					<ul style="list-style-type:square;">
-						<li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/chats" role="button">Chats <i class="fa fa-comment ml-2"></i></a></li>
-						<li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/friendlist" role="button">View
-								Friend List<i class="fa fa-th-list ml-2"></i></a></li>
-						<li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/addfriend" role="button">Add Friend<i
-								 class="fa fa-hacker-news ml-2"></i></a></li>
-                 <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/notifications" role="button">Notifications 
-                  <span class="badge badge-primary badge-pill pull-right">2</span></a></li>
-					</ul>
-				</div>
-				<div class="col-md-8">
-					<div class="app-content">
-						<div id="welcomepage">
-							<h2>Chat With Friends, meet new people</h2><br>
-							<a class="btn btn-outline-primary waves-effect waves-light" href="/addfriend" role="button">Find friends<i class="fa fa-group ml-2"></i></a>
-						</div>
-						<div id="onlinechats">
-              <div class="card"> 
-							<h3 class="card-title">Online Friends</h3>
-							<% if (!!locals.onlineFriends){ %>
-							<ul class="list-group">
-								<%	onlineFriends.forEach(function(friend){	%>
-								<l1 class="list-group-item"><a href="/<%= friend %>">@ <%= friend %></a>
-								</l1>
-								<% })	%>
-								<li></li>
-							</ul>
-
+<div class="content-app" id="index">
+  <div class="row" id="messageArea">
+    <div class="col-md-4" id="sidebar">
+      <ul style="list-style-type:square;">
+        <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/chats" role="button">Chats
+            <i class="fa fa-comment ml-2"></i></a></li>
+        <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/friendlist" role="button">Friends
+          <span class="badge badge-primary badge-pill pull-right"><%-(user.requests)?user.requests: "" %></span></a></li>
+        <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/notifications" role="button">notifications
+            <span class="badge badge-primary badge-pill pull-right"><%- (user.notifications)?user.notifications: "" %></span></a></li>
+            <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/groups" role="button">Groups  
+              <span class="badge badge-primary badge-pill pull-right">1</span></a></li>
+      </ul>
+    </div>
+    <div class="col-md-8">
+      <div class="app-content">
+        <div id="welcomepage">
+          <h2>Chat With Friends, meet new people</h2><br>
+          <a class="btn btn-outline-primary waves-effect waves-light" href="/addfriend" role="button">Find friends<i
+              class="fa fa-group ml-2"></i></a>
+        </div>
+        <div id="onlinechats">
+          <div class="card">
+            <h3 class="card-title">Online Friends</h3>
+            <% if (!!locals.onlineFriends){ %>
+            
+                <% if (onlineFriends.length){ %>
+                  <ul class="list-group">
+              <%	onlineFriends.forEach(function(friend){	%>
+              <l1 class="list-group-item"><a href="/chatphase?type=private&user=<%= friend %>">@<%= friend %></a></l1>
+              <% })	%>
+            </ul>
               <%	}	%>
+              <% if (!onlineFriends.length){ %>
+                <div  class="card-body">
+                  <p>Looks like no friend is Online</p>
+                  you can <a  href="/friendlist">send a message to a friend</a>. they will see it when they come online
+                </div>
+                <%	}	%>
+            <%	}	%>
+          </div>
+        </div>
+        <div id="findpage">
+          <%- messages();  %>
+          <% if (!!locals.users){ %>
+          <h3>Find Friends</h3>
+          <form action="/search" method="POST">
+            <input type="search" name="friendname" placeholder="search name" />
+            <input type="submit" value="check" class="btn btn-outline-primary btn-sm" />
+          </form>
+
+          <div class="friends">
+            <div class="card">
+              <h3 class="card-title">Suggestions:</h3>
+
+              <ul class="list-group">
+                <%	users.forEach(function(user){	%>
+                <l1 class="list-group-item"><a href="/users/<%= user.username %>">
+                    <%= user.name %> (@
+                    <%= user.username %>)</a>
+                  <a class="viewprofile" href="/addfriend/<%= user.username %>">Add friend</a></l1>
+                <% })	%>
+                <li></li>
+              </ul>
             </div>
-						</div>
-						<div id="findpage">
-							<%- messages();  %>
-							<% if (!!locals.users){ %>
-							<h3>Find Friends</h3>
-							<form action="/search" method="POST">
-								<input type="search" name="friendname" placeholder="search name" />
-								<input type="submit" value="check" class="btn btn-outline-primary btn-sm" />
-							</form>
+          </div>
+          <%	}	%>
+          <% if (!!locals.searchResults){ %>
+          <form action="/search" method="POST">
+            <input type="search" name="friendname" placeholder="search name" />
+            <input type="submit" class="btn btn-outline-primary btn-sm" />
+          </form>
+          <div class="friends">
+            <ul class="list-group">
+              <%	searchResults.forEach(function(user){	%>
+              <l1 class="list-group-item"><a href="/addfriend/<%= user.username %>">
+                  <%= user.name %> (@
+                  <%= user.username %>)</a></l1>
+              <% })	%>
+              <li></li>
+            </ul>
 
-							<div class="friends">
-                <div class="card">
-                <h3 class="card-title">Suggestions:</h3>
-                
-								<ul class="list-group">
-									<%	users.forEach(function(user){	%>
-									<l1 class="list-group-item"><a href="/addfriend/<%= user.username %>">
-											<%= user.name %> (@<%= user.username %>)</a>
-											<a class="viewprofile" href="/users/<%= user.username %>">view profile</a></l1>
-									<% })	%>
-									<li></li>
+            <%	}	%>
+
+          </div>
+          <div id="friendlist">
+              <a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/requests" role="button">see friend requests
+                <span class="badge badge-primary badge-pill pull-right"><%- user.requests %></span></a>
+            <% if (!!locals.friendlist) { %>
+            <% if (friendlist.length){  %>
+             <a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/addfriend" role="button">Find friends<i
+              class="fa fa-group ml-2"></i></a>
+                <h3><%= cooluser %>'s friends</h3>
+            <div class="card">
+              <ul class="list-group">
+                <%	friendlist.forEach(function(friend){	%>
+                <l1 class="list-group-item"><a href="/chatphase?type=private&user=<%= friend.username %>">
+                    <%= friend.name %> (@<%= friend.username %>)</a>
+                  <a class="viewprofile" href="/users/<%= friend.username %>">view profile</a></l1>
+                <% })	%>
+                <li></li>
+              </ul>
+            </div>
+            <%  }  %>
+            <% if (!friendlist.length){  %>
+            <h3>You do not have any friends currently.</h3><br>
+            <a class="btn btn-outline-primary waves-effect waves-light" href="/addfriend" role="button">Find friends<i
+                class="fa fa-group ml-2"></i></a>
+
+            <%  }  %>
+            <%  }  %>
+            <% if (!!locals.requests) { %>
+              <% if (requests.length){  %>
+               <a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/addfriend" role="button">Find friends<i
+                class="fa fa-group ml-2"></i></a>
+                  <h3>friend requests: </h3>
+              <div class="card">
+                <ul class="list-group">
+                  <%	requests.forEach(function(request){	%>
+                  <l1 class="list-group-item"><a href="users/<%= request.sender %>">
+                       (@<%= request.sender %>)</a>
+                    <span class="viewprofile"><a  href="/request/accept/<%= request.sender %>">accept</a>
+                    <a  href="/request/reject/<%= request.sender %>">reject</a></span></l1>
+                  <% })	%>
+                  <li></li>
                 </ul>
               </div>
-							</div>
-							<%	}	%>
-							<% if (!!locals.searchResults){ %>
-							<form action="/search" method="POST">
-								<input type="search" name="friendname" placeholder="search name" />
-								<input type="submit" class="btn btn-outline-primary btn-sm" />
-							</form>
-							<div class="friends">
-								<ul class="list-group">
-									<%	searchResults.forEach(function(user){	%>
-									<l1 class="list-group-item"><a href="/addfriend/<%= user.username %>">
-											<%= user.name %>  (@<%= user.username %>)</a></l1>
-									<% })	%>
-									<li></li>
-								</ul>
-
-								<%	}	%>
-
-							</div>
-							<div id="friendlist">
-								<% if (!!locals.friendlist) { %>
-								<% if (friendlist.length){  %>
-                <h3>Your Friends: </h3>
-                <div  class="card">
-								<ul class="list-group">
-									<%	friendlist.forEach(function(friend){	%>
-									<l1 class="list-group-item"><a href="/<%= friend.username %>">
-											<%= friend.name %> (@<%= friend.username %>)</a> 	
-											<a class="viewprofile" href="/users/<%= friend.username %>">view profile</a></l1>
-									<% })	%>
-									<li></li>
-                </ul>
-              </div>
-								<%  }  %>
-								<% if (!friendlist.length){  %>
-								<h3>You do not have any friends currently.</h3><br>
-								<a class="btn btn-outline-primary waves-effect waves-light" href="/addfriend" role="button">Find friends<i
-									 class="fa fa-group ml-2"></i></a>
-
-								<%  }  %>
-								<%  }  %>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+              <%  }  %>
+              <% if (!requests.length){  %>
+              <h3>No friend requests.</h3><br>
+              <a class="btn btn-outline-primary waves-effect waves-light" href="/addfriend" role="button">Find friends<i
+                  class="fa fa-group ml-2"></i></a>
+  
+              <%  }  %>
+              <%  }  %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
-			<footer>
-				&copy Twoexpress
-			</footer>
-		</div>
+  <footer>
+    &copy expressGo
+  </footer>
+</div>
 
 
-		<script src="vendor/jquery/jquery.min.js"></script>
-		<script src="js/socket.io.js"></script>
-		<script src="vendor/popper.js/umd/popper.min.js"> </script>
-		<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-		<script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
-		<script src="vendor/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
-		<script src="js/front.js"></script>
-    <script src="js/socket.js"></script>
-    <script src="js/notify.js"></script>
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="js/socket.io.js"></script>
+<script src="vendor/popper.js/umd/popper.min.js"> </script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+<script src="vendor/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
+<script src="js/front.js"></script>
+<script src="js/socket.js"></script>
+<script src="js/notify.js"></script>
 
-		<!-- MDB core JavaScript -->
-		<script type="text/javascript" src="md/js/mdb.min.js"></script>
-		<!-- Initializations -->
-		<script type="text/javascript">
-			// Animations initialization
-			new WOW().init();
-		</script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="md/js/mdb.min.js"></script>
+<!-- Initializations -->
+<script type="text/javascript">
+  // Animations initialization
+  new WOW().init();
+</script>
 
 </body>
 

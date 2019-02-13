@@ -13,6 +13,9 @@ img{ max-width:100%;}
 }
 .top_spac{ margin: 20px 0 0;}
 
+.newgroup{
+  display: none;
+}
 
 .recent_heading {float: left; width:40%;}
 .srch_bar {
@@ -68,10 +71,14 @@ img{ max-width:100%;}
 }
 #imgavatar{
   border-radius: 50%;
+  width: 50px;
+}
+#imgavatarr {
+  border-radius: 50%;
 }
 .headimg{
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 }
 
 .msgbody{
@@ -87,14 +94,14 @@ footer{
 
 .received_msg {
   display: inline-block;
-  padding: 0 0 0 10px;
   vertical-align: top;
   width: 92%;
+  margin: 4px 0 4px;
  }
  .received_withd_msg p {
-  background: #ebebeb none repeat scroll 0 0;
-  border-radius: 3px;
-  color: #646464;
+  background: #ececec none repeat scroll 0 0;
+  border-radius: 21px;
+  color: #2c2c2c;
   font-size: 14px;
   margin: 0;
   padding: 5px 10px 5px 12px;
@@ -104,10 +111,11 @@ footer{
   color: #f1eeee;
   display: block;
   font-size: 12px;
-  margin: 8px 0 0;
+  margin: 0px 0 5px;
 }
 
 .noti-time{
+  font-size: 11px;
   float: right;
 }
 
@@ -121,7 +129,7 @@ footer{
 
  .sent_msg p {
   background: #05728f none repeat scroll 0 0;
-  border-radius: 3px;
+  border-radius: 21px;
   font-size: 14px;
   margin: 0; color:#fff;
   padding: 5px 10px 5px 12px;
@@ -151,6 +159,10 @@ footer{
 }
 #message{
   width: 100%;
+}
+
+.text{
+  margin-bottom: 0 !important;
 }
 
 .type_msg {border-top: 1px solid #c4c4c4;position: relative;}

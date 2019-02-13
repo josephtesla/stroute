@@ -4,7 +4,7 @@
   <style>
   </style>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Twoexpress </title>
+  <title>expressGo </title>
   <script src="vendor/jquery/jquery.min.js"></script>
   <!-- Font Awesome CSS-->
   <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
@@ -59,7 +59,7 @@
     <nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
       <div class="container">
         <a class="navbar-brand waves-effect" href="/">
-          <strong>Twoxpress</strong>
+          <strong>expressGo</strong>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,26 +106,74 @@
       <div class="userpart">
 
         <center>
-          <form id="formLogin" action="/users/resetpassword" method='POST' class="col-md-6	text-center border border-light p-5">
-            <%- messages();  %>
-            <% if (locals.errormsg) { %>
-              <div class="alert alert-danger">
-                <%= errormsg %>
-              </div>
+          <div class="col-md-6" action="/users/resetpassword" method='POST'>  
+              <div class="card">
+                  <h5 class="card-header white-text text-center " style="background:rgb(44, 42, 42) !important">
+                    <strong>Password reset</strong>
+                  </h5>
+                
+                  <!--Card content-->
+                  <div class="card-body px-lg-5 pt-0">
+                <% if (locals.passwordsent) { %>
+                    <h5>Link sent!</h5>
+                    <p>We've sent the password reset confirmation link to your email address at 
+                      <%= email %>. follow the link in your email to reset your password.
+                    </p>
+                <% }  %>
+                <% if (locals.authTrue) { %>
+                  <form action="/users/reset/final" method='POST' class="text-center" style="color: #757575;">
+                    <%- messages();  %>
+                    <% if (locals.errormsg) { %>
+                      <div class="alert alert-danger">
+                        <%= errormsg %>
+                      </div>
+                      <% }  %>
+                    <input type="hidden"  name="userid" value="<%= userid %>" />
+                    <div class="md-form">
+                      <input type="password" value="<%= (!!locals.password)?password:'' %>" name="password" id="materialLoginFormPassword" class="form-control" required>
+                      <label for="materialLoginFormPassword">New password</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="password" value="<%= (!!locals.cpassword)?cpassword:'' %>" name="cpassword" id="materialLoginFormPassword" class="form-control"  required>
+                        <label for="materialLoginFormPassword">Confirm password</label>
+                      </div>
+                    <!-- button -->
+                    <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Get link</button>
+                  </form>
               <% }  %>
-            <div id="errorplace" class="alert alert-danger"></div>
-            <h6 class="h4 mb-4">Reset your password...</h6>
-            <input type="text" value="<%= (!!locals.username)?username:'' %>" name="username" class="form-control mb-4"
-              placeholder="enter username" required>
-            <input type="email" value="<%= (!!locals.email)?email:'' %>" name="email" class="form-control mb-4"
-              placeholder="enter email address" required>
-            <input type="password" value="<%= (!!locals.password)?password:'' %>" name="password" class="form-control mb-4"
-              placeholder="new password"  required>
-              <input type="password" value="<%= (!!locals.cpassword)?cpassword:'' %>" name="cpassword" class="form-control mb-4"
-              placeholder="confirm new password">
-            <button id="loginBtn" class="btn btn-info btn-block my-4" type="submit">reset</button>
+              <% if (locals.emailpage) { %>
+                  <!-- Form -->
+                  <form   action="/users/resetpassword" method='POST' class="text-center" style="color: #757575;">
+                    <%- messages();  %>
+                    <% if (locals.errormsg) { %>
+                      <div class="alert alert-danger">
+                        <%= errormsg %>
+                      </div>
+                      <% }  %>
+                    <!-- Email -->
+                    <div class="md-form">
+                      <input type="email" value="<%= (!!locals.email)?email:'' %>" name="email" id="materialLoginFormEmail" class="form-control">
+                      <label for="materialLoginFormEmail">E-mail</label>
+                      <small id="materialRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+                          Pls enter your email address. You will receive a message through your email containing the link
+                          to reset yout password..
+                        </small>
+                    </div>
+              
+                    <!-- button -->
+                    <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Get link</button>
+            
+              
+                  </form>
+                  <!-- Form -->
+                <% }  %>
+                    
+                  </div>
+                
+                </div>
 
-          </form>
+
+          </div>
 
         </center>
       </div>
@@ -133,7 +181,7 @@
     </div>
 
     <footer>
-      &copy Twoxpress
+      &copy expressGo
     </footer>
   </div>
 

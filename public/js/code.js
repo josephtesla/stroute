@@ -1,7 +1,14 @@
 $(function () {
+  var sound = new Howl({
+    src: ['fb.mp3'],
+    volume: 0.4
+  })
+
 	//takes user to last post when page loads
-	window.location.href = "#last";
-	var sendTo = location.pathname.substr(1);
+  window.location.href = "#last";
+  var queries = location.search.substr(1);
+  var type = queries.split('&')[0].split('=')[1];
+  var sendTo = queries.split('&')[1].split('=')[1];
 	var socket = io.connect();
 	var $message = document.querySelector('#message');
 	var $users = $('#users');
@@ -42,10 +49,11 @@ $(function () {
   })
   
 	$('#btn').click(function () {
-		//Emit 'send message' event after sending a message
+    //Emit 'send message' event after sending a message
+    const completemsg = $message.value
 		const messageBody = {
 			receiver: sendTo,
-			msg: $message.value
+			msg: `${completemsg}`
 		}
 		socket.emit('send message', messageBody);
 
@@ -78,19 +86,21 @@ $(function () {
             </div>
          </div>`
 				$('.msg_history').append(html);
-			}
+      }
+      sound.play();
 		}
 		window.location.href = "#last";
 
 	})
 
+
 	socket.on('get user', function (data) {
 		var html = '';
 		if (data.includes(sendTo)){
-			html += `<li class="list-group-item"><strong><a href="/users/${sendTo}">${sendTo}</a>: active </strong></li>`;
+			html += `<strong><a href="/users/${sendTo}">${sendTo}</a>: active </strong>`;
 		}
 		else{
-			html += `<li class="list-group-item"><strong><a href="/users/${sendTo}">${sendTo}</a>: offline </strong></li>`;
+			html += `<strong><a href="/users/${sendTo}">${sendTo}</a>: offline </strong>`;
 		}
 		$users.html(html);
 	})

@@ -4,7 +4,7 @@
   <style>
   </style>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Twoexpress </title>
+  <title>expressGo </title>
   <script src="vendor/jquery/jquery.min.js"></script>
   <!-- Font Awesome CSS-->
   <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
@@ -59,7 +59,7 @@
     <nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
       <div class="container">
         <a class="navbar-brand waves-effect" href="index.html">
-          <strong>Twoxpress</strong>
+          <strong>expressGo</strong>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,81 +107,133 @@
 
 
         <center>
-          <!-- Default form register -->
-          <form action="/users/register" method="POST" class="col-md-6 text-center border border-light p-5">
-            <% if (locals.errors) { %>
-            <div class="alert alert-danger">
-              <%  errors.forEach(function(error){ %>
-              <%= error.msg %><br>
-              <%  }) %>
-            </div>
-            <% }  %>
-            <% if (locals.nameerror) { %>
-            <div class="alert alert-danger">
-              <%= nameerror %>
-            </div>
-            <% }  %>
-            <h6 class="h4 mb-4">Sign Up</h6>
-            <input type="text" required value="<%= (locals.name)?name:'' %>" name="name" class="form-control mb-4"
-              placeholder="Name">
-            <input type="text" required value="<%= (locals.username)?username:'' %>" name="username" class="form-control mb-4"
-              placeholder="enter a username">
-            <input type="email" required value="<%= (locals.email)?email:'' %>" name="email" class="form-control mb-4"
-              placeholder="Email address">
-            <!-- Password -->
-            <input type="password" required value="<%= (locals.password)?password:'' %>" name="password" class="form-control"
-              placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
-            <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
-            </small>
+          <div class="col-md-6">
+          <!-- Material form register -->
+          <div class="card">
 
-            <input type="password" required value="<%= (locals.password2)?password2:'' %>" name="password2" class="form-control"
-              placeholder="confirm password" aria-describedby="defaultRegisterFormPhoneHelpBlock">
-            <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
-              confirm your password
-            </small>
-            Gender:
-            <select name="gender" required value="<%= (locals.gender)?gender:'' %>" class="form-control mb-4">
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-            <!-- Sign up button -->
-            <button id="signupBtn" class="btn btn-info my-4 btn-block" type="submit">Sign in</button>
-            <p>Already a member?
-              <a href="./login">Login </a>
-            </p>
-            <hr>
-          </form>
-          <!-- Default form register -->
+            <h5 class="card-header  white-text text-center py-4"  style="background:rgb(44, 42, 42) !important">
+              <strong>Sign up</strong>
+            </h5>
 
+            <!--Card content-->
+            <div class="card-body px-lg-5 pt-0">
+
+              <!-- Form -->
+              <form method="POST" action="/users/register" class="text-center" style="color: #757575;">
+                <% if (locals.errors) { %>
+                <div class="alert alert-danger">
+                  <%  errors.forEach(function(error){ %>
+                  <%= error.msg %><br>
+                  <%  }) %>
+                </div>
+                <% }  %>
+                <% if (locals.nameerror) { %>
+                <div class="alert alert-danger">
+                  <%= nameerror %>
+                </div>
+                <% }  %>
+                <div class="form-row">
+                  <div class="col">
+                    <!-- First name -->
+                    <div class="md-form">
+                      <input type="text" required value="<%= (locals.name)?name:'' %>" name="name" id="materialRegisterFormFirstName"
+                        class="form-control">
+                      <label for="materialRegisterFormFirstName">Full name</label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <!-- Last name -->
+                    <div class="md-form">
+                      <input type="text" required value="<%= (locals.username)?username:'' %>" name="username" id="materialRegisterFormLastName"
+                        class="form-control">
+                      <label for="materialRegisterFormLastName">Username</label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- E-mail -->
+                <div class="md-form mt-0">
+                  <input type="email" required value="<%= (locals.email)?email:'' %>" name="email" id="materialRegisterFormEmail"
+                    class="form-control">
+                  <label for="materialRegisterFormEmail">E-mail</label>
+                </div>
+
+                <!-- Password -->
+                <div class="md-form">
+                  <input type="password" required value="<%= (locals.password)?password:'' %>" name="password" id="materialRegisterFormPassword"
+                    class="form-control" aria-describedby="materialRegisterFormPasswordHelpBlock">
+                  <label for="materialRegisterFormPassword">Password</label>
+                  <small id="materialRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+                    At least 8 characters and 1 digit
+                  </small>
+                </div>
+                <!--Confirm Password -->
+                <div class="md-form">
+                  <input type="password" required value="<%= (locals.password2)?password2:'' %>" name="password2" id="materialRegisterFormPassword"
+                    class="form-control" aria-describedby="materialRegisterFormPasswordHelpBlock">
+                  <label for="materialRegisterFormPassword">Confirm password</label>
+                </div>
+                Gender:
+                <select  name="gender" required value="<%= (locals.gender)?gender:'' %>" class="mdb-select md-form">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+                <!-- Newsletter -->
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="materialRegisterFormNewsletter">
+                  <label class="form-check-label" for="materialRegisterFormNewsletter">Subscribe to our newsletter</label>
+                </div>
+
+                <!-- Sign up button -->
+                <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign
+                  Up</button>
+
+                <!-- Register -->
+                <p>Already a member?
+                  <a href="./login">Login</a>
+                </p>
+              </form>
+              <!-- Form -->
+
+            </div>
+
+          </div>
+          <!-- Material form register -->
+        </div>
         </center>
       </div>
     </div>
 
     <footer>
-      &copy Twoxpress
+      &copy expressGo
     </footer>
-    </div>
-    
-    
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="js/socket.io.js"></script>
-        <script src="vendor/popper.js/umd/popper.min.js"> </script>
-        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-        <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
-        <script src="vendor/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
-        <script src="js/front.js"></script>
-    
-    
-       <!-- MDB core JavaScript -->
-       <script type="text/javascript" src="md/js/mdb.min.js"></script>
-       <!-- Initializations -->
-       <script type="text/javascript">
-          // Animations initialization
-          new WOW().init();
-       </script>
-    
-    </body>
-    
-    
-    
-    </html>
+  </div>
+
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="js/socket.io.js"></script>
+  <script src="vendor/popper.js/umd/popper.min.js"> </script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+  <script src="vendor/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
+  <script src="js/front.js"></script>
+
+
+
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="md/js/mdb.min.js"></script>
+  <!-- Initializations -->
+  <script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
+    // Material Select Initialization
+    $(document).ready(function() {
+    $('.mdb-select').materialSelect();
+    });
+  </script>
+
+</body>
+
+
+
+</html>

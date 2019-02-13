@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router()
 const path = require('path')
+const jwt = require('jsonwebtoken');
 const User = require('../Models/User');
 const Notification = require('../Models/Notification');
 const multer = require('multer');
@@ -8,31 +9,11 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const sendEmailMessage = require('./email');
-
+const upload = require('./cloudConfig')
 
 router.use(express.static(path.join('public')));
 
 router.use('/uploads', express.static('uploads'));
-
-//generate random string to use with images
-const getRandomString = () => {
-  return (Math.floor(Math.random() * 99999)).toString();
-}
-
-//storage strategy for multer upload
-const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, './uploads');
-  },
-  filename: (req, file, callback) => {
-    callback(null, getRandomString() + file.originalname)
-  }
-})
-
-
-const upload = multer({
-  storage: storage
-})
 
 //register -GET
 router.get('/register', function (req, res) {
@@ -71,9 +52,9 @@ router.post('/register', function (req, res) {
   if (errors) {
     res.render('register', {
       errors: errors,
-      name: trim(name),
-      email: email,
-      username: trim(username),
+      name: name.trim(),
+      email: email.trim(),
+      username: username.trim(),
       password: password,
       password2: password2,
       gender: gender
@@ -84,50 +65,70 @@ router.post('/register', function (req, res) {
     User.findOne({ username: req.body.username })
       .then(founduser => {
         if (!founduser) {
-          const newUser = {
-            name: name,
-            email: email,
-            username: username,
-            password: password,
-            friends: [],
-            image: "",
-            address: "",
-            gender: gender
-          }
-          bcrypt.genSalt(10, function (err, salt) {
-            bcrypt.hash(newUser.password, salt, function (err, hash) {
-              newUser.password = hash;
-
-              User.create(newUser, function (error, docs) {
-                if (error) {
-                  console.log(error);
-                }
-                else {
-                  Notification.create({
-                    userId: docs._id,
-                    message: `Welcome ${newUser.name}, get started by adding new friends...`,
-                    link: `addfriend`,
-                    date: new Date().toISOString(),
-                    time: new Date().getTime()
-                  }).then(resp => {
-                    Notification.create({
-                      userId: docs._id,
-                      message: `${newUser.name}, update your address & profile pics so friends can recognize you`,
-                      link: `users/${newUser.username}`,
-                      date: new Date().toISOString(),
-                      time: new Date().getTime()
-                    }).then(resp => {
-                      //success-message
-                      req.flash('success', 'Successfully Registered, you can now Login');
-                      //redirect
-                      res.location('/users/login');
-                      res.redirect('/users/login')
-                    });
+          User.findOne({email: req.body.email})
+          .then(emailexists => {
+            if (!emailexists){
+              if (req.body.password.toString().length < 8){
+                res.render('register', {
+                  nameerror: "Enter at least 8 characters for password"
+                })
+              }
+              else{
+              const newUser = {
+                name: name,
+                email: email,
+                username: username,
+                password: password,
+                friends: [],
+                image: "",
+                address: "",
+                gender: gender
+              }
+              bcrypt.genSalt(10, function (err, salt) {
+                bcrypt.hash(newUser.password, salt, function (err, hash) {
+                  newUser.password = hash;
+    
+                  User.create(newUser, function (error, docs) {
+                    if (error) {
+                      console.log(error);
+                    }
+                    else {
+                       
+                      Notification.create({
+                        userId: docs._id,
+                        message: `Welcome ${newUser.name}, get started by adding new friends...`,
+                        link: `addfriend`,
+                        date: new Date().toISOString(),
+                        time: new Date().getTime()
+                      }).then(resp => {
+                        Notification.create({
+                          userId: docs._id,
+                          message: `${newUser.name}, update your address & profile pics so friends can recognize you`,
+                          link: `users/${newUser.username}`,
+                          date: new Date().toISOString(),
+                          time: new Date().getTime()
+                        }).then(resp => {
+                          docs.notifications += 2;
+                          docs.save();
+                          //success-message
+                          req.flash('success', 'Successfully Registered, you can now Login');
+                          //redirect
+                          res.location('/users/login');
+                          res.redirect('/users/login')
+                        });
+                      });
+                    }
                   });
-                }
+                });
               });
-            });
-          });
+            }
+            }
+            else{
+              res.render('register', {
+                nameerror: "user with email already exists"
+              })
+            }
+          })
         }
         else {
           res.render('register', {
@@ -193,50 +194,87 @@ router.post('/login',
   }))
 
 router.get('/resetpassword', (req, res) => {
-  res.render('forgot');
+  res.render('forgot',{
+    emailpage: true
+  });
 })
 
 router.post('/resetpassword', (req, res) => {
-  const username = req.body.username;
   const email = req.body.email;
-  User.findOne({ username: username, email: email })
+  User.findOne({ email: email })
     .then(user => {
       if (user) {
-        const emailBody = `<h1>Password reset for your account</h1>\n<p>you requested to change your current password</p>
-      follow the link below to reset your password\n<h4><a href='http://twoexpress.herokuapp.com/user/reset/543k2joi2hj2k2kjk2f'>
-      http://twoexpress.herokuapp.com/user/reset/543k2joi2hj2k2kjk2f</a></h4>`;
-
-        sendEmailMessage(email, 'TwoExpress - Password Reset confirmation', emailBody);
-        if (req.body.password === req.body.cpassword) {
-          bcrypt.genSalt(10).then(salt => {
-            bcrypt.hash(req.body.password, salt)
-              .then(hash => {
-                User.updateOne({ username: username }, { $set: { password: hash } })
-                  .then(resp => {
-                    req.flash('success', 'password successfully changed, Login with new password');
-                    res.redirect('/users/login');
-                  })
-              })
-          })
-        }
-        else {
-          res.render('forgot', {
-            errormsg: 'passwords do not match',
-            username: req.body.username,
-            email: req.body.email,
-            passport: req.body.password
-          })
-        }
-      }
+        const token = jwt.sign({id : user._id}, process.env.SECRETKEY, { expiresIn: 86400 });
+        const emailBody = `<h1>Password reset for your account</h1>\n<p>you are seeing this email because you
+      (or someone else) requested to change your current password on our app</p>
+      follow the link below to reset your password\n<h4><a href='http://localhost:5000/users/resetpasswordpage?token=${token}'>
+      http://localhost:5000/users/resetpasswordpage/token=${token}</a></h4>`;
+     sendEmailMessage(email, 'ExpressGo - Password Reset confirmation', emailBody);
+     res.render('forgot',{
+       passwordsent: true,
+       email: req.body.email
+     })
+    }
       else {
         res.render('forgot', {
-          errormsg: 'User details could not be found',
-          username: req.body.username,
-          email: req.body.email,
-          passport: req.body.password
+          emailpage:true,
+          errormsg: 'Invalid email address',
+          email: req.body.email
         })
       }
     })
+})
+
+router.get('/resetpasswordpage', (req, res) => {
+  if (!req.query.token){
+    res.redirect('/');
+  }
+  else{
+    const token = req.query.token;
+    jwt.verify(token, process.env.SECRETKEY, (error, user) => {
+      if (error){
+        console.log('Failed to authenticate')
+        res.location('/');
+        res.redirect('/');
+      }
+      res.render('forgot',{
+        authTrue: true,
+        userid: user.id
+      })
+    })
+  }
+})
+
+router.post('/reset/final',(req,res)  =>  {
+  const userid = req.body.userid;
+  if (req.body.password !== req.body.cpassword) {
+    res.render('forgot', {
+      authTrue:true,
+      errormsg: 'passwords do not match',
+      password: req.body.password,
+      cpassword: req.body.cpassword
+    })
+  }
+  else if (req.body.password.toString().length < 8){
+    res.render('forgot', {
+      authTrue:true,
+      errormsg: 'Enter at least 8 characters',
+      password: req.body.password,
+      cpassword: req.body.cpassword
+    })
+  }
+  else {
+    bcrypt.genSalt(10).then(salt => {
+      bcrypt.hash(req.body.password, salt)
+        .then(hash => {
+          User.updateOne({ _id: userid }, { $set: { password: hash } })
+            .then(resp => {
+              req.flash('success', 'password successfully changed, Login with new password');
+              res.redirect('/users/login');
+            })
+        })
+    })
+  }
 })
 
 router.get('/logout', function (req, res) {
@@ -279,7 +317,7 @@ router.post('/:username/edit', ensureAuthenticated, upload.single('profilepics')
     status: req.body.editstatus,
   }
   if (req.file) {
-    updates.image = req.file.path
+    updates.image = req.file.url
   }
 
   User.updateOne({ username: username }, { $set: updates })

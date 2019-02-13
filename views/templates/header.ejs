@@ -4,8 +4,9 @@
 	<style>
 	</style>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<title>Twoexpress</title>
-	<script src="vendor/jquery/jquery.min.js"></script>
+	<title>expressGo</title>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.js"></script>
 	<!-- Font Awesome CSS-->
 	<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
 	<!-- Custom icon font-->
@@ -33,7 +34,7 @@
 		<nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
 			<div class="container">
 				<a class="navbar-brand waves-effect" href="/">
-					<strong>Twoexpress</strong>
+					<strong>expressGo</strong>
 				</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 				 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,12 +47,6 @@
 					</ul>
 					<ul class="navbar-nav nav-flex-icons">
 						<li class="nav-item">
-							<a href="https://github.com/JosephTesla" class="btn btn-outline-white waves-effect waves-light"">
-								<i class="
-							 fa fa-github"></i>follow
-							</a>
-						</li>
-						<li class="nav-item">
 							<a href="users/<%- user.username %>" class="btn btn-outline-white waves-effect waves-light"">
 								<i class=" fa fa-user"></i>
 								<span id="userone"><%- user.username %></span>
@@ -62,6 +57,12 @@
 							<a href="/users/logout" class="btn btn-outline-white waves-effect waves-light"">
 								<i class=" fa fa-key"></i>
 								Logout
+							</a>
+            </li>
+            <li class="nav-item">
+							<a href="https://github.com/JosephTesla" class="btn btn-outline-white waves-effect waves-light"">
+								<i class="
+							 fa fa-github"></i>follow
 							</a>
 						</li>
 					</ul>

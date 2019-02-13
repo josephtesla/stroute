@@ -4,7 +4,7 @@
    <style>
    </style>
    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-   <title>Twoexpress</title>
+   <title>expressGo</title>
    <script src="vendor/jquery/jquery.min.js"></script>
    <!-- Font Awesome CSS-->
    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
@@ -33,7 +33,7 @@
       <nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
          <div class="container">
             <a class="navbar-brand waves-effect" href="index.html">
-               <strong>Twoexpress</strong>
+               <strong>expressGo</strong>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,14 +78,14 @@
          <div class="row" id="messageArea">
             <div class="col-md-4" id="sidebar">
                <ul style="list-style-type:square;">
-                  <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/chats" role="button">Chats
+                  <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/chats" role="button">Chats
                         <i class="fa fa-comment ml-2"></i></a></li>
-                  <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/friendlist" role="button">View
-                        Friend List<i class="fa fa-th-list ml-2"></i></a></li>
-                  <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/addfriend" role="button">Add
-                        Friend<i class="fa fa-hacker-news ml-2"></i></a></li>
-                  <li><a class="btn btn-outline-primary waves-effect waves-light btn-md" href="/notifications" role="button">notifications  
-                    <span class="badge badge-primary badge-pill pull-right">2</span></a></li>
+                  <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/friendlist" role="button">friends
+                    <span class="badge badge-primary badge-pill pull-right"><%- (user.requests)?user.requests: "" %></span></a></li>
+                  <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/notifications" role="button">notifications  
+                    <span class="badge badge-primary badge-pill pull-right"><%= (user.notifications)?user.notifications: "" %></span></a></li>
+                    <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/groups" role="button">Groups  
+                    <span class="badge badge-primary badge-pill pull-right">1</span></a></li>
                </ul>
             </div>
             <div class="col-md-8">
@@ -120,7 +120,7 @@
 
 
          <footer>
-            &copy Twoexpress
+            &copy expressGo
          </footer>
       </div>
 

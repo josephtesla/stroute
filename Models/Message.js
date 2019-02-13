@@ -7,7 +7,11 @@ const messageSchema = new mongoose.Schema({
 	receiver: String,
   date: String,
   datesecs: Number,
-  homeimg: String,
+  msgtype: String,
+  groupname: {
+    type: String,
+    default: ""
+  }
 })
 
 
