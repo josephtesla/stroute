@@ -11,14 +11,9 @@ const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
 const ejs = require('ejs')
 require('dotenv').config();
-const connect = require('./config');
+const Config = require('./config');
 
-connect(process.env.NODE_ENV)
-
-app.post('/api/img', (req, res) => {
-  console.log(req.file)
-  console.log(req.body.image);
-})
+Config(process.env.NODE_ENV)
 
 const Message = require('./Models/Message');
 const User = require('./Models/User')
@@ -147,7 +142,7 @@ io.sockets.on('connection', function (socket) {
 		}
 		Message.create(newMessage)
 			.then(result => {
-				console.log(result);
+				const xyz = false
 			}).catch((err) => {
 				console.log(err.message)
 			})
@@ -193,7 +188,14 @@ io.sockets.on('connection', function (socket) {
 
   })
 
-
+  //image message 
+  socket.on('image msg', function(data){
+    io.sockets.emit("newimage msg", {
+      imageurl: data.url,
+      receiver: data.received,
+      type: data.type
+    })
+  })
 	//new user
 	socket.on('new user', function (data, callback) {
 		callback(true)

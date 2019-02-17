@@ -5,7 +5,6 @@ const CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
 const API_KEY = process.env.CLOUDINARY_API_KEY;
 const API_SECRET = process.env.CLOUDINARY_API_SECRET;
 
-
 cloudinary.config({
   cloud_name: CLOUD_NAME,
   api_key: API_KEY,
@@ -15,7 +14,7 @@ cloudinary.config({
 const storage = cloudinaryStorage({
   cloudinary: cloudinary,
   folder: "TwoExpress",
-  allowedFormats: ["jpg", "png", "gif", "webp", "mp3", "mp4","ogg", "aac"],//audio and video format
+  allowedFormats: ["jpg", "png", "gif", "webp", "mp3", "mp4","ogg", "aac"],
   transformation: [{ width: 250, height: 250, crop: "limit" }],
   filename: function (req, file, callback) {
     callback(null, file.originalname);

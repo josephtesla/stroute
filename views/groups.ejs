@@ -63,9 +63,11 @@
               <div class="card-body">
                 <form method="POST" action="/groups/addmember">
                   <input type="hidden" name="groupid" value="<%= groupid %>"/>
-                  <input type="text" value="<%= (!!locals.uname)?uname:'' %>" name="uname" class="form-control mb-4"
-                    placeholder="Enter correct username" required>
-                  <button id="" class="btn btn-info my-4" type="submit">add member</button>
+                  <div class="md-form">
+                    <input type="text" value="<%= (!!locals.uname)?uname:'' %>" name="uname" id="materialRegisterFormLastName" class="form-control" required>
+                    <label for="materialRegisterFormLastName">Enter username</label>
+                  </div>
+                  <button id="" class="btn btn-outline-primary waves-effect waves-light btn-sm" type="submit">add member</button>
                 </form>
               </div>
             </div>
@@ -111,11 +113,16 @@
           <div class="card">
             <div class="card-body">
               <form method="POST" action="/groups/new">
-                <input type="text" value="<%= (!!locals.gname)?gname:'' %>" name="gname" class="form-control mb-4"
-                  placeholder="enter name of group" required>
-                <input type="text" value="<%= (!!locals.gdesc)?gdesc:'' %>" name="gdesc" class="form-control mb-4"
-                  placeholder="short description of group" required>
-                <button id="" class="btn btn-info btn-block my-4" type="submit">create</button>
+                <div class="md-form">
+                  <input type="text" value="<%= (!!locals.gname)?uname:'' %>" name="gname" id="materialRegisterFormLastName" class="form-control" required>
+                  <label for="materialRegisterFormLastName">Group name</label>
+                </div>
+                <div class="md-form">
+                  <input type="text" value="<%= (!!locals.uname)?gdesc:'' %>" name="gdesc" id="materialRegisterFormLastName" class="form-control" required>
+                  <label for="materialRegisterFormLastName">Description</label>
+                </div>   
+                  <button id="" class="btn btn-outline-primary waves-effect waves-light btn-sm" type="submit">create</button>
+ 
               </form>
             </div>
           </div>

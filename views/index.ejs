@@ -57,8 +57,7 @@
               <ul class="list-group">
                 <%	users.forEach(function(user){	%>
                 <l1 class="list-group-item"><a href="/users/<%= user.username %>">
-                    <%= user.name %> (@
-                    <%= user.username %>)</a>
+                    <%= user.name %> (@<%= user.username %>)</a>
                   <a class="viewprofile" href="/addfriend/<%= user.username %>">Add friend</a></l1>
                 <% })	%>
                 <li></li>

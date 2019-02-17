@@ -75,10 +75,10 @@ router.post('/register', function (req, res) {
               }
               else{
               const newUser = {
-                name: name,
-                email: email,
-                username: username,
-                password: password,
+                name: name.trim(),
+                email: email.trim(),
+                username: username.trim(),
+                password: password.trim(),
                 friends: [],
                 image: "",
                 address: "",
@@ -160,7 +160,7 @@ passport.deserializeUser((id, done) => {
 
 passport.use(new LocalStrategy(
   (username, password, done) => {
-    User.findOne({ username: username }, (err, user) => {
+    User.findOne({ username: username.trim() }, (err, user) => {
       if (err) {
         return done(err);
       }
@@ -209,11 +209,19 @@ router.post('/resetpassword', (req, res) => {
       (or someone else) requested to change your current password on our app</p>
       follow the link below to reset your password\n<h4><a href='http://localhost:5000/users/resetpasswordpage?token=${token}'>
       http://localhost:5000/users/resetpasswordpage/token=${token}</a></h4>`;
-     sendEmailMessage(email, 'ExpressGo - Password Reset confirmation', emailBody);
-     res.render('forgot',{
-       passwordsent: true,
-       email: req.body.email
-     })
+     sendEmailMessage(email, 'ExpressGo - Password Reset confirmation', emailBody)
+     .then(resp => {
+      res.render('forgot',{
+        passwordsent: true,
+        email: req.body.email
+      })
+     }).catch(error => {
+       res.render('forgot',{
+         emailpage:true,
+         email: req.body.email,
+         errormsg: `error occurred why trying to send mail. this might be due to incorrect email or your email settings`
+       })
+     });
     }
       else {
         res.render('forgot', {
@@ -255,7 +263,7 @@ router.post('/reset/final',(req,res)  =>  {
       cpassword: req.body.cpassword
     })
   }
-  else if (req.body.password.toString().length < 8){
+  else if (req.body.password.toString().trim().length < 8){
     res.render('forgot', {
       authTrue:true,
       errormsg: 'Enter at least 8 characters',
@@ -342,6 +350,9 @@ router.post('/:username/edit', ensureAuthenticated, upload.single('profilepics')
                       link: `users/${username}`,
                       date: new Date().toISOString(),
                       time: new Date().getTime()
+                    }).then(()  =>  {
+                      user.notifications += 1;
+                      user.save()
                     })
                   })
               })

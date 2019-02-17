@@ -85,7 +85,7 @@ $(function () {
                <span class="time_date">  ${new Date().toLocaleString()}</span>
             </div>
          </div>`
-				$('.msg_history').append(html);
+				$('.msg_hist').append(html);
 			}
 			else {
 				var html = `<div class="incoming_msg">
@@ -100,7 +100,7 @@ $(function () {
                </div>
             </div>
          </div>`
-				$('.msg_history').append(html);
+				$('.msg_hist').append(html);
       }
       sound.play()
     }

@@ -34,6 +34,7 @@
 					<br>
 					<div class="mesgs">
 						<div class="msg_history">
+              <div class="msg_hist">
 							<div class="incoming_msg">
 								<div class="incoming_msg_img"> <img id="imgavatar" src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
 								<div class="received_msg">
@@ -163,8 +164,19 @@
 									</div>
 								<% }  %>
 							<%	}   %>
-						<%	})   %>
-							<div	id="last"></div>
+            <%	})   %>
+           
+              <div	id="last"></div>
+              </div>
+              <div  id="loader" class="outgoing_msg">
+                  <div class="sent_msg">
+                    <div class='loader'>
+                      <svg class='circular' viewBox='25 25 50 50'>
+                          <circle class='path' cx='50' cy='50' r='20' fill='none' stroke-width='2' stroke-miterlimit='10'></circle>
+                      </svg>
+                  </div>
+                  </div>
+                </div>
 						</div>
 						<div class="type_msg">
 							<div class="input_msg_write">

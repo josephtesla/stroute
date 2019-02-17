@@ -8,14 +8,11 @@ const Request = require('../Models/Request');
 const Group = require('../Models/Group')
 
 router.post('/api/saveimageurl', ensureAuthenticated, (req, res) => {
-  console.log(req.body.url)
-  console.log(req.body.received)
-	
 	Message.create({
     sillyId: `${req.user.username} ${req.body.received}`,
     message: {
       msg: req.body.url,
-		  type: "image"
+		  type: req.body.type
     },
     sender: req.user.username,
     receiver: req.body.received,
@@ -32,7 +29,7 @@ router.post('/api/saveimageurl', ensureAuthenticated, (req, res) => {
       console.log(err)
 			res.json({error:err.message})
 		})
-	
+
 })
 
 router.post('/mpsome/:received', upload.single('mpsome'), (req, res) => {
@@ -57,7 +54,7 @@ router.post('/mpsome/:received', upload.single('mpsome'), (req, res) => {
 })
 
 router.get('/', ensureAuthenticated, (req, res) => {
-  
+
   function swapNames(string) {
     const splitArr = string.split(" ");
     const final = `${splitArr[1]} ${splitArr[0]}`
@@ -199,6 +196,7 @@ router.get('/request/accept/:user', ensureAuthenticated, (req, res) => {
 	User.findOne({ username: req.params.user })
 		.then(friend => {
       if (friend === null){
+        console.log(friend)
         res.location('/requests');
         res.redirect('/requests');
       }
@@ -217,6 +215,7 @@ router.get('/request/accept/:user', ensureAuthenticated, (req, res) => {
                 res.redirect('/requests');
               }
             })
+            console.log(userExists)
             if (!userExists) {
               user.friends.push(newFriend)
               user.save();
@@ -380,13 +379,15 @@ router.post('/groups/addmember', ensureAuthenticated,  (req, res) => {
             date: new Date().toISOString(),
             time:new Date().getTime()
           }).then(resp => {
+            user.notifications += 1;
+            user.save();
             Message.create({
-              sillyId: `${req.user.username} ${groupid}`,
+              sillyId: `groupbot ${groupid}`,
               message: {
                   msg: `${user.name} joined the group`,
                   type:"text"
-                },
-              sender: req.user.username,
+              },
+              sender: 'groupbot',
               receiver: groupid,
               date: new Date().toLocaleString(),
               datesecs: Date.now(),
@@ -440,7 +441,6 @@ router.post('/groups/new',  ensureAuthenticated,	(req, res) => {
 })
 
 router.get('/deleteuser', ensureAuthenticated,	(req, res) => {
-  console.log()
   if (!req.query.userid && !req.query.groupid){
     res.redirect('/');
   }
@@ -454,16 +454,17 @@ router.get('/deleteuser', ensureAuthenticated,	(req, res) => {
       })
       Group.updateOne({_id: groupid}, { $set : {users : users, members: group.members-1}})
       .then(resp => {
-        console.log(userid)
         User.findById(userid)
         .then(leftuser  => {
+          leftuser.groups.splice(leftuser.groups.indexOf(groupid), 1);
+          leftuser.save();
           Message.create({
-            sillyId: `${group.createdBy} ${groupid}`,
+            sillyId: `groupbot ${groupid}`,
             message: {
                 msg: `${leftuser.username} left the group`,
                 type:"text"
               },
-            sender: group.createdBy,
+            sender: 'groupbot',
             receiver: groupid,
             date: new Date().toLocaleString(),
             datesecs: Date.now(),
@@ -509,7 +510,7 @@ router.get('/notifications', ensureAuthenticated, (req, res) => {
 				[60, 'min'],
 				[1,'second']
 		];
-		
+
 		for (var i = 0,j = chunks.length; i < j; i++){
 				var seconds = chunks[i][0];
 				var name = chunks[i][1];
@@ -525,7 +526,7 @@ router.get('/notifications', ensureAuthenticated, (req, res) => {
 		var newTime = `${time[0]} ${time[1]} ago`;
 		return newTime;
  }
- 
+
 	Notification.find({userId:req.user.id})
 	.sort({date: -1})
 	.then(notifications => {
@@ -539,7 +540,7 @@ router.get('/notifications', ensureAuthenticated, (req, res) => {
       })
     })
 	})
-	
+
 })
 
 
@@ -588,16 +589,22 @@ router.get('/chatphase', ensureAuthenticated, (req, res) => {
       group.users.forEach(user => {
         groupusers.push(user.username);
       });
-      const chats = group.messages;
-      res.render('groupchats' , {
-        chats: chats,
-        receiver: chatid,
-        name: group.name,
-        admin: group.createdBy,
-        members: group.members,
-        groupid: group._id,
-        groupusers: groupusers
-      })
+      if (groupusers.indexOf(req.user.username) === -1){
+        res.location('/')
+        res.redirect('/');
+      }
+      else{
+        const chats = group.messages;
+        res.render('groupchats' , {
+          chats: chats,
+          receiver: chatid,
+          name: group.name,
+          admin: group.createdBy,
+          members: group.members,
+          groupid: group._id,
+          groupusers: groupusers
+        })
+      }
     })
   }
 
@@ -619,7 +626,7 @@ module.exports = router;
 
 
 
-/** 
+/**
 User.deleteMany({})
 .then(() => {
   Message.deleteMany({})

@@ -70,7 +70,7 @@ $(function () {
                <span class="time_date">  ${new Date().toLocaleString()}</span>
             </div>
          </div>`
-				$('.msg_history').append(html);
+				$('.msg_hist').append(html);
 			}
 			else {
 				var html = `<div class="incoming_msg">
@@ -85,7 +85,7 @@ $(function () {
                </div>
             </div>
          </div>`
-				$('.msg_history').append(html);
+				$('.msg_hist').append(html);
       }
       sound.play();
 		}
@@ -103,7 +103,22 @@ $(function () {
 			html += `<strong><a href="/users/${sendTo}">${sendTo}</a>: offline </strong>`;
 		}
 		$users.html(html);
-	})
+  })
+  
+  socket.on('newimage msg', function (data) {
+    var html = '';
+    if (data.receiver === $currentUser){
+      html += `<div class="incoming_msg">
+      <div class="incoming_msg_img"> <img id="imgavatar" src="img/user.svg" alt="sunil"> </div>
+      <div class="received_msg">
+        <div class="received_withd_msg">
+        <span class="imgwhite"><img style="border:3px solid white;"	src="${data.imageurl}" /></span>
+        <span class="time_date"><a style="color:#f2dede;"	href="/users/${data.user}">${data.user.toUpperCase()}</a> |${new Date().toLocaleString()}</span>
+        </div></div></div>`;
+      $('.msg_hist').append(html)
+      window.location.href = '#last'
+    }
+  })
 
 })
 

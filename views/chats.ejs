@@ -23,6 +23,7 @@
 					<br>
 					<div class="mesgs">
 						<div class="msg_history">
+              <div class="msg_hist">
 							<div class="incoming_msg">
 								<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
 								<div class="received_msg">
@@ -150,8 +151,18 @@
 									</div>
 								<% }  %>
 							<%	}   %>
-						<%	})   %>
-							<div	id="last"></div>
+            <%	})   %>
+              <div	id="last"></div>
+            </div>
+            <div id='loader' class="outgoing_msg">
+                <div class="sent_msg">
+                  <div class='loader'>
+                    <svg class='circular' viewBox='25 25 50 50'>
+                        <circle class='path' cx='50' cy='50' r='20' fill='none' stroke-width='2' stroke-miterlimit='10'></circle>
+                    </svg>
+                </div>
+                </div>
+              </div>
 						</div>
 						<div class="type_msg">
 							<div class="input_msg_write">
@@ -169,15 +180,15 @@
 								<button id="btnImageSend">send</button>
               </div>
 							<a	class="btn btn-outline-primary btn-sm" href="" id="mpLink">send audio/video</a>
-							<form action="/mpsome/<%= receiver  %>" enctype="multipart/form-data" method="POST" id="mp-form">
-								<input type="file" name="mpsome"	required placeholder="upload only mp3/mp4/" />
+							<div id="mp-form">
+								<input type="file" name="mpsome" id="mp-upload"	required placeholder="upload only mp3/mp4/" />
 								supports mp3/mp4 formats
-								<select name="mpsome">
+								<select id="mpselect" name="mpsome">
 									<option value="audio">Audio</option>
 									<option value="video">Video</option>
 								</select>
-								<input type="submit"  value="upload" />
-							</form>
+								<button id="btnMpSend">send</button>
+              </div>
 						</div>
 					</div>
 				</div>
