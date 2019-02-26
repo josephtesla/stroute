@@ -187,3 +187,53 @@ s.sort(by('first'));
       }
  * 
  */
+
+  function spliceIt(str) {
+    for (let i = 0; i < str.length; i++) {
+      for (let j = 0; j < str.length; j++) {
+        console.log(str.slic)
+      }
+    }
+  }
+
+ const getSubStrings  = (str) =>  {
+   str = str.toString();
+   strSplit = str.split("");
+   const filter = []
+   for (let i = 0; i < strSplit.length; i++) {
+     let word = strSplit[i];
+    for (let j = 0; j < strSplit.length; j++) {
+      if (strSplit[i] == strSplit[j]){
+        continue;
+      }
+      else{
+        word += strSplit[j];
+        for (let k = 0; k < word.length; k++) {
+          for (let l = 0; l < word.length; l++) {
+            var wordInArr = word.split("");
+            var left = wordInArr.splice(k,l);
+            if (filter.indexOf(word) === -1){
+              filter.push(word);
+            }
+          } 
+        }
+      }
+    }
+   }
+   filter.push(str)
+   return filter;
+ }
+var total5digits = 0
+var totalDivisible = 0
+ for (let i = 0; i < getSubStrings("012345").length; i++) {
+   if (i.length === 5){
+    total5digits += 1;
+   }
+   if (Number(i) % 6 === 0){
+     totalDivisible += 1;
+   }
+ }
+
+ console.log(total5digits);
+ console.log(totalDivisible)
+

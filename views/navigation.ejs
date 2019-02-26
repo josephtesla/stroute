@@ -1,0 +1,43 @@
+<div class="card"  id="desktop-nav">
+  
+    <!-- List group links -->
+    <div class="list-group list-group-flush"  style="height:210 !important;">
+      <a href="/chats" class="list-group-item list-group-item-action waves-effect">Chats
+          <span class="badge badge-success badge-pill pull-right">
+        </span>
+      </a>
+      <a href="/friendlist" class="list-group-item list-group-item-action waves-effect">Friends
+          <span class="badge badge-primary badge-pill pull-right"><%-(user.requests)?user.requests: "" %></span>
+      </a>
+      <a href="/notifications" class="list-group-item list-group-item-action waves-effect">Notifications
+          <span class="badge badge-primary badge-pill pull-right"><%- (user.notifications)?user.notifications: "" %></span>
+        </a>
+      <a href="/groups" class="list-group-item list-group-item-action waves-effect">Groups
+        <span class="badge badge-primary badge-pill pull-right"><%- (user.groups.length)?user.groups.length: "" %></span>
+      </a>
+      <a  href="/" class="list-group-item list-group-item-action waves-effect">Messages
+        <span class="badge badge-success badge-pill pull-right"><%- (user.messages)?user.messages: "" %></span>
+      </a>
+    </div>
+  </div>
+    <!-- List group links -->
+
+</div>
+<div class="col-md-8">
+<div  class="small-device-nav">
+<a href="/chats"  class="btn-outline-primary waves-effect btn-sm small-device-a">Chats
+    <span class="badge badge-success badge-pill pull-right"></span>
+</a>
+<a href="/friendlist" class="btn-outline-primary waves-effect btn-sm small-device-a">Friends
+    <span class="badge badge-primary badge-pill pull-right"><%-(user.requests)?user.requests: "" %></span>
+</a>
+<a href="/notifications" class="btn-outline-primary waves-effect btn-sm small-device-a">Notifications
+    <span class="badge badge-primary badge-pill pull-right"><%- (user.notifications)?user.notifications: "" %></span>
+</a>
+<a  href="/groups" class="btn-outline-primary waves-effect btn-sm small-device-a">Groups
+    <span class="badge badge-primary badge-pill pull-right"><%- (user.groups.length)?user.groups.length: "" %></span>
+</a>
+<a  href="/" class="btn-outline-primary waves-effect btn-sm small-device-a">Messages
+    <span class="badge badge-success badge-pill pull-right"><%- (user.messages)?user.messages: "" %></span>
+</a>
+</div>

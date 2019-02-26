@@ -6,7 +6,10 @@ const userSchema = new mongoose.Schema({
    password: String,
    email: String,
    gender: String,
-   image:String,
+   image:{
+     type:String,
+     default: "img/user.svg"
+   },
    address: String,
    friends: Array,
    status: {
@@ -21,7 +24,12 @@ const userSchema = new mongoose.Schema({
    requests: {
     type:Number,
     default: 0
-   }
+   },
+   messages:{
+    type:Number,
+    default: 0
+   },
+   
 
 })
 

@@ -19,7 +19,8 @@
     </div>
 		<div class="content-app">
 			<div class="row" id="messageArea">
-				<div class="col-md-12" id="online">
+        <div class="col-md-4"></div>
+				<div class="col-md-8" id="online">
 					<br>
 					<div class="mesgs">
 						<div class="msg_history">
@@ -28,7 +29,7 @@
 								<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
 								<div class="received_msg">
 									<div class="received_withd_msg">
-										<p>End-to-end user encryption now enabled. chats cannot be viewed by a third party</p>
+										<p class="card">Private chat phase. chats can only be seen by you and friend.</p>
 										<span class="time_date"> 11:01 AM | Dec 11</span>
 									</div>
 								</div>
@@ -39,13 +40,13 @@
 							<% if (chat.sender === user.username){  %>
 							<div class="outgoing_msg">
 								<div class="sent_msg">
-										<span class="imgwhite ">
+										<span class="outimgwhite">
 										<%  if (chat.message.type === "image") {	%>
-										<img class="bg-white" style="border:3px solid white"	src="<%= chat.message.msg %>"	 width="100%"/>
+										<img class="bg-white card" style="border:2px solid #2d3aa0"	src="<%= chat.message.msg %>"	 width="100%"/>
 										<%	}   %>
 
 										<%  if (chat.message.type === "audio") {	%>
-											<span class="imgwhite "><audio	class="bg-white" controls>
+											<span class="imgwhite "><audio	class="bg-white card" controls>
 												<source src="http://localhost:5000/<%= chat.message.msg %>" 
 													type="audio/mp3">
 												</source>
@@ -58,7 +59,7 @@
 											</audio> </span>
 										<%	}   %>
 										<%  if (chat.message.type === "video") {	%>
-											<span class="imgwhite "><video class="bg-white"	width="100%"	height="100%"	controls>
+											<span class="imgwhite "><video class="bg-white card"	width="100%"	height="100%"	controls>
 												<source src="http://localhost:5000/<%= chat.message.msg %>" 
 													type="video/mp4">
 												</source>
@@ -76,7 +77,7 @@
 										<%= chat.date %></span>
 										</span>
 										<%  if (chat.message.type === "text") {	%>
-											<p><%= chat.message.msg %></p>
+											<p class="card realtext"><%= chat.message.msg %></p>
 										<%	}   %>
 								</div>
 							</div>
@@ -89,8 +90,8 @@
 									<div class="received_withd_msg">
                     
 												<%  if (chat.message.type === "image") {	%>
-												<span class="imgwhite"><img style="border:3px solid white;"	src="<%= chat.message.msg %>" /></span>
-												<%	}   %></span>
+												<span class="imgwhite"><img class="bg-white card" style="border:3px solid white;"	src="<%= chat.message.msg %>" /></span>
+												<%	}   %>
 
 												<%  if (chat.message.type === "audio") {	%>
 													<audio controls>
@@ -119,7 +120,7 @@
 													</video></span>
 												<%	}   %>
 										<span class="time_date">
-											<a style="color:#f2dede;"	href="/users/<%=	chat.sender	%>"><%=	chat.sender.toUpperCase()	%></a> |
+											<a style="color:black;"	href="/users/<%=	chat.sender	%>"><%=	chat.sender.toUpperCase()	%></a> |
 											<%=	chat.date	%></span>
 									</div>
 								</div>
@@ -132,8 +133,8 @@
 											<div class="incoming_msg_img"> <img id="imgavatar" src="img/user.svg" alt="img"> </div>
 											<div class="received_msg">
 												<div class="received_withd_msg">
-													<p><%= chat.message.msg %></p>
-													<span class="time_date"><a style="color:#f2dede;"	href="/users/<%=	chat.sender	%>"><%=	chat.sender.toUpperCase()	%></a> |
+												<p class="card realtext"><%= chat.message.msg %></p>
+													<span class="time_date"><a style="color:black"	href="/users/<%=	chat.sender	%>"><%=	chat.sender.toUpperCase()	%></a> |
 														<%=	chat.date	%></span>
 												</div>
 											</div>
@@ -144,7 +145,7 @@
 
 									<div class="outgoing_msg">
 											<div class="sent_msg">
-														<p><%= chat.message.msg %></p>
+														<p class="card realtext"><%= chat.message.msg %></p>
 														<span class="time_date"> |
 																<%=	chat.date	%></span>
 											</div>
@@ -158,7 +159,7 @@
                 <div class="sent_msg">
                   <div class='loader'>
                     <svg class='circular' viewBox='25 25 50 50'>
-                        <circle class='path' cx='50' cy='50' r='20' fill='none' stroke-width='2' stroke-miterlimit='10'></circle>
+                        <circle class='path' cx='50' cy='50' r='10' fill='none' stroke-width='1' stroke-miterlimit='10'></circle>
                     </svg>
                 </div>
                 </div>
@@ -166,28 +167,22 @@
 						</div>
 						<div class="type_msg">
 							<div class="input_msg_write">
-								<textarea id="message" type="text" class="write_msg" placeholder="Type a message"></textarea>
+					      <textarea required  id="message" type="text" class="write_msg" placeholder="Type a message"></textarea>
 								<button id="btn" class="msg_send_btn" type="button"><i class="fa fa-send" aria-hidden="true"></i></button>
-							</div>
-							<br><a  class="btn btn-outline-primary btn-sm" href="" id="addlink">add link</a>
-							<div id="link-form">
-								<input id="linktext" placeholder="text to display" /><input id="link" placeholder="link" />
-								<input type="button" id="linkbtn" value="add link" />
-							</div>
-							<a href="" class="btn btn-outline-primary btn-sm"	id="imgLink">send photo</a>
+							</div>&nbsp;
+							<img src="img/imageico.jpg"	id="imgLink" width="40px"  height="40px"/>
 							<div id="img-form">
-								<input type="file" id="image-upload" required name="image" placeholder="upload" />supports Jpg/png format
-								<button id="btnImageSend">send</button>
+								<input type="file" id="image-upload" required name="image" placeholder="upload" />
+								<button disabled="disabled"  id="btnPrivateImageSend"><i class="fa fa-send"></i></button>
               </div>
-							<a	class="btn btn-outline-primary btn-sm" href="" id="mpLink">send audio/video</a>
-							<div id="mp-form">
-								<input type="file" name="mpsome" id="mp-upload"	required placeholder="upload only mp3/mp4/" />
-								supports mp3/mp4 formats
-								<select id="mpselect" name="mpsome">
-									<option value="audio">Audio</option>
-									<option value="video">Video</option>
-								</select>
-								<button id="btnMpSend">send</button>
+							<img src="img/video.png"	id="mpLink" width="40px"  height="40px"/>
+							<div id="mp-form">                
+                <input type="file" name="mpsome" id="mp-upload"	required placeholder="upload only mp3/mp4/" />
+                <select class="mdb-select md-form"  id="mpselect" name="mpsome">
+                    <option value="audio" disabled selected>Audio</option>
+                    <option value="video">Video</option>
+                  </select>
+								<button id="btnMpSend" disabled="disabled"><i class="fa fa-send"></i></button>
               </div>
 						</div>
 					</div>
@@ -198,7 +193,7 @@
 
 
 		<footer>
-			&copy	expressGo
+			&copy	Stroute
 		</footer>
 
 
@@ -212,7 +207,8 @@
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
 	<script src="vendor/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
-	<script src="js/front.js"></script>
+  <script src="js/front.js"></script>
+  <script src="js/filterUrl.js"></script>
 	<script src="js/code.js"></script>
 
 	<!-- MDB core JavaScript -->
@@ -220,7 +216,21 @@
 	<!-- Initializations -->
 	<script type="text/javascript">
 		// Animations initialization
-		new WOW().init();
+    new WOW().init();
+    $(document).ready(function() {
+      $('.mdb-select').materialSelect();
+    });
+    var imageUpload = document.getElementById('image-upload');
+    var btnPrivateImageSend = document.getElementById('btnPrivateImageSend');
+    imageUpload.addEventListener('change', function(e){
+    var fileType = e.target.files[0].type;
+    if (fileType === "image/jpeg" || fileType === "image/png"){
+      btnPrivateImageSend.removeAttribute('disabled');
+    }
+    else{
+      btnPrivateImageSend.setAttribute('disabled','disabled');
+    }
+  })
 	</script>
 
 </body>

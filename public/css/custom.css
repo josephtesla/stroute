@@ -19,9 +19,12 @@
   border-radius: 4px;
 }
 
+.bigheader{
+  font-size: 28px;
+}
 
 .navbar {
-  background-color: rgb(44, 42, 42) !important;
+  background-color:#181c33 !important;
   color: white !important;
 }
 .active {
@@ -32,13 +35,19 @@
 }
 .navbar-light .navbar-brand {
   color: white !important;
+  font-size: 28px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 .msg_history{
-  background-image: url('/img/bg-1.jpg');
+  background-image: url('/img/whatsapp.jpg');
 }
 
 #index{
   margin-top: 70px; 
+}
+
+.small-device-a{
+  margin: 0 1px 0 1px;
 }
 
 #addmember{
@@ -86,11 +95,21 @@
 
 .imgwhite{
   padding: 5px;
-  float: right;
 }
 .bg-white{
   background: white;
 }
+img.bg-white{
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.outimgwhite {
+  float: right;
+  padding: 5px;
+}
+
 .userimg{
   width: 200px;
   height: 200px;
@@ -150,125 +169,22 @@ main.posts-listing .post {
   display: none;
 }
 
-.showbox {
- position: absolute;
- top: 0;
- bottom: 0;
- left: 0;
- right: 0;
- padding: 5%;
+.small-device-nav{
+
+  display: none;
 }
 
-.loader {
- position: relative;
- margin: 0 auto;
- width: 100px;
- top: 50%;
- transform: translateY(-50%);
- border: none !important;
- border-top:none  !important;
-}
 
-.loader:before {
- content: '';
- display: block;
- padding-top: 100%;
+@media screen and (max-width: 770px) {
+  .btn-outline-white{
+    padding: 2px;
+  }
+  #desktop-nav {
+    display: none;
+  }
+  .small-device-nav{
+    display: block;
+    margin-bottom: 12px;
+    margin-top: 4px;
+  }
 }
-
-.circular {
- -webkit-animation: rotate 2s linear infinite;
- animation: rotate 2s linear infinite;
- height: 100%;
- -webkit-transform-origin: center center;
- transform-origin: center center;
- width: 100%;
- position: absolute;
- top: 0;
- bottom: 0;
- left: 0;
- right: 0;
- margin: auto;
-}
-
-.path {
- stroke-dasharray: 1, 200;
- stroke-dashoffset: 0;
- -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
- animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
- stroke-linecap: round;
-}
-
-@-webkit-keyframes rotate {
- 100% {
-     -webkit-transform: rotate(360deg);
-     transform: rotate(360deg);
- }
-}
-
-@keyframes rotate {
- 100% {
-     -webkit-transform: rotate(360deg);
-     transform: rotate(360deg);
- }
-}
-@-webkit-keyframes dash {
- 0% {
-     stroke-dasharray: 1, 200;
-     stroke-dashoffset: 0;
- }
- 50% {
-     stroke-dasharray: 89, 200;
-     stroke-dashoffset: -35px;
- }
- 100% {
-     stroke-dasharray: 89, 200;
-     stroke-dashoffset: -124px;
- }
-}
-@keyframes dash {
- 0% {
-     stroke-dasharray: 1, 200;
-     stroke-dashoffset: 0;
- }
- 50% {
-     stroke-dasharray: 89, 200;
-     stroke-dashoffset: -35px;
- }
- 100% {
-     stroke-dasharray: 89, 200;
-     stroke-dashoffset: -124px;
- }
-}
-@-webkit-keyframes color {
- 100%,
- 0% {
-     stroke: #d62d20;
- }
- 40% {
-     stroke: #0057e7;
- }
- 66% {
-     stroke: #008744;
- }
- 80%,
- 90% {
-     stroke: #ffa700;
- }
-}
-@keyframes color {
- 100%,
- 0% {
-     stroke: #d62d20;
- }
- 40% {
-     stroke: #0057e7;
- }
- 66% {
-     stroke: #008744;
- }
- 80%,
- 90% {
-     stroke: #ffa700;
- }
-}
-

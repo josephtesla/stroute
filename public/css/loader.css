@@ -11,8 +11,10 @@
 .loader {
   position: relative;
   margin: 0 auto;
-  width: 100px;
-  top: 50%;
+  border: 0 !important;
+  border-top: 0px !important;
+  width: 50px;
+  top: 30%;
   transform: translateY(-50%);
 }
 
@@ -93,32 +95,32 @@
 @-webkit-keyframes color {
   100%,
   0% {
-      stroke: #d62d20;
+      stroke: white;
   }
   40% {
-      stroke: #0057e7;
+      stroke: black;
   }
   66% {
-      stroke: #008744;
+      stroke: green;
   }
   80%,
   90% {
-      stroke: #ffa700;
+      stroke: white;
   }
 }
 @keyframes color {
   100%,
   0% {
-      stroke: #d62d20;
+      stroke: green;
   }
   40% {
-      stroke: #0057e7;
+      stroke: black;
   }
   66% {
-      stroke: #008744;
+      stroke: green;
   }
   80%,
   90% {
-      stroke: #ffa700;
+      stroke: #ffffff;
   }
 }

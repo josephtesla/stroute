@@ -14,7 +14,7 @@ cloudinary.config({
 const storage = cloudinaryStorage({
   cloudinary: cloudinary,
   folder: "TwoExpress",
-  allowedFormats: ["jpg", "png", "gif", "webp", "mp3", "mp4","ogg", "aac"],
+  allowedFormats: ["jpg", "png"],
   transformation: [{ width: 250, height: 250, crop: "limit" }],
   filename: function (req, file, callback) {
     callback(null, file.originalname);
@@ -24,4 +24,4 @@ const storage = cloudinaryStorage({
 
 const upload = multer({storage: storage});
 
-module.exports = upload;
+module.exports =  { upload, cloudinary } ;

@@ -9,7 +9,9 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const sendEmailMessage = require('./email');
-const upload = require('./cloudConfig')
+const { upload } = require('./cloudConfig');
+const { checkRememberMe } = require('./utils');
+
 
 router.use(express.static(path.join('public')));
 
@@ -87,13 +89,13 @@ router.post('/register', function (req, res) {
               bcrypt.genSalt(10, function (err, salt) {
                 bcrypt.hash(newUser.password, salt, function (err, hash) {
                   newUser.password = hash;
-    
+
                   User.create(newUser, function (error, docs) {
                     if (error) {
                       console.log(error);
                     }
                     else {
-                       
+
                       Notification.create({
                         userId: docs._id,
                         message: `Welcome ${newUser.name}, get started by adding new friends...`,
@@ -141,7 +143,7 @@ router.post('/register', function (req, res) {
 })
 
 //login - GET
-router.get('/login', function (req, res) {
+router.get('/login', checkRememberMe,  (req, res) => {
   req.logout()
   res.render('login');
 })
@@ -188,10 +190,16 @@ passport.use(new LocalStrategy(
 
 router.post('/login',
   passport.authenticate('local', {
-    successRedirect: '/',
     failureRedirect: '/users/login',
     failureFlash: 'Invalid username or password',
-  }))
+  }), (req, res, next) => {
+    const rememberMe = Boolean(req.body.rememberMe);
+    if (rememberMe){
+      res.cookie('rememberId', req.user._id, { maxAge: 365 * 24 * 60 * 60 * 1000});
+      // Cookie expires after 1 year
+    } 
+    res.redirect('/loadinguser');
+})
 
 router.get('/resetpassword', (req, res) => {
   res.render('forgot',{
@@ -209,7 +217,7 @@ router.post('/resetpassword', (req, res) => {
       (or someone else) requested to change your current password on our app</p>
       follow the link below to reset your password\n<h4><a href='http://localhost:5000/users/resetpasswordpage?token=${token}'>
       http://localhost:5000/users/resetpasswordpage/token=${token}</a></h4>`;
-     sendEmailMessage(email, 'ExpressGo - Password Reset confirmation', emailBody)
+     sendEmailMessage(email, 'Stroute - Password Reset confirmation', emailBody)
      .then(resp => {
       res.render('forgot',{
         passwordsent: true,
@@ -241,7 +249,6 @@ router.get('/resetpasswordpage', (req, res) => {
     const token = req.query.token;
     jwt.verify(token, process.env.SECRETKEY, (error, user) => {
       if (error){
-        console.log('Failed to authenticate')
         res.location('/');
         res.redirect('/');
       }
@@ -287,6 +294,7 @@ router.post('/reset/final',(req,res)  =>  {
 
 router.get('/logout', function (req, res) {
   req.logout();
+  res.clearCookie('rememberId');
   req.flash('success', 'You Have Logged Out');
   res.redirect('/users/login');
 })

@@ -1,34 +1,76 @@
 const express = require('express');
 const router = express.Router()
-const upload = require('./cloudConfig');
+const {upload, cloudinary} = require('./cloudConfig');
 const Message = require('../Models/Message')
 const User = require('../Models/User')
 const Notification = require('../Models/Notification');
 const Request = require('../Models/Request');
 const Group = require('../Models/Group')
 
+
+
 router.post('/api/saveimageurl', ensureAuthenticated, (req, res) => {
-	Message.create({
-    sillyId: `${req.user.username} ${req.body.received}`,
-    message: {
-      msg: req.body.url,
-		  type: req.body.type
-    },
-    sender: req.user.username,
-    receiver: req.body.received,
-    date: new Date().toLocaleString(),
-    datesecs: Date.now(),
-    msgtype:"private"
-  })
-		.then(message => {
-      console.log(message)
-			res.status(200).json({
-        message: 'image sent'
+  if (req.body.type === 'private'){
+    Message.create({
+      sillyId: `${req.user.username} ${req.body.receiver}`,
+      message: {
+        msg: req.body.url,
+        type: "image"
+      },
+      sender: req.user.username,
+      receiver: req.body.receiver,
+      date: new Date().toLocaleString(),
+      datesecs: Date.now(),
+      msgtype: "private"
+    }).then(message => {
+      User.findOne({username: message.receiver})
+      .then(resp => {
+        resp.messages += 1;
+        resp.save();
       })
-		}).catch(err => {
-      console.log(err)
-			res.json({error:err.message})
-		})
+        res.status(200).json({
+          message: 'image sent'
+        })
+      }).catch(err => {
+        console.log(err)
+        res.json({error:err.message})
+      })
+  }
+	else if (req.body.type === 'group'){
+    const groupid = req.body.receiver;
+    Group.findById(groupid).populate('users').then(group => {
+      Message.create({
+        sillyId: `${req.user.username} ${groupid}`,
+        message: {
+            msg: req.body.url,
+            type:"image"
+        },
+        sender: req.user.username,
+        receiver: groupid,
+        date: new Date().toLocaleString(),
+        datesecs: Date.now(),
+        msgtype:"group",
+        groupname: group.name,
+        groupid: group._id
+      }).then(message => {
+        Group.findById(groupid)
+        .then(group => {
+          group.messages.push(message)
+          group.users.forEach(member => {
+            User.findOne({username: member.username})
+            .then(respUser => {
+              respUser.messages += 1;
+              respUser.save();
+            })
+          });
+          group.save();
+          res.status(200).json({
+            message: 'image sent'
+          })
+        })
+      })
+    })
+  }
 
 })
 
@@ -54,7 +96,6 @@ router.post('/mpsome/:received', upload.single('mpsome'), (req, res) => {
 })
 
 router.get('/', ensureAuthenticated, (req, res) => {
-
   function swapNames(string) {
     const splitArr = string.split(" ");
     const final = `${splitArr[1]} ${splitArr[0]}`
@@ -62,6 +103,8 @@ router.get('/', ensureAuthenticated, (req, res) => {
   }
   User.findOne({username : req.user.username})
   .then(loggedInUser => {
+    loggedInUser.messages = 0;
+    loggedInUser.save();
     Message.find({})
     .sort({datesecs: -1})
     .then(messages => {
@@ -91,6 +134,10 @@ router.get('/', ensureAuthenticated, (req, res) => {
     })
   })
   })
+})
+
+router.get('/loadinguser', ensureAuthenticated,(req,res) => {
+  res.render('loading')
 })
 
 router.get('/addfriend/', ensureAuthenticated, (req, res) => {
@@ -207,7 +254,7 @@ router.get('/request/accept/:user', ensureAuthenticated, (req, res) => {
         }
         User.findOne({ username: req.user.username })
           .then(user => {
-            const userExists = false;
+            let userExists = false;
             user.friends.forEach(userFriend => {
               if (userFriend.username === newFriend.username){
                 userExists = true;
@@ -229,8 +276,11 @@ router.get('/request/accept/:user', ensureAuthenticated, (req, res) => {
                   userFriend.save();
                   Request.deleteOne({sender:newFriend.username, receiver: req.user.username })
                   .then(() => {
-                    user.requests -= 1;
-                    user.save();
+                    User.findById(req.user._id)
+                    .then(reqUser => {
+                      reqUser.requests -= 1;
+                      reqUser.save();
+                    })
                     Notification.create({
                       userId: friend._id,
                       message: `${req.user.name} (@${req.user.username}) accepted your friend request.`,
@@ -379,8 +429,10 @@ router.post('/groups/addmember', ensureAuthenticated,  (req, res) => {
             date: new Date().toISOString(),
             time:new Date().getTime()
           }).then(resp => {
-            user.notifications += 1;
-            user.save();
+            User.findOne({username: newuser}).then(setuser =>  {
+              setuser.notifications += 1;
+              setuser.save();
+            })
             Message.create({
               sillyId: `groupbot ${groupid}`,
               message: {
@@ -484,6 +536,45 @@ router.get('/deleteuser', ensureAuthenticated,	(req, res) => {
   }
 })
 
+router.get('/deletegroupcompletely', ensureAuthenticated, (req,res) =>  {
+  if (!req.query.groupid){
+    res.redirect('/groups');
+  }
+  else{
+    const groupid = req.query.groupid;
+    Group.findById(groupid).populate('users').exec()
+    .then(group => {
+      Group.deleteOne({_id: groupid})
+      .then(resp => {
+       Message.deleteMany({receiver: groupid})
+        .then(() => {
+          req.flash('success','group deleted!')
+          res.location('/groups');
+          res.redirect('/groups')
+          group.users.forEach(user => {
+            Notification.create({
+              userId: user._id,
+              message: `@${req.user.username} deleted the group '${group.name}'`,
+              link:`groups`,
+              date: new Date().toISOString(),
+              time:new Date().getTime()
+            }).then(() => {
+              User.findById(user._id).then(setUser => {
+                setUser.notifications += 1;
+                setUser.save();
+              })
+            })
+          });
+        })
+      }).catch((error) => {
+        console.log(error);
+        res.redirect('/groups');
+      })
+    })
+
+  }
+})
+
 router.get('/friendlist', ensureAuthenticated,	(req, res) => {
   let userId = req.user.username;
   if (req.query.user){
@@ -526,20 +617,51 @@ router.get('/notifications', ensureAuthenticated, (req, res) => {
 		var newTime = `${time[0]} ${time[1]} ago`;
 		return newTime;
  }
-
-	Notification.find({userId:req.user.id})
-	.sort({date: -1})
-	.then(notifications => {
-    User.findById(req.user._id)
-    .then(user => {
-      user.notifications = 0;
-      user.save();
+ User.findById(req.user._id)
+ .then(user => {
+   user.notifications = 0;
+   user.save();
+   Notification.find({userId:req.user.id})
+   .sort({date: -1})
+   .then(notifications => {
       res.render('notify', {
         notifications: notifications,
         timeSince: timeSince
       })
+   })
+  })
+
+})
+
+router.post('/groups/changename/:groupid', ensureAuthenticated, (req, res)  =>  {
+  const newgroupname = req.body.groupname;
+  const groupid = req.params.groupid;
+  Group.findById(groupid).populate('users').exec()
+  .then(group => {
+    const formerName = group.name;
+    Group.updateOne({_id:groupid},{ $set :  {name: newgroupname}})
+    .then(resp  =>  {
+      Message.updateMany({receiver: groupid}, {$set:{groupname: newgroupname}})
+      .then(() => {
+        group.users.forEach(user => {
+          Notification.create({
+            userId: user._id,
+            message: `@${req.user.username} changed the groupname '${formerName}' to '${newgroupname}'`,
+            link:`chatphase?type=group&user=${groupid}`,
+            date: new Date().toISOString(),
+            time:new Date().getTime()
+          }).then(() => {
+            User.findById(user._id).then(setUser => {
+              setUser.notifications += 1;
+              setUser.save();
+            })
+          })
+        });
+        res.location(`/chatphase?type=group&user=${groupid}`);
+        res.redirect(`/chatphase?type=group&user=${groupid}`);
+      })
     })
-	})
+  })
 
 })
 
@@ -585,26 +707,34 @@ router.get('/chatphase', ensureAuthenticated, (req, res) => {
     .populate('users')
     .populate('messages')
     .then(group => {
-      let groupusers = []
-      group.users.forEach(user => {
-        groupusers.push(user.username);
-      });
-      if (groupusers.indexOf(req.user.username) === -1){
-        res.location('/')
-        res.redirect('/');
+      if (group){
+        let groupusers = []
+        group.users.forEach(user => {
+          groupusers.push(user.username);
+        });
+        if (groupusers.indexOf(req.user.username) === -1){
+          res.location('/')
+          res.redirect('/');
+        }
+        else{
+          const chats = group.messages;
+          res.render('groupchats' , {
+            chats: chats,
+            receiver: chatid,
+            name: group.name,
+            admin: group.createdBy,
+            members: group.members,
+            groupid: group._id,
+            groupusers: groupusers
+          })
+        }
       }
       else{
-        const chats = group.messages;
-        res.render('groupchats' , {
-          chats: chats,
-          receiver: chatid,
-          name: group.name,
-          admin: group.createdBy,
-          members: group.members,
-          groupid: group._id,
-          groupusers: groupusers
-        })
+        res.redirect('/groups')
       }
+    }).catch((e)  =>  {
+      console.log(e.message);
+      res.redirect('/groups');
     })
   }
 

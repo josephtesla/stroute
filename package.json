@@ -1,7 +1,7 @@
 {
-  "name": "Twoexpress",
+  "name": "Stroute",
   "version": "1.0.0",
-  "description": "Instant chat messenger build with JavaScript stack",
+  "description": "Instant chat messenger built with JavaScript stack",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js"
@@ -14,6 +14,7 @@
     "body-parser": "1.18.3",
     "cloudinary": "^1.13.2",
     "connect-flash": "0.1.1",
+    "cookie-parser": "^1.4.4",
     "dotenv": "^6.2.0",
     "ejs": "2.6.1",
     "express": "4.16.4",
@@ -28,6 +29,7 @@
     "nodemailer": "^5.1.1",
     "passport": "0.4.0",
     "passport-local": "1.0.0",
+    "passport-remember-me-extended": "0.0.3",
     "passport-strategy": "1.0.0",
     "socket.io": "2.2.0"
   }

@@ -4,8 +4,9 @@
   <style>
   </style>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>expressGo </title>
+  <title>Stroute </title>
   <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="js/serviceWorker.js"></script>
   <!-- Font Awesome CSS-->
   <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
   <!-- Custom icon font-->
@@ -30,36 +31,36 @@
 </head>
 <style>
   #messages ul.error {
-          list-style: none;
-          color: #a94442;
-          background-color:#f2dede;
-          border-color:#ebccd1;
-          padding: 15px;
-          margin-bottom:20px;
-          border: 1px solid transparent;
-          border-radius: 4px;
-        }
-        #messages ul.success {
-          list-style: none;
-          color: #54c922;
-          background-color:#dfeed9;
-          border-color:#d3e5d1;
-          padding: 15px;
-          margin-bottom:20px;
-          border: 1px solid transparent;
-          border-radius: 4px;
-        }
+    width: 100%;
+    list-style: none;
+    color: #a94442;
+    background-color:#f2dede;
+    border-color:#ebccd1;
+    padding: 15px;
+    margin-bottom:20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+  #messages ul.success {
+    width: 100%;
+    list-style: none;
+    color: #54c922;
+    background-color:#dfeed9;
+    border-color:#d3e5d1;
+    padding: 15px;
+    margin-bottom:20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
 
-
-        
-        </style>
+</style>
 
 <body>
   <header class="header">
     <nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
       <div class="container">
-        <a class="navbar-brand waves-effect" href="/">
-          <strong>expressGo</strong>
+        <a class="navbar-brand waves-effect bigheader" href="/">
+          <strong>Stroute</strong>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,13 +74,13 @@
           <ul class="navbar-nav nav-flex-icons">
             <li class="nav-item">
               <a href="https://github.com/JosephTesla" class="btn btn-outline-white waves-effect waves-light btn-sm">
-								<i class="
+                <i class="
                 fa fa-github"></i>follow
               </a>
             </li>
             <li class="nav-item">
               <a href="/users/register" class="btn btn-outline-white waves-effect waves-light btn-sm">
-								<i class=" fa
+                <i class=" fa
                 fa-user"></i>
                 <span id="userone">
                   Signup</span>
@@ -88,7 +89,7 @@
             <li></li>
             <li id="usertwo" class="nav-item">
               <a href="/users/login" class="btn btn-outline-white waves-effect waves-light btn-sm">
-								<i class=" fa
+                <i class=" fa
                 fa-key"></i> Login
               </a>
             </li>
@@ -109,68 +110,71 @@
 
           <div class="col-md-6">
             <!-- Material form login -->
-<div class="card">
+            <div class="card">
 
-    <h4 class="card-header white-text text-center py-4" style="background:rgb(44, 42, 42) !important">
-      <strong>Login</strong>
-    </h4>
-  
-    <!--Card content-->
-    <div class="card-body px-lg-5 pt-0">
-  
-      <!-- Form -->
-      <form action="/users/login" method='POST' class="text-center" style="color: #757575;">
-  <%- messages() %>
-        <!-- Username -->
-        
+              <h4 class="card-header white-text text-center py-4" style="background:#181c33 !important">
+                <strong>Login</strong>
+              </h4>
 
-        <div class="md-form">
-          <input type="text" value="<%= (!!locals.username)?username:'' %>" name="username" id="materialRegisterFormLastName" class="form-control">
-          <label for="materialRegisterFormLastName">Username</label>
-        </div>
-  
-        <!-- Password -->
-        <div class="md-form">
-          <input type="password" value="<%= (!!locals.password)?password:'' %>" name="password" id="materialLoginFormPassword" class="form-control">
-          <label for="materialLoginFormPassword">Password</label>
-        </div>
-  
-        <div class="d-flex justify-content-around">
-          <div>
-            <!-- Remember me -->
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="materialLoginFormRemember">
-              <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
+              <!--Card content-->
+              <div class="card-body px-lg-5 pt-0">
+
+                <!-- Form -->
+                <form action="/users/login" method='POST' class="text-center" style="color: #757575;">
+                  <%- messages() %>
+                  <!-- Username -->
+
+
+                  <div class="md-form">
+                    <input type="text" value="<%= (!!locals.username)?username:'' %>" name="username" id="materialRegisterFormLastName"
+                      class="form-control">
+                    <label for="materialRegisterFormLastName">Username</label>
+                  </div>
+
+                  <!-- Password -->
+                  <div class="md-form">
+                    <input type="password" value="<%= (!!locals.password)?password:'' %>" name="password" id="materialLoginFormPassword"
+                      class="form-control">
+                    <label for="materialLoginFormPassword">Password</label>
+                  </div>
+
+                  <div class="d-flex justify-content-around">
+                    <div>
+                      <!-- Remember me -->
+                      <div class="form-check">
+                        <input type="checkbox" name="rememberMe" class="form-check-input" id="materialLoginFormRemember">
+                        <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
+                      </div>
+                    </div>
+                    <div>
+                      <!-- Forgot password -->
+                      <a href="./resetpassword">Forgot password?</a>
+                    </div>
+                  </div>
+
+                  <!-- Sign in button -->
+                  <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign
+                    in</button>
+
+                  <!-- Register -->
+                  <p>Not a member?
+                    <a href="./register">Register</a>
+                  </p>
+                </form>
+                <!-- Form -->
+
+              </div>
+
             </div>
+            <!-- Material form login -->
           </div>
-          <div>
-            <!-- Forgot password -->
-            <a href="./resetpassword">Forgot password?</a>
-          </div>
-        </div>
-  
-        <!-- Sign in button -->
-        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign in</button>
-  
-        <!-- Register -->
-        <p>Not a member?
-          <a href="./register">Register</a>
-        </p>
-      </form>
-      <!-- Form -->
-  
-    </div>
-  
-  </div>
-  <!-- Material form login -->
-  </div>
         </center>
       </div>
 
     </div>
 
     <footer>
-      &copy expressGo
+      &copy Stroute
     </footer>
   </div>
 
@@ -189,7 +193,7 @@
   <!-- Initializations -->
   <script type="text/javascript">
     // Animations initialization
-    new WOW().init();
+    new WOW().init
   </script>
 
 </body>

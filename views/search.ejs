@@ -4,8 +4,9 @@
    <style>
    </style>
    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-   <title>expressGo</title>
+   <title>Stroute</title>
    <script src="vendor/jquery/jquery.min.js"></script>
+   <script src="js/serviceWorker.js"></script>
    <!-- Font Awesome CSS-->
    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
    <!-- Custom icon font-->
@@ -32,8 +33,8 @@
    <header class="header">
       <nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
          <div class="container">
-            <a class="navbar-brand waves-effect" href="index.html">
-               <strong>expressGo</strong>
+            <a class="navbar-brand waves-effect bigheader" href="index.html">
+               <strong>Stroute</strong>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,19 +77,49 @@
 
       <div class="content-app" id="index">
          <div class="row" id="messageArea">
-            <div class="col-md-4" id="sidebar">
-               <ul style="list-style-type:square;">
-                  <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/chats" role="button">Chats
-                        <i class="fa fa-comment ml-2"></i></a></li>
-                  <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/friendlist" role="button">friends
-                    <span class="badge badge-primary badge-pill pull-right"><%- (user.requests)?user.requests: "" %></span></a></li>
-                  <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/notifications" role="button">notifications  
-                    <span class="badge badge-primary badge-pill pull-right"><%= (user.notifications)?user.notifications: "" %></span></a></li>
-                    <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/groups" role="button">Groups  
-                    <span class="badge badge-primary badge-pill pull-right">1</span></a></li>
-               </ul>
+            <div class="card-body"  id="desktop-nav">
+
+                <!-- List group links -->
+                <div class="list-group list-group-flush"  style="height:210 !important;">
+                  <a href="/chats" class="list-group-item list-group-item-action waves-effect">Chats
+                      <span class="badge badge-success badge-pill pull-right">
+                    </span>
+                  </a>
+                  <a href="/friendlist" class="list-group-item list-group-item-action waves-effect">Friends
+                      <span class="badge badge-primary badge-pill pull-right"><%= (user.requests)?user.requests: "" %></span>
+                  </a>
+                  <a href="/notifications" class="list-group-item list-group-item-action waves-effect">Notifications
+                      <span class="badge badge-primary badge-pill pull-right"><%= (user.notifications)?user.notifications: "" %></span>
+                    </a>
+                  <a href="/groups" class="list-group-item list-group-item-action waves-effect">Groups
+                    <span class="badge badge-primary badge-pill pull-right">1</span>
+                  </a>
+                  <a class="list-group-item list-group-item-action waves-effect">Messages
+                    <span class="badge badge-success badge-pill pull-right">7</span>
+                  </a>
+                </div>
+              </div>
+                <!-- List group links -->
+            
             </div>
             <div class="col-md-8">
+            <div  class="small-device-nav">
+            <a href="/chats"  class="waves-effect small-device-a">Chats
+                <span class="badge badge-success badge-pill pull-right"></span>
+            </a>
+            <a href="/friendlist" class="waves-effect  small-device-a">Friends
+                <span class="badge badge-primary badge-pill pull-right"><%= (user.requests)?user.requests: "" %></span>
+            </a>
+            <a href="/notifications" class="waves-effect  small-device-a">Notifications
+                <span class="badge badge-primary badge-pill pull-right"><%= (user.notifications)?user.notifications: "" %></span>
+            </a>
+            <a  href="/groups" class="waves-effect  small-device-a">Groups
+                <span class="badge badge-danger badge-pill pull-right">1</span>
+            </a>
+            <a class="waves-effect  small-device-a">Messages
+                <span class="badge badge-success badge-pill pull-right">7</span>
+            </a>
+            </div>
                <div class="app-content">
                   <h3>Find Friends</h3>
                 <form action="/search" method="POST">
@@ -120,7 +151,7 @@
 
 
          <footer>
-            &copy expressGo
+            &copy Stroute
          </footer>
       </div>
 

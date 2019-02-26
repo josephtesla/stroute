@@ -1,0 +1,228 @@
+<html>
+
+<head>
+   <style>
+   </style>
+   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+   <title>Stroute</title>
+   <script src="vendor/jquery/jquery.min.js"></script>
+   <!-- Font Awesome CSS-->
+   <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+   <!-- Custom icon font-->
+   <link rel="stylesheet" href="css/fontastic.css">
+   <!-- Google fonts - Open Sans-->
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+   <!-- Fancybox-->
+   <link rel="stylesheet" href="vendor/@fancyapps/fancybox/jquery.fancybox.min.css">
+   <!-- theme stylesheet-->
+   <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+   <!-- Custom stylesheet - for your changes-->
+   <link rel="stylesheet" href="css/custom.css">
+   <link rel="stylesheet" href="css/chat.css">
+   <!-- Bootstrap core CSS -->
+   <link href="md/css/bootstrap.min.css" rel="stylesheet">
+   <!-- Material Design Bootstrap -->
+   <link href="md/css/mdb.min.css" rel="stylesheet">
+   <!-- Favicon-->
+   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900"
+      rel="stylesheet">
+   <script src="js/index.js"></script>
+   <style>
+
+.showbox {
+    background: #f3f3f3;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 5%;
+}
+
+.loader {
+    border: 0 !important;
+    border-top: 0 !important;
+    position: relative;
+    margin: 0 auto;
+    width: 100px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.loader:before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+}
+
+.circular {
+    -webkit-animation: rotate 2s linear infinite;
+    animation: rotate 2s linear infinite;
+    height: 100%;
+    -webkit-transform-origin: center center;
+    transform-origin: center center;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.path {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    -webkit-animation: dash 0.8s ease-in-out infinite, color 6s ease-in-out infinite;
+    animation: dash 0.8s ease-in-out infinite, color 6s ease-in-out infinite;
+    stroke-linecap: round;
+}
+
+@-webkit-keyframes rotate {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotate {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
+    }
+}
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
+    }
+}
+@-webkit-keyframes color {
+    100%,
+    0% {
+        stroke: black;
+    }
+    40% {
+        stroke: black;
+    }
+    66% {
+        stroke: black;
+    }
+    80%,
+    90% {
+        stroke: black;
+    }
+}
+@keyframes color {
+    100%,
+    0% {
+        stroke: black;
+    }
+    40% {
+        stroke: black;
+    }
+    66% {
+        stroke: black;
+    }
+    80%,
+    90% {
+        stroke: black;
+    }
+}
+
+   </style>
+</head>
+<body>
+   <header class="header">
+      <nav class="navbar fixed-top navbar-expand-lg navbar-light  scrolling-navbar">
+         <div class="container">
+            <a class="navbar-brand waves-effect" href="index.html">
+               <strong>Stroute</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+               aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+               <!--<span class="navbar-toggler-icon"></span>-->
+               <i class="fa fa-navicon fa-lg"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+               <ul class="navbar-nav mr-auto">
+
+               </ul>
+               <ul class="navbar-nav nav-flex-icons">
+                  <li class="nav-item">
+                     <a href="https://github.com/JosephTesla" class="btn btn-outline-white waves-effect waves-light btn-sm">
+								<i class="
+                        fa fa-github"></i>follow
+                     </a>
+                  </li>
+                  <li></li>
+                  <li id="usertwo" class="nav-item">
+                     <a href="users/logout" class="btn btn-outline-white waves-effect waves-light btn-sm">
+								<i class="
+                        fa fa-key"></i>
+                        Logout
+                     </a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+   </header>
+   <div class="container" id="bgrey">
+     <section id='loader'>
+       <div class='showbox'>
+           <div class='loader'>
+               <svg class='circular' viewBox='25 25 50 50'>
+                   <circle class='path' cx='50' cy='50' r='20' fill='none' stroke-width='2' stroke-miterlimit='10'></circle>
+               </svg>
+           </div>
+       </div>
+   </section>
+   please wait...
+      </div>
+
+      <script src="vendor/jquery/jquery.min.js"></script>
+      <script src="js/socket.io.js"></script>
+      <script src="vendor/popper.js/umd/popper.min.js"> </script>
+      <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+      <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+      <script src="vendor/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
+      <script src="js/front.js"></script>
+      <!-- MDB core JavaScript -->
+      <script type="text/javascript" src="md/js/mdb.min.js"></script>
+      <!-- Initializations -->
+      <script type="text/javascript">
+         // Animations initialization
+         new WOW().init();
+         setTimeout(function() {
+           window.location.href = "/";
+         }, 2000)
+      </script>
+
+</body>
+
+
+
+</html>

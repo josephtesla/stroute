@@ -11,6 +11,22 @@ img{ max-width:100%;}
   clear: both;
   overflow: hidden;
 }
+
+#btnImageSend{
+  padding: 7px;
+  border-radius: 50%;
+}
+
+#btnMpSend{
+  padding: 7px;
+  border-radius: 50%;
+}
+
+#imgLink, #mpLink{
+  padding: 4px !important;
+  margin-right: 12px;
+}
+
 .top_spac{ margin: 20px 0 0;}
 
 .newgroup{
@@ -100,18 +116,21 @@ footer{
  }
  .received_withd_msg p {
   background: #ececec none repeat scroll 0 0;
-  border-radius: 21px;
-  color: #2c2c2c;
+  border-top-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  color: black;
   font-size: 14px;
   margin: 0;
-  padding: 5px 10px 5px 12px;
+  padding: 5px 10px 5px 10px;
   width: 100%;
 }
 .time_date {
-  color: #f1eeee;
+  color: black;
   display: block;
-  font-size: 12px;
+  font-size: 10px;
   margin: 0px 0 5px;
+  font-weight: 600;
 }
 
 .noti-time{
@@ -122,14 +141,22 @@ footer{
 .received_withd_msg { width: 65%;}
 .mesgs {
   float: left;
-  
   width: 100%;
   border: 1px solid grey;
 }
-
+.scrollex{
+  overflow-y: scroll;
+  height: 70px;
+  border: 1px solid rgb(139, 137, 137);
+}
+#groupname{
+  font-size: 30px;
+}
  .sent_msg p {
-  background: #05728f none repeat scroll 0 0;
-  border-radius: 21px;
+  background: #2d3aa0 none repeat scroll 0 0;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
   font-size: 14px;
   margin: 0; color:#fff;
   padding: 5px 10px 5px 12px;
@@ -138,7 +165,8 @@ footer{
 
 .sent_msg span {
   border-radius: 3px;
-  margin: 0; color:#fff;
+  margin: 0; color:black;
+  font-weight: 600;
 }
 
 
@@ -167,7 +195,7 @@ footer{
 
 .type_msg {border-top: 1px solid #c4c4c4;position: relative;}
 .msg_send_btn {
-  background: #05728f none repeat scroll 0 0;
+  background: #2d3aa0 none repeat scroll 0 0;
   border: medium none;
   border-radius: 50%;
   color: #fff;
@@ -182,11 +210,22 @@ footer{
 .messaging { padding: 0 0 50px 0;}
 .msg_history {
   height: 516px;
-  overflow-y: scroll;
+  overflow: auto;
 }
 
+#groupdelete{
+  color: rgb(196, 4, 4);
+  font-weight: 500;
+}
+
+#groupEditForm{
+  display: none;
+}
 
 .list-group{
   height: 480px;
-  overflow-y: scroll;
+  overflow: auto;
+}
+#groupedit{
+  float: right;
 }

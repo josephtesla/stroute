@@ -3,18 +3,7 @@
 <div class="content-app" id="index">
   <div class="row" id="messageArea">
     <div class="col-md-4" id="sidebar">
-      <ul style="list-style-type:square;">
-        <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/chats" role="button">Chats
-            <i class="fa fa-comment ml-2"></i></a></li>
-        <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/friendlist" role="button">Friends
-          <span class="badge badge-primary badge-pill pull-right"><%-(user.requests)?user.requests: "" %></span></a></li>
-        <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/notifications" role="button">notifications
-            <span class="badge badge-primary badge-pill pull-right"><%- (user.notifications)?user.notifications: "" %></span></a></li>
-        <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/groups" role="button">Groups
-            <span class="badge badge-primary badge-pill pull-right">1</span></a></li>
-      </ul>
-    </div>
-    <div class="col-md-8">
+        <%- include('navigation') %>
       <div class="app-content">
         <a class="btn btn-outline-primary waves-effect waves-light btn-sm" id="newg" role="button">New Group</a>
         <%- messages(); %>
@@ -40,6 +29,9 @@
           <div class="settingsarea">
             <% if (locals.adminsetting) { %>
             <h2><%= heading  %></h2>
+            <input type="hidden" id="groupid" value="<%= groupid %>">
+            <input type="hidden" id="adminpale" value="<%= admin %>">
+            <a href="" id="groupdelete">Delete group!</a><br>
             <a class="btn btn-outline-primary waves-effect waves-light btn-sm" id="admem" role="button">add member</a>
             <a class="btn btn-outline-primary waves-effect waves-light btn-sm" id="vmem" role="button">view members</a>
             <div class="card" id="groupmembers">
@@ -132,7 +124,7 @@
   </div>
 </div>
 <footer>
-  &copy expressGo
+  &copy Stroute
 </footer>
 </div>
 
@@ -144,7 +136,6 @@
 <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
 <script src="vendor/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
 <script src="js/front.js"></script>
-<script src="js/edit.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="md/js/mdb.min.js"></script>
 <!-- Initializations -->
@@ -178,10 +169,31 @@
     $('#groupbody').toggle();
     $('.newgroup').fadeToggle(100)
   })
-  if (window.location.search) {
+  if (window.location.search.substring(1,6) === "admin") {
     $('#admin').html('view groups you are in')
     document.getElementById('admin').setAttribute('href', '/groups')
   }
+
+  if (window.location.search.indexOf("manage") !== -1){
+    var adminpale = document.querySelector('#adminpale').value;
+    var $current = document.querySelector('#userone').innerHTML;
+    if (adminpale !== $current){
+      window.location.href = "groups";
+    }
+  }
+
+    $('#groupdelete').click(function(e) {
+    e.preventDefault();
+    var groupid = document.querySelector('#groupid').value;
+    var deleteGroup = confirm("All group messages will be cleared and group will be deleted?");
+    if (deleteGroup){
+      var continues = confirm("proceed to delete?");
+      if (continues){
+        window.location.href = `/deletegroupcompletely?groupid=${groupid}`;
+      }
+    }
+  })
+  
 </script>
 
 </body>

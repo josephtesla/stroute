@@ -9,6 +9,7 @@ const flash = require('connect-flash')
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
+const cookieParser = require('cookie-parser');
 const ejs = require('ejs')
 require('dotenv').config();
 const Config = require('./config');
@@ -32,6 +33,8 @@ app.set('view engine', 'ejs');
 //static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+//cookie-parser
+app.use(cookieParser());
 
 //bodyparser
 app.use(bodyParser.json());
@@ -83,7 +86,7 @@ app.use(function (req, res, next) {
 })
 
 app.get('*', (req, res, next) => {
-	res.locals.user = req.user || null;
+  res.locals.user = req.user || null;
 	next();
 })
 
@@ -142,7 +145,11 @@ io.sockets.on('connection', function (socket) {
 		}
 		Message.create(newMessage)
 			.then(result => {
-				const xyz = false
+        User.findOne({username: data.receiver})
+        .then(resp => {
+          resp.messages += 1;
+          resp.save();
+        })
 			}).catch((err) => {
 				console.log(err.message)
 			})
@@ -177,10 +184,17 @@ io.sockets.on('connection', function (socket) {
       groupname: group.name,
       groupid: group._id
     }).then(message => {
-      Group.findById(groupid)
+      Group.findById(groupid).populate('users')
       .then(group => {
         group.messages.push(message)
         group.save();
+        group.users.forEach(member => {
+          User.findOne({username: member.username})
+          .then(respUser => {
+            respUser.messages += 1;
+            respUser.save();
+          })
+        });
       })
     })
 
@@ -192,7 +206,8 @@ io.sockets.on('connection', function (socket) {
   socket.on('image msg', function(data){
     io.sockets.emit("newimage msg", {
       imageurl: data.url,
-      receiver: data.received,
+      receiver: data.receiver,
+      user: data.user,
       type: data.type
     })
   })
@@ -222,9 +237,8 @@ app.use((error, req, res, next) => {
   res.render('404');
 });
 
-
 server.listen(process.env.PORT || 5000,  () => {
-	console.log('server started...')
+	console.log('server started...');
 });
 
 module.exports = app;

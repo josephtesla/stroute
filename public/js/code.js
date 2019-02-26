@@ -1,9 +1,5 @@
 $(function () {
-  var sound = new Howl({
-    src: ['fb.mp3'],
-    volume: 0.4
-  })
-
+  
 	//takes user to last post when page loads
   window.location.href = "#last";
   var queries = location.search.substr(1);
@@ -12,15 +8,10 @@ $(function () {
 	var socket = io.connect();
 	var $message = document.querySelector('#message');
 	var $users = $('#users');
-	var $currentUser = document.querySelector('#userone').innerHTML;
-
+  var $currentUser = document.querySelector('#userone').innerHTML;
+  var btn = document.querySelector('#btn');
 	socket.emit('new user', $currentUser, function () {
 		console.log('user sent')
-	})
-
-	$('#addlink').click(function (e) {
-		e.preventDefault();
-		alert('working on that')
 	})
 
 	$('#imgLink').click(function (e) {
@@ -33,40 +24,28 @@ $(function () {
 		$('#mp-form').toggle();
 	})
 
-	$('#linkbtn').click(function (e) {
-		e.preventDefault();
-		const $linktext = $('#linktext').val();
-		const $link = document.querySelector('#link');
-		console.log($link)
-		if ($link.value.includes('http')) {
-			const html = `<a href='${link.value}'>${$linktext}</a>`;
-			$message.innerHTML += ' ' + html;
-		}
-		else {
-			const html = `<a href='http://${link.value}' target='_blank'>${$linktext}</a>`;
-			$message.innerHTML += ' ' + html;
-		}
-  })
-  
 	$('#btn').click(function () {
     //Emit 'send message' event after sending a message
-    const completemsg = $message.value
-		const messageBody = {
-			receiver: sendTo,
-			msg: `${completemsg}`
-		}
-		socket.emit('send message', messageBody);
+    if ($message.value.length){
+      const completemsg = $message.value
+      const messageBody = {
+        receiver: sendTo,
+        msg: `${completemsg}`
+      }
+      socket.emit('send message', messageBody);
 
-		//clear message area
-		$message.value = '';
+      //clear message area
+      $message.value = '';
+    }
 	})
 	socket.on('new message', function (data) {
-		//send message privately
+    //send message privately
+   
 		if (data.receiver === $currentUser && data.user === sendTo || data.user === $currentUser) {
 			if (data.user == $currentUser) {
 				var html = `<div class="outgoing_msg">
             <div class="sent_msg">
-               <p>${data.msg}</p>
+               <p class="card">${toUrlCheck(data.msg)}</p>
                <span class="time_date">  ${new Date().toLocaleString()}</span>
             </div>
          </div>`
@@ -78,8 +57,8 @@ $(function () {
              <img id="imgavatar"	src="img/user.svg" alt=""> </div>
             <div class="received_msg">
                <div class="received_withd_msg">
-                  <p>${data.msg}</p>
-                  <span class="time_date"><a style="color:#f2dede;"	href="/users/${data.user}">${data.user.toUpperCase()}</a> |
+                  <p class="card">${toUrlCheck(data.msg)}</p>
+                  <span class="time_date"><a style="color:black;"	href="/users/${data.user}">${data.user.toUpperCase()}</a> |
                   ${new Date().toLocaleString()}</span>
                 
                </div>
@@ -87,10 +66,14 @@ $(function () {
          </div>`
 				$('.msg_hist').append(html);
       }
-      sound.play();
+      window.location.href = "#last";
+     /**
+      *  new Howl({
+        src: ['fb.mp3'],
+        volume: 0.4
+      }).play();
+      */
 		}
-		window.location.href = "#last";
-
 	})
 
 
@@ -112,13 +95,19 @@ $(function () {
       <div class="incoming_msg_img"> <img id="imgavatar" src="img/user.svg" alt="sunil"> </div>
       <div class="received_msg">
         <div class="received_withd_msg">
-        <span class="imgwhite"><img style="border:3px solid white;"	src="${data.imageurl}" /></span>
-        <span class="time_date"><a style="color:#f2dede;"	href="/users/${data.user}">${data.user.toUpperCase()}</a> |${new Date().toLocaleString()}</span>
+        <span class="imgwhite"><img class="bg-white card" style="border:3px solid white;"	src="${data.imageurl}" />
+        <span class="time_date"><a style="color:#f2dede;"	href="/users/${data.user}">${data.user.toUpperCase()}</a> |${new Date().toLocaleString()}</span></span>
         </div></div></div>`;
-      $('.msg_hist').append(html)
+      $('.msg_hist').append(html);
       window.location.href = '#last'
     }
   })
 
+    var realtexts = document.querySelectorAll('.realtext');
+    for (let i = 0; i < realtexts.length; i++) {
+      const splitNow = realtexts[i].textContent.toString()
+      var textHtml = toUrlCheck(splitNow);
+      realtexts[i].innerHTML = textHtml;
+    }
 })
 

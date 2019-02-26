@@ -3,20 +3,7 @@
 <div class="content-app" id="index">
   <div class="row" id="messageArea">
     <div class="col-md-4" id="sidebar">
-      <ul style="list-style-type:square;">
-        <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/chats" role="button">Chats
-            <i class="fa fa-comment ml-2"></i></a></li>
-        <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/friendlist" role="button">Friends
-            <span class="badge badge-primary badge-pill pull-right">
-              <%-(user.requests)?user.requests: "" %></span></a></li>
-        <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/notifications" role="button">notifications
-            <span class="badge badge-primary badge-pill pull-right">
-              <%- (user.notifications)?user.notifications: "" %></span></a></li>
-        <li><a class="btn btn-outline-primary waves-effect waves-light btn-sm" href="/groups" role="button">Groups
-            <span class="badge badge-primary badge-pill pull-right">1</span></a></li>
-      </ul>
-    </div>
-    <div class="col-md-8">
+        <%- include('navigation') %>
       <div class="app-content">
         <h2>Messages</h2>
         <div class="card">
@@ -99,7 +86,7 @@
 
 
     <footer>
-      &copy expressGo
+      &copy Stroute
     </footer>
   </div>
 
@@ -122,15 +109,15 @@
     const textValues = document.querySelectorAll('.textvalue');
     const text = document.querySelectorAll('.text');
     for (var i = 0; i < textValues.length; i++) {
-      if (textValues[i].value.substring(0, 8) === 'https://'){
-        text[i].innerHTML =  `file received...`;
+      if (textValues[i].value.substring(0, 8) === 'https://') {
+        text[i].innerHTML = `file received...`;
       }
-      else{
+      else {
         if (textValues[i].value.length > 50) {
-        text[i].innerHTML = `${textValues[i].value.substring(0, 50)}... more`
+          text[i].innerHTML = `${textValues[i].value.substring(0, 50)}... more`
         }
-      }  
-    }j
+      }
+    } j
   </script>
 
   </body>
