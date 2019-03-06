@@ -67,12 +67,10 @@ $(function () {
 				$('.msg_hist').append(html);
       }
       window.location.href = "#last";
-     /**
-      *  new Howl({
+      new Howl({
         src: ['fb.mp3'],
         volume: 0.4
       }).play();
-      */
 		}
 	})
 
