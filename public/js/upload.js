@@ -39,7 +39,7 @@ function UploadImage(msgType) {
       type: msgType,
       user: document.getElementById('userone').innerHTML
     };
-    fetch('http://localhost:5000/api/saveimageurl',{
+    fetch('http://stroutechat.herokuapp.com/api/saveimageurl',{
       method: 'POST',
       headers:{
          'Content-Type': 'application/json; charset=utf-8'

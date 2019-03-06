@@ -215,8 +215,8 @@ router.post('/resetpassword', (req, res) => {
         const token = jwt.sign({id : user._id}, process.env.SECRETKEY, { expiresIn: 86400 });
         const emailBody = `<h1>Password reset for your account</h1>\n<p>you are seeing this email because you
       (or someone else) requested to change your current password on our app</p>
-      follow the link below to reset your password\n<h4><a href='http://localhost:5000/users/resetpasswordpage?token=${token}'>
-      http://localhost:5000/users/resetpasswordpage/token=${token}</a></h4>`;
+      follow the link below to reset your password\n<h4><a href='http://stroutechat.herokuapp.com/users/resetpasswordpage?token=${token}'>
+      http://stroutechat.herokuapp.com/users/resetpasswordpage/token=${token}</a></h4>`;
      sendEmailMessage(email, 'Stroute - Password Reset confirmation', emailBody)
      .then(resp => {
       res.render('forgot',{
