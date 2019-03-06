@@ -140,7 +140,6 @@ footer{
 
 .received_withd_msg { width: 65%;}
 .mesgs {
-  float: left;
   width: 100%;
   border: 1px solid grey;
 }

@@ -59,6 +59,10 @@ function UploadImage(msgType) {
       <span class="time_date">  ${new Date().toLocaleString()}</span></span></div></div>`;
       $('.msg_hist').append(html);
       socket.emit('image msg', Data);
+      new Howl({
+        src: ['fb.mp3'],
+        volume: 0.4
+      }).play();
       window.location.href = '#last'
     }).catch(err => {
       console.log(err)

@@ -95,6 +95,10 @@ $(function () {
          </div>`
 				$('.msg_hist').append(html);
       }
+      new Howl({
+        src: ['fb.mp3'],
+        volume: 0.4
+      }).play();
     }
 		window.location.href = "#last";
 
@@ -121,6 +125,10 @@ $(function () {
         <span class="time_date"><a style="color:#f2dede;"	href="/users/${data.user}">${data.user.toUpperCase()}</a> |${new Date().toLocaleString()}</span></span>
         </div></div></div>`;
       $('.msg_hist').append(html)
+      new Howl({
+        src: ['fb.mp3'],
+        volume: 0.4
+      }).play();
       window.location.href = '#last'
     }
   })
