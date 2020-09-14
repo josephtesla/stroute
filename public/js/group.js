@@ -89,7 +89,6 @@ $(function () {
                   <p class="card">${toUrlCheck(data.msg)}</p>
                   <span class="time_date"><a style="color:black;"	href="/users/${data.user}">${data.user.toUpperCase()}</a> |
                   ${new Date().toLocaleString()}</span>
-                
                </div>
             </div>
          </div>`
